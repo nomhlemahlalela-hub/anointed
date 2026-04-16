@@ -1,0 +1,19 @@
+/* ─── EVENTS ─── */
+    .event-featured { background: var(--white); border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
+    .event-featured img { width: 100%; height: 300px; object-fit: cover; }
+    .event-featured-body { padding: 28px; }
+    .event-badge { font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); font-weight: 600; border: 1px solid var(--gold); padding: 3px 10px; border-radius: 2px; display: inline-block; margin-bottom: 14px; }
+    .calendar-grid { background: var(--white); border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
+    .cal-header { background: var(--forest); color: white; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; }
+    .cal-header h5 { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 400; color: white; margin: 0; }
+    .cal-nav-btn { background: rgba(255,255,255,0.1); border: none; color: white; width: 30px; height: 30px; border-radius: 2px; cursor: pointer; transition: background 0.2s; font-size: 0.8rem; }
+    .cal-nav-btn:hover { background: rgba(255,255,255,0.2); }
+    .cal-table { width: 100%; border-collapse: collapse; }
+    .cal-table th { background: var(--warm); color: var(--ink-muted); font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 10px; text-align: center; }
+    .cal-table td { padding: 9px 4px; text-align: center; font-size: 0.85rem; border-top: 1px solid var(--border); color: var(--ink-soft); }
+    .cal-event-cell { background: var(--gold) !important; color: var(--ink) !important; font-weight: 700; cursor: pointer; border-radius: 2px; }
+    .cal-event-cell:hover { background: var(--gold-lt) !important; }
+
+    
+/* ─── GIVE ─── */
+    .give-wrap { max-width: 520px; margin: 0 auto; }

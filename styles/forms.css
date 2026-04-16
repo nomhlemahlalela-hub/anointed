@@ -1,0 +1,12 @@
+/* ─── FORMS ─── */
+    .form-control, .form-select { border: 1px solid var(--border); border-radius: 2px; padding: 11px 14px; font-family: 'Jost', sans-serif; font-size: 0.85rem; font-weight: 300; background: var(--ivory); transition: border-color 0.2s; }
+    .form-control:focus, .form-select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(184,146,42,0.08); background: var(--white); }
+    .form-label { font-size: 0.73rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px; display: block; }
+    .btn-submit { background: var(--forest); color: white; border: none; font-family: 'Jost', sans-serif; font-weight: 500; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 13px 28px; border-radius: 2px; cursor: pointer; width: 100%; transition: background 0.2s; }
+    .btn-submit:hover { background: var(--ink); }
+    .section-form-label { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--ink); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+    .section-form-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .gift-tag { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border); border-radius: 2px; padding: 6px 13px; font-size: 0.78rem; font-weight: 400; cursor: pointer; transition: all 0.15s; user-select: none; background: var(--ivory); margin: 3px; }
+    .gift-tag:hover { border-color: var(--gold); color: var(--gold); }
+    .gift-tag:has(input:checked) { background: var(--forest); color: white; border-color: var(--forest); }
+    .gift-tag input { accent-color: white; width: 12px; height: 12px; }

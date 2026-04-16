@@ -1,0 +1,18 @@
+/* ─── HOME ─── */
+    #home { display: none; min-height: 92vh; background: var(--forest); position: relative; overflow: hidden; align-items: center; justify-content: center; text-align: center; padding: 100px 24px; flex-direction: column; }
+    #home::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 60% 40%, rgba(184,146,42,0.12) 0%, transparent 60%), radial-gradient(ellipse at 20% 80%, rgba(42,92,68,0.4) 0%, transparent 50%); pointer-events: none; }
+    .home-logo { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold); box-shadow: 0 0 0 8px rgba(184,146,42,0.12), 0 20px 60px rgba(0,0,0,0.3); margin-bottom: 32px; position: relative; z-index: 1; }
+    .home-church-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 6vw, 4rem); font-weight: 400; color: white; letter-spacing: 0.02em; line-height: 1.1; margin-bottom: 20px; position: relative; z-index: 1; }
+    .home-verse { font-style: italic; color: rgba(255,255,255,0.6); font-size: 1rem; max-width: 500px; margin: 0 auto 40px; line-height: 1.8; position: relative; z-index: 1; font-family: 'Cormorant Garamond', serif; font-weight: 300; }
+    .home-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+    .btn-primary-g { background: var(--gold); color: var(--ink); border: none; font-family: 'Jost', sans-serif; font-weight: 500; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 13px 30px; border-radius: 2px; cursor: pointer; transition: all 0.2s; }
+    .btn-primary-g:hover { background: var(--gold-lt); transform: translateY(-1px); }
+    .btn-outline-w { background: transparent; color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.3); font-family: 'Jost', sans-serif; font-weight: 400; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 13px 30px; border-radius: 2px; cursor: pointer; transition: all 0.2s; }
+    .btn-outline-w:hover { border-color: rgba(255,255,255,0.7); color: white; }
+    .verse-card { margin-top: 48px; max-width: 520px; margin-left: auto; margin-right: auto; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; padding: 24px 28px; text-align: left; position: relative; z-index: 1; }
+    .verse-card-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .verse-card-label::before { content: ''; display: block; width: 20px; height: 1px; background: var(--gold); }
+    .verse-card p { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-style: italic; color: rgba(255,255,255,0.85); line-height: 1.75; margin-bottom: 10px; }
+    .verse-card-ref { font-size: 0.78rem; font-weight: 500; color: var(--gold); letter-spacing: 0.08em; }
+    .share-verse-btn { background: none; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.5); border-radius: 2px; padding: 5px 14px; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; font-family: 'Jost', sans-serif; margin-top: 14px; transition: all 0.2s; }
+    .share-verse-btn:hover { border-color: var(--gold); color: var(--gold); }

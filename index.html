@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Anointed in Living Christ | Church in Pretoria, Mpumalanga & KwaZulu-Natal</title>
+  <meta name="description" content="Anointed in Living Christ — a Spirit-filled church with branches in Soshanguve Block 1A Pretoria, Kameelriver B (Kwandebele), Nkomazi (Jeppes Reef), Msogwaba Pienaar (near Sindzawonye Primary School), Matsulu in Mpumalanga, and Madadeni Newcastle (near Qaphelani Primary School) in KwaZulu-Natal.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Anointed in Living Christ">
+  <meta property="og:description" content="To Know Christ and Make Him Known.">
+  <meta property="og:type" content="website">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/layout.css">
+  <link rel="stylesheet" href="styles/home.css">
+  <link rel="stylesheet" href="styles/about.css">
+  <link rel="stylesheet" href="styles/leaders.css">
+  <link rel="stylesheet" href="styles/events.css">
+  <link rel="stylesheet" href="styles/forms.css">
+  <link rel="stylesheet" href="styles/store.css">
+  <link rel="stylesheet" href="styles/sermons.css">
+  <link rel="stylesheet" href="styles/profile.css">
+  <link rel="stylesheet" href="styles/quiz.css">
+  <link rel="stylesheet" href="styles/wishlist.css">
+  <link rel="stylesheet" href="styles/orders.css">
+  <link rel="stylesheet" href="styles/ui.css">
+  <link rel="stylesheet" href="styles/bible.css">
+
+</head>
+<body>
+
+<!-- TOAST -->
+<div id="toastEl" class="toast-notification">
+  <i id="toastIcon" class="bi bi-check-circle-fill"></i>
+  <span id="toastMsg"></span>
+</div>
+
+<!-- LIVE CHAT WIDGET -->
+<div id="chatWidget" class="chat-widget">
+  <div class="chat-toggle" onclick="toggleChat()">
+    <i class="bi bi-chat-dots-fill"></i>
+    <span class="chat-notification" id="chatNotification" style="display:none">1</span>
+  </div>
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-avatar">
+          <i class="bi bi-person-circle"></i>
+        </div>
+        <div>
+          <div class="chat-name">Church Support</div>
+          <div class="chat-status" id="chatStatus">Online</div>
+        </div>
+      </div>
+      <button class="chat-close" onclick="toggleChat()">
+        <i class="bi bi-x"></i>
+      </button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="message received">
+        <div class="message-content">Hello! Welcome to Anointed in Living Christ. How can we help you today?</div>
+        <div class="message-time">Just now</div>
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatKeyPress(event)">
+      <button onclick="sendChatMessage()" class="chat-send-btn">
+        <i class="bi bi-send-fill"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- LIVE BANNER -->
+<div id="liveBanner" onclick="show('home')">
+  <span class="live-dot"></span>
+  Live Now — Sunday Service is streaming. Watch here
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="brand" onclick="show('home')">
+      <img src="images/Logo.png.jpeg" class="brand-logo" onerror="this.src='https://via.placeholder.com/40?text=ALC'">
+      <div class="brand-text">
+        <span class="brand-name">Anointed in Living Christ</span>
+        <span class="brand-sub">Abagcotshwa Ku-Krestu Ophilayo</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-profile-hdr" onclick="show('profile')" id="profileBtn">
+        <i class="bi bi-person-circle"></i><span id="profileBtnLabel">Sign In</span>
+      </button>
+      <button class="btn-give-hdr" onclick="show('give')"><i class="bi bi-gift me-2"></i>Give</button>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="sitenav">
+  <div class="sitenav-inner">
+    <ul class="sitenav-links" id="navLinks">
+      <li><a onclick="show('home')"><i class="bi bi-house me-1"></i>Home</a></li>
+      <li><a onclick="show('about')">About</a></li>
+      <li><a onclick="show('leaders')">Leadership</a></li>
+      <li><a onclick="show('branches')">Branches</a></li>
+      <li><a onclick="show('events')">Events</a></li>
+      <li><a onclick="show('music')">Music</a></li>
+      <li><a onclick="show('store')">Store</a></li>
+      <li><a onclick="show('quiz')">Quiz</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ══════ HOME ══════ -->
+  <section id="home" class="section" style="display:flex">
+    <img src="images/Logo.png.jpeg" class="home-logo" onerror="this.src='https://via.placeholder.com/110?text=ALC'">
+    <h1 class="home-church-name">Anointed in Living Christ</h1>
+    <p class="home-verse">"He is the atoning sacrifice for our sins, and not only for ours but also for the sins of the whole world."1 John 2:2</p>
+    <div class="home-actions">
+      <button class="btn-primary-g" onclick="show('about')">Discover More</button>
+      <button class="btn-outline-w" onclick="show('join')">Join Our Family</button>
+    </div>
+    <div class="verse-card">
+      <div class="verse-card-label">Verse of the Day</div>
+      <p id="dailyVerseText"></p>
+      <div class="verse-card-ref" id="dailyVerseRef"></div>
+      <button class="share-verse-btn" onclick="shareDailyVerse()"><i class="bi bi-share me-1"></i>Share</button>
+    </div>
+  </section>
+
+  <!-- ══════ PROFILE ══════ -->
+  <section id="profile" class="section">
+
+    <!-- LOGGED OUT STATE -->
+    <div id="profileLoggedOut">
+      <div style="background:var(--forest);padding:60px 36px;text-align:center;position:relative;overflow:hidden">
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(184,146,42,0.12) 0%,transparent 60%);pointer-events:none"></div>
+        <div style="position:relative;z-index:1">
+          <i class="bi bi-person-circle" style="font-size:3.5rem;color:var(--gold);display:block;margin-bottom:16px"></i>
+          <h2 style="font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:400;color:white;margin-bottom:8px">My Account</h2>
+          <p style="color:rgba(255,255,255,0.5);font-size:0.85rem">Sign in to manage your profile, view orders, and save quiz scores</p>
+        </div>
+      </div>
+      <div style="max-width:440px;margin:0 auto;padding:48px 24px">
+        <!-- Auth tabs -->
+        <div style="display:flex;border-bottom:1px solid var(--border);margin-bottom:28px">
+          <button class="profile-tab-btn active" id="pTabLogin" onclick="switchProfileTab('login')" style="flex:1;padding:12px;border:none;background:none;font-family:'Jost',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;color:var(--ink-muted);border-bottom:2px solid transparent;transition:all 0.2s">Sign In</button>
+          <button class="profile-tab-btn" id="pTabRegister" onclick="switchProfileTab('register')" style="flex:1;padding:12px;border:none;background:none;font-family:'Jost',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;color:var(--ink-muted);border-bottom:2px solid transparent;transition:all 0.2s">Create Account</button>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <div id="profileLoginForm">
+          <div class="mb-3"><label class="form-label">Email Address</label><input type="email" id="pLoginEmail" class="form-control" placeholder="your@email.com"></div>
+          <div class="mb-3"><label class="form-label">Password</label><input type="password" id="pLoginPass" class="form-control" placeholder="Your password"></div>
+          <p id="pLoginErr" style="font-size:0.82rem;color:#c94040;min-height:18px;margin-bottom:10px"></p>
+          <button class="btn-submit" onclick="profileLogin()"><i class="bi bi-box-arrow-in-right me-2"></i>Sign In</button>
+          <p style="text-align:center;font-size:0.82rem;color:var(--ink-muted);margin-top:16px">No account? <a href="#" onclick="switchProfileTab('register')" style="color:var(--forest);font-weight:500">Register here</a></p>
+        </div>
+
+        <!-- REGISTER FORM -->
+        <div id="profileRegisterForm" style="display:none">
+          <div class="mb-3"><label class="form-label">Full Name *</label><input type="text" id="pRegName" class="form-control" placeholder="Your full name"></div>
+          <div class="mb-3"><label class="form-label">Email Address *</label><input type="email" id="pRegEmail" class="form-control" placeholder="your@email.com"></div>
+          <div class="mb-3"><label class="form-label">Password *</label><input type="password" id="pRegPass" class="form-control" placeholder="At least 6 characters"></div>
+          <div class="mb-3"><label class="form-label">Confirm Password *</label><input type="password" id="pRegConfirm" class="form-control" placeholder="Repeat your password"></div>
+          <p id="pRegErr" style="font-size:0.82rem;color:#c94040;min-height:18px;margin-bottom:6px"></p>
+          <p id="pRegOk" style="font-size:0.82rem;color:#2d7a4f;min-height:18px;margin-bottom:6px"></p>
+          <button class="btn-submit" onclick="profileRegister()"><i class="bi bi-person-plus me-2"></i>Create Account</button>
+          <p style="text-align:center;font-size:0.82rem;color:var(--ink-muted);margin-top:16px">Already registered? <a href="#" onclick="switchProfileTab('login')" style="color:var(--forest);font-weight:500">Sign in here</a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOGGED IN STATE -->
+    <div id="profileLoggedIn" style="display:none">
+      <!-- Profile Hero -->
+      <div class="profile-hero">
+        <div style="position:relative;z-index:1;max-width:1320px;margin:0 auto">
+          <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+            <div class="profile-avatar-ring" id="profileAvatarRing">?</div>
+            <div>
+              <div style="font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:4px">Member</div>
+              <h2 style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:400;color:white;margin-bottom:2px" id="profileDisplayName">Welcome</h2>
+              <p style="color:rgba(255,255,255,0.5);font-size:0.82rem" id="profileDisplayEmail"></p>
+            </div>
+            <div style="margin-left:auto;display:flex;gap:24px">
+              <div class="profile-stat"><div class="profile-stat-num" id="profileQuizBest">—</div><div class="profile-stat-label">Best Score</div></div>
+              <div class="profile-stat"><div class="profile-stat-num" id="profileOrderCount">0</div><div class="profile-stat-label">Orders</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile Tabs -->
+      <div class="profile-tab-bar" style="max-width:1320px;margin:0 auto">
+        <button class="profile-tab-btn active" onclick="switchProfilePanel('overview')">Overview</button>
+        <button class="profile-tab-btn" onclick="switchProfilePanel('orders')">My Orders</button>
+        <button class="profile-tab-btn" onclick="switchProfilePanel('quiz')">Quiz Stats</button>
+        <button class="profile-tab-btn" onclick="switchProfilePanel('settings')">Settings</button>
+      </div>
+
+      <div style="max-width:1320px;margin:0 auto;padding:40px 36px">
+
+        <!-- OVERVIEW PANEL -->
+        <div id="panelOverview" class="profile-panel active">
+          <div class="row g-4">
+            <div class="col-md-8">
+              <div class="card-clean mb-4">
+                <div class="section-eyebrow">Quick Actions</div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:8px">
+                  <div class="quick-action-card" onclick="show('store')"><i class="bi bi-bag" style="font-size:1.5rem;color:var(--gold);display:block;margin-bottom:8px"></i><div style="font-size:0.78rem;font-weight:600;color:var(--ink)">Shop Now</div></div>
+                  <div class="quick-action-card" onclick="show('quiz')"><i class="bi bi-patch-question" style="font-size:1.5rem;color:var(--gold);display:block;margin-bottom:8px"></i><div style="font-size:0.78rem;font-weight:600;color:var(--ink)">Take Quiz</div></div>
+                  <div class="quick-action-card" onclick="show('give')"><i class="bi bi-gift" style="font-size:1.5rem;color:var(--gold);display:block;margin-bottom:8px"></i><div style="font-size:0.78rem;font-weight:600;color:var(--ink)">Give Online</div></div>
+                  <div class="quick-action-card" onclick="show('events')"><i class="bi bi-calendar-event" style="font-size:1.5rem;color:var(--gold);display:block;margin-bottom:8px"></i><div style="font-size:0.78rem;font-weight:600;color:var(--ink)">Events</div></div>
+                </div>
+              </div>
+              <div class="card-clean">
+                <div class="section-eyebrow">Recent Activity</div>
+                <div id="profileRecentActivity" style="margin-top:12px;color:var(--ink-muted);font-size:0.85rem;font-style:italic">No recent activity</div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card-clean mb-4">
+                <div class="section-eyebrow">Your Info</div>
+                <div style="font-size:0.85rem;line-height:2;margin-top:8px" id="profileInfoBox">—</div>
+              </div>
+              <div style="background:var(--forest);border-radius:4px;padding:24px;text-align:center">
+                <i class="bi bi-trophy" style="font-size:2rem;color:var(--gold);display:block;margin-bottom:8px"></i>
+                <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:white;margin-bottom:4px">Hall of Faith</div>
+                <p style="font-size:0.78rem;color:rgba(255,255,255,0.5);margin-bottom:14px">Compete in Bible Quiz</p>
+                <button onclick="show('quiz')" style="background:var(--gold);color:var(--ink);border:none;border-radius:2px;padding:9px 22px;font-size:0.73rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif">Play Now</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ORDERS PANEL -->
+        <div id="panelOrders" class="profile-panel">
+          <div class="section-eyebrow">Order History</div>
+          <h3 class="serif" style="font-size:1.8rem;font-weight:600;margin-bottom:4px">My Orders</h3>
+          <p style="font-size:0.82rem;color:var(--ink-muted);margin-bottom:28px">Your recent store purchases</p>
+          <div id="profileOrderList"><div style="text-align:center;padding:48px;color:var(--ink-muted);font-style:italic">Loading orders...</div></div>
+        </div>
+
+        <!-- QUIZ STATS PANEL -->
+        <div id="panelQuiz" class="profile-panel">
+          <div class="section-eyebrow">Performance</div>
+          <h3 class="serif" style="font-size:1.8rem;font-weight:600;margin-bottom:24px">Quiz Statistics</h3>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:3px;overflow:hidden;margin-bottom:24px">
+            <div style="background:var(--white);padding:24px;text-align:center"><div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--forest)" id="statBestScore">—</div><div style="font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-muted);margin-top:4px">Best Score</div></div>
+            <div style="background:var(--white);padding:24px;text-align:center"><div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--forest)" id="statTotalPlays">—</div><div style="font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-muted);margin-top:4px">Total Plays</div></div>
+            <div style="background:var(--white);padding:24px;text-align:center"><div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--gold)" id="statPct">—</div><div style="font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-muted);margin-top:4px">Best Percentage</div></div>
+          </div>
+          <button onclick="show('quiz')" class="btn-submit" style="max-width:240px"><i class="bi bi-arrow-repeat me-2"></i>Play Again</button>
+        </div>
+
+        <!-- SETTINGS PANEL -->
+        <div id="panelSettings" class="profile-panel">
+          <div class="section-eyebrow">Account</div>
+          <h3 class="serif" style="font-size:1.8rem;font-weight:600;margin-bottom:24px">Settings</h3>
+          <div class="card-clean mb-4" style="max-width:520px">
+            <div class="section-eyebrow">Notifications</div>
+            <h5 style="font-weight:600;margin-bottom:16px">Stay Connected</h5>
+            <div class="notification-settings">
+              <div class="notification-item">
+                <div class="notification-info">
+                  <div style="font-weight:500;font-size:0.9rem">Browser Notifications</div>
+                  <div style="font-size:0.8rem;color:var(--ink-muted)">Get notified about upcoming events and announcements</div>
+                </div>
+                <button id="browserNotifBtn" class="btn-outline" onclick="toggleBrowserNotifications()" style="font-size:0.8rem;padding:6px 14px">
+                  <i class="bi bi-bell me-1"></i>Enable
+                </button>
+              </div>
+
+              <div class="notification-item">
+                <div class="notification-info">
+                  <div style="font-weight:500;font-size:0.9rem">Email Updates</div>
+                  <div style="font-size:0.8rem;color:var(--ink-muted)">Receive weekly newsletters and event reminders</div>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="emailNotifications" onchange="updateEmailPreferences()">
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <div class="notification-item">
+                <div class="notification-info">
+                  <div style="font-weight:500;font-size:0.9rem">Event Reminders</div>
+                  <div style="font-size:0.8rem;color:var(--ink-muted)">Get reminded about events you've RSVP'd for</div>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="eventReminders" checked onchange="updateEventReminders()">
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <div class="notification-item">
+                <div class="notification-info">
+                  <div style="font-weight:500;font-size:0.9rem">Prayer Request Updates</div>
+                  <div style="font-size:0.8rem;color:var(--ink-muted)">Receive updates on your prayer requests</div>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="prayerUpdates" onchange="updatePrayerUpdates()">
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <div class="notification-item">
+                <div class="notification-info">
+                  <div style="font-weight:500;font-size:0.9rem">Browser Notifications</div>
+                  <div style="font-size:0.8rem;color:var(--ink-muted)">Get desktop notifications</div>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="browserNotifications" onchange="updateBrowserNotifications()">
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="card-clean mb-4" style="max-width:520px">
+            <div class="section-eyebrow">Account</div>
+            <h5 style="font-weight:600;margin-bottom:16px">Your Profile</h5>
+            <div class="mb-3">
+              <label class="form-label">Profile Photo</label>
+              <input type="file" id="settingsPhotoInput" class="form-control" accept="image/*" onchange="uploadProfilePhoto(event)">
+              <img id="profileAvatarPreview" src="" alt="Preview" style="display:none;width:90px;height:90px;border-radius:50%;object-fit:cover;margin-top:10px;border:2px solid var(--forest)">
+            </div>
+            <button class="btn btn-outline-primary btn-sm mb-3" onclick="saveProfilePhoto()" style="max-width:240px"><i class="bi bi-upload me-2"></i>Upload Photo</button>
+            <div class="mb-3">
+              <label class="form-label">Full Name</label>
+              <input type="text" id="settingsName" class="form-control" placeholder="Your name">
+            </div>
+            <button class="btn-submit" onclick="updateProfileSettings()" style="max-width:240px"><i class="bi bi-check-circle me-2"></i>Save Changes</button>
+          </div>
+          <div class="card-clean mb-4" style="max-width:520px">
+            <div class="section-eyebrow" style="color:#c94040">Danger Zone</div>
+            <p style="font-size:0.85rem;color:var(--ink-muted);margin-bottom:14px">Sign out of your account on this device.</p>
+            <button onclick="memberLogout()" style="background:transparent;border:1px solid #c94040;color:#c94040;border-radius:2px;padding:10px 22px;font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif;transition:all 0.2s" onmouseover="this.style.background='#c94040';this.style.color='white'" onmouseout="this.style.background='transparent';this.style.color='#c94040'"><i class="bi bi-box-arrow-right me-2"></i>Sign Out</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ ABOUT ══════ -->
+  <section id="about" class="section">
+    <div class="section-wrap">
+      <div class="text-center mb-5">
+        <div class="section-eyebrow">Who We Are</div>
+        <h2 class="section-title">About the Church</h2>
+        <div class="rule"></div>
+      </div>
+      <div id="churchCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+        <div class="carousel-inner rounded-1" style="border:1px solid var(--border)">
+          <div class="carousel-item active"><img src="images/SLIDE 1.jpeg" class="d-block w-100 about-img" onerror="this.src='https://via.placeholder.com/1200x400?text=Slide+1'"></div>
+          <div class="carousel-item"><img src="images/SLIDE 2.jpeg" class="d-block w-100 about-img" onerror="this.src='https://via.placeholder.com/1200x400?text=Slide+2'"></div>
+          <div class="carousel-item"><img src="images/SLIDE 3.jpeg" class="d-block w-100 about-img" onerror="this.src='https://via.placeholder.com/1200x400?text=Slide+3'"></div>
+          <div class="carousel-item"><img src="images/SLIDE 4.jpeg" class="d-block w-100 about-img" onerror="this.src='https://via.placeholder.com/1200x400?text=Slide+4'"></div>
+          <div class="carousel-item"><img src="images/SLIDE 5.jpeg" class="d-block w-100 about-img" onerror="this.src='https://via.placeholder.com/1200x400?text=Slide+5'"></div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#churchCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+        <button class="carousel-control-next" type="button" data-bs-target="#churchCarousel" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+      </div>
+
+      <div class="row align-items-center g-5 mb-5">
+        <div class="col-md-3 text-center">
+          <img src="images/lady arch.jpeg" class="img-fluid" style="max-width:200px;border:2px solid var(--gold);border-radius:3px" onerror="this.src='https://via.placeholder.com/200?text=Bishop'">
+        </div>
+        <div class="col-md-9">
+          <div class="card-clean">
+            <div class="section-eyebrow"><i class="bi bi-quote me-2"></i>A Word from Our Bishop</div>
+            <p style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;line-height:1.85;color:var(--ink-soft);margin:12px 0 14px">"Welcome to Anointed In Living Christ, we are a zion family of faith, passionate about knowing Christ and making Him known. Whether you're searching for hope, looking for a church home, or just curious — you are welcome here."</p>
+            <p style="font-size:0.78rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted)">— Lady Arch Bishop</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:56px">
+        <div style="background:var(--white);padding:28px 24px"><div class="section-eyebrow">Mission</div><h4 class="serif" style="font-size:1.1rem;font-weight:600;margin-bottom:10px">Proclaim the Gospel</h4><p style="font-size:0.85rem;color:var(--ink-muted);line-height:1.7;font-style:italic">"The Spirit of the LORD is upon Me, Because He has anointed Me to preach the gospel to the poor..." — Luke 4:18–19</p></div>
+        <div style="background:var(--white);padding:28px 24px"><div class="section-eyebrow">Vision</div><h4 class="serif" style="font-size:1.1rem;font-weight:600;margin-bottom:10px">Make Disciples</h4><p style="font-size:0.85rem;color:var(--ink-muted);line-height:1.7;font-style:italic">"Go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit." — Matthew 28:19</p></div>
+        <div style="background:var(--warm);padding:28px 24px"><div class="section-eyebrow">Motto</div><h4 class="serif" style="font-size:1.1rem;font-weight:600;margin-bottom:10px">Our Calling</h4><p style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;font-style:italic;color:var(--forest)">"To Know Christ and Make Him Known"</p></div>
+      </div>
+
+      <div class="text-center mb-4"><div class="section-eyebrow">Doctrine</div><h3 class="serif" style="font-size:1.8rem;font-weight:600;color:var(--ink)">What We Believe</h3></div>
+      <div class="belief-grid mb-5">
+        <div class="belief-item"><span class="belief-icon"><i class="bi bi-book"></i></span><div class="belief-title">The Bible</div><p class="belief-text">Inspired, infallible, and our final authority.</p></div>
+        <div class="belief-item"><span class="belief-icon"><i class="bi bi-heart"></i></span><div class="belief-title">God</div><p class="belief-text">One God in three persons: Father, Son, Holy Spirit.</p></div>
+        <div class="belief-item"><span class="belief-icon"><i class="bi bi-plus-circle"></i></span><div class="belief-title">Salvation</div><p class="belief-text">Through faith in Jesus Christ alone.</p></div>
+        <div class="belief-item"><span class="belief-icon"><i class="bi bi-people"></i></span><div class="belief-title">The Church</div><p class="belief-text">The body of Christ, called to worship and serve.</p></div>
+      </div>
+
+      <div class="card-clean mb-5">
+        <div class="section-eyebrow">Schedule</div>
+        <h4 class="serif" style="font-size:1.3rem;font-weight:600;margin-bottom:0">Service Times</h4>
+        <div class="service-time-row">
+          <div class="service-time-item"><div class="service-time-label">Sunday Worship</div><div class="service-time-val">11:00 - 14:00</div></div>
+          <div class="service-time-item"><div class="service-time-label">Sunday School</div><div class="service-time-val">10:00 - 10:30</div></div>
+          <div class="service-time-item"><div class="service-time-label">Practice</div><div class="service-time-val">15:00 - 17:00</div></div>
+        </div>
+      </div>
+
+      <div class="row g-4 mb-5">
+        <div class="col-md-5">
+          <div class="card-clean h-100">
+            <div class="section-eyebrow">Visit Us</div>
+            <p style="line-height:1.9;font-size:0.88rem;margin-bottom:16px"><strong>Mpumalanga</strong><br>Msogwaba Pienaar, Nelspruit<br><br><strong>Gauteng</strong><br>Soshanguve Block 1A, Pretoria<br><br><strong>KwaZulu-Natal</strong><br>Madadeni, Newcastle</p>
+            <hr style="border-color:var(--border);margin:14px 0">
+            <p style="font-size:0.85rem;line-height:1.9"><i class="bi bi-telephone me-2" style="color:var(--gold)"></i>+27 12 345 6789<br><i class="bi bi-envelope me-2" style="color:var(--gold)"></i><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9cf5f2faf3dcfdf2f3f5f2e8f9f8f0f5eaf5f2fbfff4eef5efe8b2f3eefb">[email&#160;protected]</a></p>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div style="border:1px solid var(--border);border-radius:3px;overflow:hidden;height:100%;min-height:280px">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3593.2!2d28.187!3d-25.746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e95619c2b6b3b1b%3A0xa7e9b0e7b7b7b7b7!2sPretoria!5e0!3m2!1sen!2sza!4v1712345678" width="100%" height="100%" style="min-height:280px;border:0" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-clean mb-5">
+        <div class="section-eyebrow">Our Story</div>
+        <h4 class="serif" style="font-size:1.3rem;font-weight:600;margin-bottom:12px">Our History</h4>
+        <p style="line-height:1.85;color:var(--ink-muted);font-size:0.9rem">Founded in 2018 by the Late Archbishop Mvuleni, Anointed in Living Christ started as a small home fellowship with just 12 members. Through God's grace, we have grown into a multi-campus church with branches in Pretoria and Mpumalanga, reaching thousands with the gospel.</p>
+      </div>
+
+      <div class="text-center">
+        <div class="section-eyebrow">Connect</div>
+        <h4 class="serif" style="font-size:1.3rem;font-weight:600;margin-bottom:20px">Find Us Online</h4>
+        <div class="d-flex gap-3 justify-content-center flex-wrap">
+          <a href="https://www.facebook.com/profile.php?id=61562024954789" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border:1px solid var(--border);border-radius:2px;text-decoration:none;color:var(--ink);font-size:0.78rem;font-weight:500;letter-spacing:0.08em;transition:all 0.2s" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--ink)'"><i class="bi bi-facebook"></i>Facebook</a>
+          <a href="#" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border:1px solid var(--border);border-radius:2px;text-decoration:none;color:var(--ink);font-size:0.78rem;font-weight:500;letter-spacing:0.08em;transition:all 0.2s" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--ink)'"><i class="bi bi-tiktok"></i>TikTok</a>
+          <a href="https://youtube.com/@anointedinlivingchrist-ail394?si=VTMZzhww_4iJDxnI" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border:1px solid var(--border);border-radius:2px;text-decoration:none;color:var(--ink);font-size:0.78rem;font-weight:500;letter-spacing:0.08em;transition:all 0.2s" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--ink)'"><i class="bi bi-youtube"></i>YouTube</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ LEADERSHIP ══════ -->
+  <section id="leaders" class="section">
+    <div class="section-wrap">
+      <div class="text-center mb-2"><div class="section-eyebrow">The Team</div><h2 class="section-title">Church Leadership</h2><div class="rule"></div></div>
+      <div id="leaders-container"></div>
+    </div>
+  </section>
+
+  <!-- ══════ BRANCHES ══════ -->
+  <section id="branches" class="section">
+    <div class="section-wrap">
+      <div class="text-center mb-2"><div class="section-eyebrow">Locations</div><h2 class="section-title">Our Branches</h2><p style="color:var(--ink-muted);font-size:0.88rem;margin-bottom:0">Serving communities across South Africa</p><div class="rule"></div></div>
+      <div class="region-header mb-3"><i class="bi bi-geo-alt-fill" style="color:var(--gold)"></i><h3>Mpumalanga — Nelspruit</h3></div>
+      <div class="row g-4 mb-5">
+        <div class="col-md-4"><div class="branch-card" style="border-color:var(--gold)"><div class="branch-region">Mpumalanga · <span style="color:var(--gold)">Head Branch</span></div><div class="branch-name">Msogwaba Pienaar</div><div class="branch-detail">Near Sindzawonye Primary School<br><i class="bi bi-person me-1"></i>Pastor Nelsiwe<br><i class="bi bi-telephone me-1" style="color:var(--gold)"></i>Thuli · 076 511 3198</div><a href="https://maps.google.com/?q=Msogwaba+Pienaar+Nelspruit" target="_blank" class="btn-map"><i class="bi bi-map"></i>View on Map</a></div></div>
+        <div class="col-md-4"><div class="branch-card"><div class="branch-region">Mpumalanga</div><div class="branch-name">Kameelriver B (Kwandebele)</div><div class="branch-detail"><i class="bi bi-telephone me-2" style="color:var(--gold)"></i>Dr Mphuti · 072 817 7521</div><a href="https://maps.google.com/?q=Kameelriver+B+Kwandebele" target="_blank" class="btn-map"><i class="bi bi-map"></i>View on Map</a></div></div>
+        <div class="col-md-4"><div class="branch-card"><div class="branch-region">Mpumalanga</div><div class="branch-name">Nkomazi (Jeppes Reef)</div><div class="branch-detail"><i class="bi bi-telephone me-2" style="color:var(--gold)"></i>Sbongile · 079 333 8567</div><a href="https://maps.google.com/?q=Jeppes+Reef+Mpumalanga" target="_blank" class="btn-map"><i class="bi bi-map"></i>View on Map</a></div></div>
+        <div class="col-md-4"><div class="branch-card"><div class="branch-region">Mpumalanga</div><div class="branch-name">Matsulu</div><div class="branch-detail"><i class="bi bi-person me-1"></i>Pastor TBD</div><a href="https://maps.google.com/?q=Matsulu+Mpumalanga" target="_blank" class="btn-map"><i class="bi bi-map"></i>View on Map</a></div></div>
+      </div>
+      <div class="region-header mb-3"><i class="bi bi-geo-alt-fill" style="color:var(--gold)"></i><h3>Gauteng — Pretoria</h3></div>
+      <div class="row g-4 mb-5">
+        <div class="col-md-6"><div class="branch-card" style="border-color:var(--gold)"><div class="branch-region">Gauteng · <span style="color:var(--gold)">Head Branch</span></div><div class="branch-name">Soshanguve Block 1A</div><div class="branch-detail">Near Putco Bus Terminus, Pretoria<br><i class="bi bi-person me-1"></i>Pastor Mamba<br><i class="bi bi-telephone me-1" style="color:var(--gold)"></i>Busi · 076 506 4627</div><a href="https://maps.google.com/?q=Soshanguve+Block+1A+Pretoria" target="_blank" class="btn-map"><i class="bi bi-map"></i>View on Map</a></div></div>
+      </div>
+      <div class="region-header mb-3"><i class="bi bi-geo-alt-fill" style="color:var(--gold)"></i><h3>KwaZulu-Natal — Newcastle</h3></div>
+      <div class="row g-4">
+        <div class="col-md-6"><div class="branch-card"><div class="branch-region">KwaZulu-Natal</div><div class="branch-name">Madadeni</div><div class="branch-detail">Near Qaphelani Primary School, Newcastle<br><i class="bi bi-telephone me-1" style="color:var(--gold)"></i>Philile · 067 214 8523</div><a href="https://maps.google.com/?q=Madadeni+Newcastle" target="_blank" class="btn-map"><i class="bi bi-map"></i>View on Map</a></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ EVENTS ══════ -->
+  <section id="events" class="section">
+    <div class="section-wrap">
+      <div class="text-center mb-2"><div class="section-eyebrow">What's On</div><h2 class="section-title">Upcoming Events</h2><div class="rule"></div></div>
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="event-featured mb-5">
+            <div class="row g-0">
+              <div class="col-md-7">
+                <img src="images/revival image.jpeg" onerror="this.src='https://via.placeholder.com/600x400?text=REVIVAL'" style="height:100%;object-fit:cover;width:100%;border-radius:3px 0 0 3px">
+              </div>
+              <div class="col-md-5">
+                <div class="event-featured-body" style="padding:40px 30px;height:100%;display:flex;flex-direction:column">
+                  <span class="event-badge">Upcoming Event</span>
+                  <h3 class="serif" style="font-size:2.2rem;font-weight:600;color:var(--ink);margin-bottom:20px;line-height:1.2">REVIVAL</h3>
+
+                  <div style="flex:1">
+                    <div class="mb-4">
+                      <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-calendar-event" style="color:var(--gold);font-size:1.1rem;margin-right:10px"></i>
+                        <div>
+                          <div style="font-size:1rem;font-weight:600;color:var(--ink)">Saturday, August 9, 2026</div>
+                          <div style="font-size:0.85rem;color:var(--ink-muted)">10:00 AM - 6:00 PM</div>
+                        </div>
+                      </div>
+
+                      <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-geo-alt-fill" style="color:var(--gold);font-size:1.1rem;margin-right:10px"></i>
+                        <div>
+                          <div style="font-size:1rem;font-weight:600;color:var(--ink)">LKAMEELRIVER KWANDEBELE</div>
+                          <div style="font-size:0.85rem;color:var(--ink-muted)">Mpumalanga, South Africa</div>
+                        </div>
+                      </div>
+
+                      <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-broadcast" style="color:var(--gold);font-size:1.1rem;margin-right:10px"></i>
+                        <div>
+                          <div style="font-size:0.9rem;color:var(--ink)">In-person & Online Available</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <p style="font-size:1rem;line-height:1.7;margin-bottom:20px;color:var(--ink-soft)">Join us for a powerful revival gathering where we will experience the presence of God, receive fresh anointing, and witness mighty miracles. This special event will feature anointed preaching, worship, and prayer ministry.</p>
+
+                    <div class="mb-4">
+                      <div class="info-tag me-2"><i class="bi bi-music-note"></i> Worship</div>
+                      <div class="info-tag me-2"><i class="bi bi-megaphone"></i> Preaching</div>
+                      <div class="info-tag"><i class="bi bi-pray"></i> Prayer Ministry</div>
+                    </div>
+                  </div>
+
+                  <div style="border-top:1px solid var(--border);padding-top:20px;margin-top:auto">
+                    <div class="d-flex gap-3 flex-wrap">
+                      <a href="https://maps.google.com/?q=LKAMEELRIVER+KWANDEBELE" target="_blank" class="btn-submit" style="text-decoration:none;padding:12px 20px;font-size:0.85rem">
+                        <i class="bi bi-geo-alt me-2"></i>Get Directions
+                      </a>
+                      <button class="btn-submit" style="background:var(--gold);color:var(--ink);padding:12px 20px;font-size:0.85rem" onclick="show('events')">
+                        <i class="bi bi-calendar-check me-2"></i>RSVP Below
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="calendar-grid mb-5">
+            <div class="cal-header"><h5 id="monthYearDisplay"></h5><div class="d-flex gap-2"><button class="cal-nav-btn" onclick="changeMonth(-1)"><i class="bi bi-chevron-left"></i></button><button class="cal-nav-btn" onclick="changeMonth(1)"><i class="bi bi-chevron-right"></i></button></div></div>
+            <div class="p-3"><table class="cal-table"><thead><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr></thead><tbody id="calendarBody"></tbody></table></div>
+            <div style="padding:0 16px 14px;font-size:0.73rem;color:var(--ink-muted)"><i class="bi bi-circle-fill me-1" style="color:var(--gold);font-size:0.5rem"></i>Gold dates have events — click for details</div>
+          </div>
+
+          <!-- Event Poster -->
+          <div class="card-clean mb-4">
+            <div class="section-eyebrow">Event Poster</div>
+            <h4 class="serif" style="font-size:1.3rem;font-weight:600;margin-bottom:8px">REVIVAL Poster</h4>
+            <div style="text-align:center;padding:40px;background:var(--warm);border:2px dashed var(--gold);border-radius:8px;">
+              <i class="bi bi-image" style="font-size:3rem;color:var(--gold);display:block;margin-bottom:16px"></i>
+              <p style="font-size:1.2rem;font-weight:600;color:var(--ink);margin-bottom:8px">POSTER COMING SOON</p>
+              <p style="font-size:0.9rem;color:var(--ink-muted)">The official REVIVAL poster will be available here soon. Stay tuned for updates!</p>
+            </div>
+          </div>
+
+          <div class="card-clean">
+          <div class="card-clean mt-4">
+            <div class="section-eyebrow">Share Your Experience</div>
+            <h4 class="serif" style="font-size:1.3rem;font-weight:600;margin-bottom:8px">Rate Past Events</h4>
+            <p style="font-size:0.88rem;color:var(--ink-muted);margin-bottom:20px">Help us improve by sharing your feedback about recent church events</p>
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Select Event</label>
+                <select class="form-select" id="feedbackEvent">
+                  <option value="">Choose an event...</option>
+                  <option value="good-friday-2026">Good Friday Service 2026</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Your Rating</label>
+                <div class="rating-stars" id="ratingStars">
+                  <i class="bi bi-star" data-rating="1"></i>
+                  <i class="bi bi-star" data-rating="2"></i>
+                  <i class="bi bi-star" data-rating="3"></i>
+                  <i class="bi bi-star" data-rating="4"></i>
+                  <i class="bi bi-star" data-rating="5"></i>
+                </div>
+                <input type="hidden" id="selectedRating" value="0">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Your Feedback</label>
+                <textarea class="form-control" id="feedbackText" rows="3" placeholder="What did you enjoy? What could be improved? Any suggestions..."></textarea>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Your Name (Optional)</label>
+                <input type="text" id="feedbackName" class="form-control" placeholder="Your name">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Email (Optional)</label>
+                <input type="email" id="feedbackEmail" class="form-control" placeholder="your@email.com">
+              </div>
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="feedbackAnonymous">
+                  <label class="form-check-label" for="feedbackAnonymous" style="font-size:0.85rem;color:var(--ink-muted)">
+                    Submit anonymously
+                  </label>
+                </div>
+              </div>
+              <div class="col-12">
+                <button class="btn-submit" onclick="submitFeedback()">
+                  <i class="bi bi-star me-2"></i>Submit Feedback
+                </button>
+                <p id="feedbackMsg" class="mt-2" style="font-size:0.83rem;min-height:18px"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ BIBLE STUDY ══════ -->
+  <section id="bible" class="section">
+    <div class="section-wrap">
+      <div class="text-center mb-2"><div class="section-eyebrow">Study</div><h2 class="section-title">Interactive Bible Study</h2><div class="rule"></div></div>
+
+      <div class="row g-4">
+        <div class="col-lg-8">
+          <div class="card-clean">
+            <div class="section-eyebrow">Verse Lookup</div>
+            <h4 class="serif" style="font-size:1.3rem;font-weight:600;margin-bottom:8px">Search the Scriptures</h4>
+            <p style="font-size:0.88rem;color:var(--ink-muted);margin-bottom:20px">Find and explore Bible verses with our interactive lookup tool</p>
+
+            <div class="row g-3 mb-4">
+              <div class="col-md-4">
+                <select class="form-select" id="bibleBook">
+                  <option value="">Select Book</option>
+                  <option value="Genesis">Genesis</option><option value="Exodus">Exodus</option><option value="Leviticus">Leviticus</option>
+                  <option value="Numbers">Numbers</option><option value="Deuteronomy">Deuteronomy</option><option value="Joshua">Joshua</option>
+                  <option value="Judges">Judges</option><option value="Ruth">Ruth</option><option value="1 Samuel">1 Samuel</option>
+                  <option value="2 Samuel">2 Samuel</option><option value="1 Kings">1 Kings</option><option value="2 Kings">2 Kings</option>
+                  <option value="1 Chronicles">1 Chronicles</option><option value="2 Chronicles">2 Chronicles</option>
+                  <option value="Ezra">Ezra</option><option value="Nehemiah">Nehemiah</option><option value="Esther">Esther</option>
+                  <option value="Job">Job</option><option value="Psalms">Psalms</option><option value="Proverbs">Proverbs</option>
+                  <option value="Ecclesiastes">Ecclesiastes</option><option value="Song of Solomon">Song of Solomon</option>
+                  <option value="Isaiah">Isaiah</option><option value="Jeremiah">Jeremiah</option><option value="Lamentations">Lamentations</option>
+                  <option value="Ezekiel">Ezekiel</option><option value="Daniel">Daniel</option><option value="Hosea">Hosea</option>
+                  <option value="Joel">Joel</option><option value="Amos">Amos</option><option value="Obadiah">Obadiah</option>
+                  <option value="Jonah">Jonah</option><option value="Micah">Micah</option><option value="Nahum">Nahum</option>
+                  <option value="Habakkuk">Habakkuk</option><option value="Zephaniah">Zephaniah</option><option value="Haggai">Haggai</option>
+                  <option value="Zechariah">Zechariah</option><option value="Malachi">Malachi</option>
+                  <option value="Matthew">Matthew</option><option value="Mark">Mark</option><option value="Luke">Luke</option>
+                  <option value="John">John</option><option value="Acts">Acts</option><option value="Romans">Romans</option>
+                  <option value="1 Corinthians">1 Corinthians</option><option value="2 Corinthians">2 Corinthians</option>
+                  <option value="Galatians">Galatians</option><option value="Ephesians">Ephesians</option><option value="Philippians">Philippians</option>
+                  <option value="Colossians">Colossians</option><option value="1 Thessalonians">1 Thessalonians</option>
+                  <option value="2 Thessalonians">2 Thessalonians</option><option value="1 Timothy">1 Timothy</option>
+                  <option value="2 Timothy">2 Timothy</option><option value="Titus">Titus</option><option value="Philemon">Philemon</option>
+                  <option value="Hebrews">Hebrews</option><option value="James">James</option><option value="1 Peter">1 Peter</option>
+                  <option value="2 Peter">2 Peter</option><option value="1 John">1 John</option><option value="2 John">2 John</option>
+                  <option value="3 John">3 John</option><option value="Jude">Jude</option><option value="Revelation">Revelation</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <input type="number" class="form-control" id="bibleChapter" placeholder="Chapter" min="1">
+              </div>
+              <div class="col-md-3">
+                <input type="number" class="form-control" id="bibleVerse" placeholder="Verse (optional)">
+              </div>
+              <div class="col-md-2">
+                <button class="btn-submit" onclick="lookupVerse()" style="width:100%;padding:10px 16px;font-size:0.85rem">
+                  <i class="bi bi-search me-1"></i>Find
+                </button>
+              </div>
+            </div>
+
+            <div id="verseResult" style="display:none">
+              <div class="verse-display">
+                <div class="verse-header">
+                  <span id="verseReference" class="verse-ref"></span>
+                  <button class="btn-sm" onclick="shareVerse()" style="font-size:0.75rem;padding:4px 12px">
+                    <i class="bi bi-share me-1"></i>Share
+                  </button>
+                </div>
+                <p id="verseText" class="verse-text"></p>
+                <div class="verse-actions">
+                  <button class="btn-outline" onclick="addToStudyPlan()" style="font-size:0.8rem;padding:6px 14px">
+                    <i class="bi bi-plus-circle me-1"></i>Add to Study Plan
+                  </button>
+                  <button class="btn-outline" onclick="highlightVerse()" style="font-size:0.8rem;padding:6px 14px">
+                    <i class="bi bi-bookmark me-1"></i>Bookmark
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Study Plans -->
+          <div class="card-clean mt-4">
+            <div class="section-eyebrow">Study Plans</div>
+            <h4 class="serif" style="font-size:1.3rem;font-weight:600;margin-bottom:8px">Guided Bible Study</h4>
+            <p style="font-size:0.88rem;color:var(--ink-muted);margin-bottom:20px">Follow along with our structured Bible study plans</p>
+
+            <div class="study-plans">
+              <div class="study-plan-item" onclick="startStudyPlan('beginners')">
+                <div class="study-plan-icon"><i class="bi bi-star"></i></div>
+                <div class="study-plan-content">
+                  <h6 style="font-weight:600;margin-bottom:4px">Beginner's Guide to Faith</h6>
+                  <p style="font-size:0.8rem;color:var(--ink-muted);margin-bottom:8px">Perfect for new believers exploring their faith</p>
+                  <div class="study-progress">
+                    <div class="progress-bar" style="width:0%"></div>
+                  </div>
+                  <small style="color:var(--gold)">0 of 12 lessons completed</small>
+                </div>
+              </div>
+
+              <div class="study-plan-item" onclick="startStudyPlan('prayer')">
+                <div class="study-plan-icon"><i class="bi bi-heart"></i></div>
+                <div class="study-plan-content">
+                  <h6 style="font-weight:600;margin-bottom:4px">The Power of Prayer</h6>
+                  <p style="font-size:0.8rem;color:var(--ink-muted);margin-bottom:8px">Learn to develop a meaningful prayer life</p>
+                  <div class="study-progress">
+                    <div class="progress-bar" style="width:0%"></div>
+                  </div>
+                  <small style="color:var(--gold)">0 of 8 lessons completed</small>
+                </div>
+              </div>
+
+              <div class="study-plan-item" onclick="startStudyPlan('discipleship')">
+                <div class="study-plan-icon"><i class="bi bi-people"></i></div>
+                <div class="study-plan-content">
+                  <h6 style="font-weight:600;margin-bottom:4px">Discipleship Journey</h6>
+                  <p style="font-size:0.8rem;color:var(--ink-muted);margin-bottom:8px">Grow in your walk with Christ</p>
+                  <div class="study-progress">
+                    <div class="progress-bar" style="width:0%"></div>
+                  </div>
+                  <small style="color:var(--gold)">0 of 15 lessons completed</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="card-clean">
+            <div class="section-eyebrow">Daily Verse</div>
+            <h5 class="serif" style="font-size:1.1rem;font-weight:600;margin-bottom:16px">Verse of the Day</h5>
+            <div id="dailyBibleVerse">
+              <p class="verse-text-small">"For I know the plans I have for you," declares the Lord, "plans to prosper you and not to harm you, plans to give you hope and a future."</p>
+              <div class="verse-ref-small">Jeremiah 29:11</div>
+            </div>
+            <button class="btn-outline" onclick="getNewVerse()" style="width:100%;margin-top:16px;font-size:0.85rem">
+              <i class="bi bi-arrow-clockwise me-1"></i>New Verse
+            </button>
+          </div>
+
+          <div class="card-clean mt-4">
+            <div class="section-eyebrow">Bookmarks</div>
+            <h5 class="serif" style="font-size:1.1rem;font-weight:600;margin-bottom:16px">Saved Verses</h5>
+            <div id="bookmarkedVerses">
+              <p style="font-size:0.85rem;color:var(--ink-muted);text-align:center;padding:20px 0">
+                <i class="bi bi-bookmark d-block mb-2" style="font-size:1.5rem"></i>
+                No bookmarked verses yet
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ MUSIC ══════ -->
+  <section id="music" class="section">
+    <div class="section-wrap">
+      <div class="text-center mb-2"><div class="section-eyebrow">Worship</div><h2 class="section-title">Worship Music</h2><div class="rule"></div></div>
+      <div class="row g-4">
+        <div class="col-md-6"><div class="card-clean h-100"><div class="section-eyebrow"><i class="bi bi-spotify me-2"></i>Spotify</div><h4 class="serif" style="font-size:1.2rem;font-weight:600;margin-bottom:16px">Listen on Spotify</h4><iframe style="border-radius:3px" src="https://open.spotify.com/embed/artist/4Z2U8mtsETharalZmbsoiR?utm_source=generator" width="100%" height="320" frameBorder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div></div>
+        <div class="col-md-6"><div class="card-clean h-100"><div class="section-eyebrow">Award Winner</div><h4 class="serif" style="font-size:1.2rem;font-weight:600;margin-bottom:8px">Gospel Awards Winner</h4><p style="font-size:0.88rem;color:var(--ink-muted);margin-bottom:16px"><strong>"Alokho Elinye Igama"</strong> — won the Mpumalanga Gospel Award.</p></div></div>
+      </div>
+
+      <!-- Worship Team -->
+      <div class="card-clean mb-4">
+        <div class="section-eyebrow"><i class="bi bi-people me-2"></i>Meet Our Team</div>
+        <h4 class="serif" style="font-size:1.2rem;font-weight:600;margin-bottom:16px">Worship & Music Ministry</h4>
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div class="team-member-card">
+              <div class="d-flex align-items-center">
+                <div class="team-member-avatar me-3">
+                  <i class="bi bi-music-note"></i>
+                </div>
+                <div>
+                  <h6 class="mb-1">Pastor Lady Mamba</h6>
+                  <p class="small text-muted mb-0">Music & Worship Pastor</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="team-member-card">
+              <div class="d-flex align-items-center">
+                <div class="team-member-avatar me-3">
+                  <i class="bi bi-mic"></i>
+                </div>
+                <div>
+                  <h6 class="mb-1">Worship Team</h6>
+                  <p class="small text-muted mb-0">Choir & Musicians</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-3 text-center">
+          <button class="btn btn-outline-primary" onclick="showJoinModal('worship')">
+            <i class="bi bi-plus-circle me-2"></i>Join Worship Team
+          </button>
+        </div>
+      </div>
+
+      <!-- Interactive Features -->
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="card-clean h-100">
+            <div class="section-eyebrow"><i class="bi bi-heart me-2"></i>Favorites</div>
+            <h4 class="serif" style="font-size:1.2rem;font-weight:600;margin-bottom:16px">Your Favorite Songs</h4>
+            <div id="favoriteSongs" class="song-list">
+              <p class="text-muted small">Sign in to save your favorite songs</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card-clean h-100">
+            <div class="section-eyebrow"><i class="bi bi-chat-quote me-2"></i>Song Comments</div>
+            <h4 class="serif" style="font-size:1.2rem;font-weight:600;margin-bottom:16px">Share Your Song Feedback</h4>
+            <form id="songRequestForm" onsubmit="submitSongRequest(event)">
+              <div class="mb-3">
+                <input type="text" class="form-control" id="requestSongTitle" placeholder="Song title" required>
+              </div>
+              <div class="mb-3">
+                <input type="text" class="form-control" id="requestArtist" placeholder="Artist (optional)">
+              </div>
+              <div class="mb-3">
+                <textarea class="form-control" id="requestMessage" rows="3" placeholder="Write your comments about this song"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Submit Comment</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-clean mt-4" style="background:rgba(255,255,255,0.95);border:1px dashed var(--border);padding:24px;text-align:center">
+        <h4 class="serif" style="font-size:1.2rem;font-weight:600;margin-bottom:12px">Find More</h4>
+        <p style="margin:0;font-size:0.95rem;color:var(--ink-muted)">Find more of our music and messages from our pastors on our YouTube and TikTok.</p>
+        <div class="d-flex gap-2 justify-content-center flex-wrap" style="margin-top:16px">
+          <a href="https://www.youtube.com/@anointedinlivingchrist-ail394?si=VTMZzhww_4iJDxnI" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border:1px solid var(--border);border-radius:3px;text-decoration:none;color:var(--ink);font-size:0.85rem;font-weight:500;transition:all 0.2s" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--ink)'"><i class="bi bi-youtube"></i>YouTube</a>
+          <a href="https://www.tiktok.com/@anointedinlivingchrist" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border:1px solid var(--border);border-radius:3px;text-decoration:none;color:var(--ink);font-size:0.85rem;font-weight:500;transition:all 0.2s" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--ink)'"><i class="bi bi-tiktok"></i>TikTok</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ SERMONS ══════ -->
+  <section id="sermons" class="section">
+    <div class="section-wrap">
+      <div class="text-center mb-2"><div class="section-eyebrow">Messages</div><h2 class="section-title">Sermons &amp; Messages</h2><div class="rule"></div></div>
+      
+      <!-- Featured Sermon -->
+      <div class="card-clean mb-5">
+        <div class="section-eyebrow">Featured</div>
+        <h4 class="serif" style="font-size:1.2rem;font-weight:600;margin-bottom:16px">Our Latest Message</h4>
+        <div style="position:relative;padding-bottom:56.25%;height:0"><iframe src="https://www.youtube.com/embed/hEl_ULInpng?si=ytP9GzOGK0H0_yDkt" style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:3px" allowfullscreen></iframe></div>
+        <div class="mt-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
+          <div>
+            <p class="mb-1" style="font-size:0.9rem"><strong>Speaker:</strong> Pastor Samuel Mthembu</p>
+            <p class="mb-1" style="font-size:0.9rem"><strong>Topic:</strong> Walking by Faith</p>
+            <p style="font-size:0.85rem;color:var(--ink-muted)"><strong>Duration:</strong> 45:32 | <strong>Key Verse:</strong> Hebrews 11:1</p>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-sm btn-outline-primary" onclick="toggleFavoriteSermon(this)"><i class="bi bi-heart"></i></button>
+            <button class="btn btn-sm btn-outline-primary" onclick="shareSermon('featured')"><i class="bi bi-share"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filters & Search -->
+      <div class="card-clean mb-4" style="background:var(--warm);padding:20px">
+        <div class="row g-3">
+          <div class="col-md-3">
+            <label class="form-label" style="font-size:0.85rem"><strong>Search</strong></label>
+            <div style="position:relative"><i class="bi bi-search" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--ink-muted);font-size:0.85rem"></i><input type="text" class="form-control form-control-sm" id="sermonSearch" placeholder="Title or speaker..." onkeyup="filterSermons(this.value)" style="padding-left:38px;font-size:0.85rem"></div>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label" style="font-size:0.85rem"><strong>Series</strong></label>
+            <select class="form-select form-select-sm" id="sermonSeries" onchange="filterSermonsBySeries(this.value)" style="font-size:0.85rem">
+              <option value="">All Series</option>
+              <option value="walking-by-faith">Walking by Faith</option>
+              <option value="power-of-prayer">Power of Prayer</option>
+              <option value="abundant-life">Abundant Life</option>
+              <option value="grace-upon-grace">Grace Upon Grace</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label" style="font-size:0.85rem"><strong>Category</strong></label>
+            <select class="form-select form-select-sm" id="sermonCategory" onchange="filterSermonsByCategory(this.value)" style="font-size:0.85rem">
+              <option value="">All Topics</option>
+              <option value="salvation">Salvation & Deliverance</option>
+              <option value="prayer">Prayer & Intercession</option>
+              <option value="worship">Worship & Praise</option>
+              <option value="leadership">Leadership & Growth</option>
+              <option value="family">Family & Relationships</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label" style="font-size:0.85rem"><strong>Date Range</strong></label>
+            <select class="form-select form-select-sm" id="sermonDateRange" onchange="filterSermonsByDate(this.value)" style="font-size:0.85rem">
+              <option value="">All Dates</option>
+              <option value="week">This Week</option>
+              <option value="month">This Month</option>
+              <option value="quarter">Last 3 Months</option>
+              <option value="year">This Year</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sermon Grid -->
+      <div class="row g-4" id="sermonGrid"></div>
+    </div>
+  </section>
+
+  <!-- Sermon Detail Modal -->
+  <div class="modal fade" id="sermonDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="max-width:90vw">
+      <div class="modal-content" style="background:var(--light);border:none;border-radius:8px">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title" id="sermonTitle" style="font-family: 'Crimson Text', serif"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Video Player -->
+          <div style="position:relative;padding-bottom:56.25%;height:0;margin-bottom:20px" id="sermonVideoContainer"></div>
+          
+          <!-- Sermon Meta Info -->
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <p style="margin:0;font-size:0.9rem"><strong><i class="bi bi-person me-2"></i>Speaker:</strong> <span id="sermonSpeaker"></span></p>
+              <p style="margin:0;font-size:0.9rem;margin-top:8px"><strong><i class="bi bi-bookmark me-2"></i>Series:</strong> <span id="sermonSeriesName"></span></p>
+              <p style="margin:0;font-size:0.9rem;margin-top:8px"><strong><i class="bi bi-calendar me-2"></i>Date:</strong> <span id="sermonDate"></span></p>
+            </div>
+            <div class="col-md-6">
+              <p style="margin:0;font-size:0.9rem"><strong><i class="bi bi-tag me-2"></i>Category:</strong> <span id="sermonCategoryName"></span></p>
+              <p style="margin:0;font-size:0.9rem;margin-top:8px"><strong><i class="bi bi-clock me-2"></i>Duration:</strong> <span id="sermonDuration"></span></p>
+              <p style="margin:0;font-size:0.9rem;margin-top:8px"><strong><i class="bi bi-book me-2"></i>Key Verse:</strong> <span id="sermonVerse"></span></p>
+            </div>
+          </div>
+
+          <!-- Key Takeaway -->
+          <div class="border-top border-bottom py-3 mb-4" style="background:var(--warm)">
+            <p style="font-size:0.9rem;margin:0"><strong><i class="bi bi-lightbulb me-2" style="color:var(--gold)"></i>Key Takeaway:</strong></p>
+            <p id="sermonTakeaway" style="font-size:0.85rem;color:var(--ink-muted);margin-top:8px;margin-bottom:0"></p>
+          </div>
+
+          <!-- Transcript/Notes -->
+          <div class="mb-4">
+            <ul class="nav nav-tabs" style="border-bottom:2px solid var(--border)">
+              <li class="nav-item"><a class="nav-link active" href="#notes" data-bs-toggle="tab"><i class="bi bi-file-text me-1"></i>Sermon Notes</a></li>
+              <li class="nav-item"><a class="nav-link" href="#transcript" data-bs-toggle="tab"><i class="bi bi-chat-left-dots me-1"></i>Transcript</a></li>
+            </ul>
+            <div class="tab-content mt-3">
+              <div class="tab-pane fade show active" id="notes">
+                <div id="sermonNotes" style="font-size:0.85rem;line-height:1.6"></div>
+              </div>
+              <div class="tab-pane fade" id="transcript">
+                <div id="sermonTranscript" style="font-size:0.85rem;line-height:1.6;color:var(--ink-muted)"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rating & Engagement -->
+          <div class="border-top pt-3 mb-4">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+              <div>
+                <p style="font-size:0.9rem;margin:0"><strong>Rate This Sermon:</strong></p>
+                <div class="d-flex gap-1 mt-2">
+                  <button class="btn btn-sm" style="background:none;border:none;font-size:1.3rem;cursor:pointer" onclick="rateSermon(1)">☆</button>
+                  <button class="btn btn-sm" style="background:none;border:none;font-size:1.3rem;cursor:pointer" onclick="rateSermon(2)">☆</button>
+                  <button class="btn btn-sm" style="background:none;border:none;font-size:1.3rem;cursor:pointer" onclick="rateSermon(3)">☆</button>
+                  <button class="btn btn-sm" style="background:none;border:none;font-size:1.3rem;cursor:pointer" onclick="rateSermon(4)">☆</button>
+                  <button class="btn btn-sm" style="background:none;border:none;font-size:1.3rem;cursor:pointer" onclick="rateSermon(5)">☆</button>
+                </div>
+              </div>
+              <div class="d-flex gap-2">
+                <button class="btn btn-sm btn-outline-primary" onclick="toggleFavoriteSermon(this)"><i class="bi bi-heart me-1"></i>Save</button>
+                <button class="btn btn-sm btn-outline-primary" onclick="shareSermon('modal')"><i class="bi bi-share me-1"></i>Share</button>
+                <button class="btn btn-sm btn-outline-primary" onclick="downloadSermon()"><i class="bi bi-download me-1"></i>Download</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Share Buttons -->
+          <div class="mb-4" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+            <button class="btn btn-sm" style="background:#25D366;color:white;border:none" onclick="shareToWhatsApp()"><i class="bi bi-whatsapp me-1"></i>WhatsApp</button>
+            <button class="btn btn-sm" style="background:#1877F2;color:white;border:none" onclick="shareToFacebook()"><i class="bi bi-facebook me-1"></i>Facebook</button>
+            <button class="btn btn-sm" style="background:#000;color:white;border:none" onclick="shareToX()"><i class="bi bi-twitter-x me-1"></i>X/Twitter</button>
+            <button class="btn btn-sm" style="background:#E1306C;color:white;border:none" onclick="shareToInstagram()"><i class="bi bi-instagram me-1"></i>Instagram</button>
+            <button class="btn btn-sm btn-outline-secondary" onclick="copyLink()"><i class="bi bi-link-45deg me-1"></i>Copy Link</button>
+          </div>
+
+          <!-- Comments Section -->
+          <div class="border-top pt-4">
+            <h6 style="font-weight:600;margin-bottom:16px"><i class="bi bi-chat-dots me-2"></i>Discussion (<span id="commentCount">0</span>)</h6>
+            
+            <!-- Add Comment Form -->
+            <form onsubmit="submitSermonComment(event)" class="mb-4">
+              <div class="mb-3">
+                <textarea class="form-control" id="commentText" placeholder="Share your thoughts on this message..." rows="2" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-send me-1"></i>Post Comment</button>
+            </form>
+
+            <!-- Comments List -->
+            <div id="commentsList" style="max-height:300px;overflow-y:auto">
+              <!-- Comments will be loaded here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ JOIN ══════ -->
+  <section id="join" class="section">
+    <div class="section-wrap-sm">
+      <div class="text-center mb-2"><div class="section-eyebrow">Membership</div><h2 class="section-title">Join Our Family</h2><div class="rule"></div></div>
+      <div class="card-clean mb-4">
+        <div class="section-eyebrow">Membership Form</div>
+        <h4 class="serif" style="font-size:1.3rem;font-weight:600;margin-bottom:6px">Express Your Interest</h4>
+        <p style="font-size:0.85rem;color:var(--ink-muted);margin-bottom:24px">Become a member of Anointed in Living Christ</p>
+        <form id="membershipForm" onsubmit="return submitMembershipForm()">
+          <div class="section-form-label"><i class="bi bi-person-circle me-2" style="color:var(--gold)"></i>Personal Information</div>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6"><label class="form-label">Full Name *</label><input type="text" class="form-control" id="fullName" required></div>
+            <div class="col-md-6"><label class="form-label">Date of Birth *</label><input type="date" class="form-control" id="dob" required></div>
+            <div class="col-md-6"><label class="form-label">Gender *</label><select class="form-select" id="gender" required><option value="">Select...</option><option>Male</option><option>Female</option></select></div>
+            <div class="col-md-6"><label class="form-label">Marital Status *</label><select class="form-select" id="maritalStatus" required><option value="">Select...</option><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select></div>
+            <div class="col-md-6"><label class="form-label">Phone Number *</label><input type="tel" class="form-control" id="phone" required></div>
+            <div class="col-md-6"><label class="form-label">Email Address *</label><input type="email" class="form-control" id="email" required></div>
+            <div class="col-md-6"><label class="form-label">Region *</label><input type="text" class="form-control" id="region" placeholder="e.g. Gauteng" required></div>
+            <div class="col-md-6"><label class="form-label">Nearest Branch *</label><select class="form-select" id="branch" required><option value="">Select...</option><option>Headquarters – Pretoria</option><option>Mpumalanga – Nelspruit</option><option>Gauteng – Soshanguve</option><option>KwaZulu-Natal – Newcastle</option></select></div>
+            <div class="col-md-6"><label class="form-label">Occupation</label><input type="text" class="form-control" id="occupation" placeholder="Your job/profession"></div>
+            <div class="col-md-6"><label class="form-label">Education Level</label><select class="form-select" id="education"><option value="">Select...</option><option>Primary School</option><option>High School</option><option>Diploma/Certificate</option><option>Bachelor's Degree</option><option>Master's Degree</option><option>Doctorate</option><option>Other</option></select></div>
+            <div class="col-12"><label class="form-label">Languages Spoken</label><input type="text" class="form-control" id="languages" placeholder="e.g. English, Afrikaans, Zulu"></div>
+          </div>
+          <div class="section-form-label"><i class="bi bi-heart me-2" style="color:var(--gold)"></i>Commitment & Giving</div>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6"><label class="form-label">Tithing Commitment *</label><select class="form-select" id="tithing" required><option value="">Select...</option><option>Yes, I commit to tithing 10%</option><option>I will give as I am able</option><option>Not at this time</option></select></div>
+            <div class="col-md-6"><label class="form-label">Service Attendance *</label><select class="form-select" id="attendance" required><option value="">Select...</option><option>Weekly (Sundays)</option><option>Regular (2-3 times/month)</option><option>Occasional</option></select></div>
+            <div class="col-12">
+              <label class="form-label">I agree to abide by the church constitution and bylaws *</label>
+              <div class="mt-2">
+                <label class="gift-tag" style="margin:0"><input type="checkbox" id="agreeConstitution" required> Yes, I have read and agree to follow the church rules</label>
+              </div>
+            </div>
+          </div>
+          <div class="section-form-label"><i class="bi bi-shield-check me-2" style="color:var(--gold)"></i>References & Background</div>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6"><label class="form-label">Reference 1 Name</label><input type="text" class="form-control" id="ref1Name" placeholder="Pastor or church member"></div>
+            <div class="col-md-6"><label class="form-label">Reference 1 Contact</label><input type="tel" class="form-control" id="ref1Contact" placeholder="Phone number"></div>
+            <div class="col-md-6"><label class="form-label">Reference 2 Name</label><input type="text" class="form-control" id="ref2Name" placeholder="Pastor or church member"></div>
+            <div class="col-md-6"><label class="form-label">Reference 2 Contact</label><input type="tel" class="form-control" id="ref2Contact" placeholder="Phone number"></div>
+            <div class="col-12"><label class="form-label">Any medical conditions or allergies we should be aware of?</label><textarea class="form-control" id="medicalInfo" rows="2" placeholder="Optional - for safety during church activities"></textarea></div>
+            <div class="col-12">
+              <label class="form-label">Criminal Background Disclosure *</label>
+              <div class="mt-2">
+                <label class="gift-tag" style="margin:0 10px 0 0"><input type="radio" name="criminalRecord" value="none" required> No criminal record</label>
+                <label class="gift-tag" style="margin:0 10px 0 0"><input type="radio" name="criminalRecord" value="minor"> Minor offenses only</label>
+                <label class="gift-tag" style="margin:0"><input type="radio" name="criminalRecord" value="serious"> Serious offenses</label>
+              </div>
+              <small class="text-muted">This information helps us provide appropriate ministry opportunities</small>
+            </div>
+          </div>]
+          <div class="section-form-label"><i class="bi bi-pencil-square me-2" style="color:var(--gold)"></i>Declaration & Signature</div>
+          <div class="row g-3 mb-4">
+            <div class="col-12">
+              <label class="form-label">Declaration *</label>
+              <div class="border p-3 rounded" style="background:var(--warm)">
+                <p class="mb-2" style="font-size:0.85rem">I hereby declare that the information provided is true and complete to the best of my knowledge. I understand that membership in Anointed in Living Christ is a commitment to:</p>
+                <ul style="font-size:0.8rem;margin:0;padding-left:20px">
+                  <li>Regular attendance and participation in church activities</li>
+                  <li>Support of the church's mission and vision</li>
+                  <li>Adherence to biblical principles and church guidelines</li>
+                  <li>Contributing to the spiritual growth of the congregation</li>
+                </ul>
+              </div>
+              <div class="mt-3">
+                <label class="gift-tag" style="margin:0"><input type="checkbox" id="agreeDeclaration" required> I agree to the above declaration</label>
+              </div>
+            </div>
+            <div class="col-md-6"><label class="form-label">Signature (Full Name) *</label><input type="text" class="form-control" id="signature" required></div>
+            <div class="col-md-6"><label class="form-label">Date *</label><input type="date" class="form-control" id="signatureDate" required></div>
+          </div>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6"><label class="form-label">Are you baptised? *</label><select class="form-select" id="baptised" required><option value="">Select...</option><option>Yes – Water Baptism</option><option>Yes – Holy Spirit Baptism</option><option>Yes – Both</option><option>Not yet</option><option>I would like to be baptised</option></select></div>
+            <div class="col-md-6"><label class="form-label">Accepted Jesus as Lord? *</label><select class="form-select" id="salvation" required><option value="">Select...</option><option>Yes, I am born again</option><option>Not yet</option><option>I am not sure</option></select></div>
+            <div class="col-12"><label class="form-label">Previous Church Attended</label><input type="text" class="form-control" id="prevChurch" placeholder="Name of church (if any)"></div>
+            <div class="col-12"><label class="form-label">How did you hear about us? *</label><select class="form-select" id="heardFrom" required><option value="">Select...</option><option>Friend or Family</option><option>Facebook</option><option>YouTube</option><option>TikTok</option><option>Walk-in / Visited a Service</option><option>Community Outreach</option><option>Other</option></select></div>
+          </div>
+          <div class="section-form-label"><i class="bi bi-stars me-2" style="color:var(--gold)"></i>Ministry &amp; Spiritual Gifts</div>
+          <div class="row g-3 mb-4">
+            <div class="col-12"><label class="form-label">Desired Role / Ministry *</label><select class="form-select" id="role" required><option value="">Select...</option><option>Member</option><option>Volunteer</option><option>Choir / Worship Team</option><option>Usher</option><option>Sunday School Teacher</option><option>Technical Team</option><option>Prayer Team</option><option>Evangelism Team</option><option>Youth Ministry</option><option>Other</option></select></div>
+            <div class="col-12">
+              <label class="form-label">Spiritual Gifts</label>
+              <div class="d-flex flex-wrap mt-2">
+                <label class="gift-tag"><input type="checkbox"> Preaching</label>
+                <label class="gift-tag"><input type="checkbox"> Teaching</label>
+                <label class="gift-tag"><input type="checkbox"> Prophecy</label>
+                <label class="gift-tag"><input type="checkbox"> Healing</label>
+                <label class="gift-tag"><input type="checkbox"> Intercession</label>
+                <label class="gift-tag"><input type="checkbox"> Worship / Music</label>
+                <label class="gift-tag"><input type="checkbox"> Administration</label>
+                <label class="gift-tag"><input type="checkbox"> Evangelism</label>
+                <label class="gift-tag"><input type="checkbox"> Mercy / Caring</label>
+                <label class="gift-tag"><input type="checkbox"> Giving</label>
+              </div>
+            </div>
+          </div>
+          <div class="section-form-label"><i class="bi bi-telephone-plus me-2" style="color:var(--gold)"></i>Emergency Contact</div>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6"><label class="form-label">Name *</label><input type="text" class="form-control" id="emergencyName" required></div>
+            <div class="col-md-6"><label class="form-label">Relationship *</label><select class="form-select" id="emergencyRelation" required><option value="">Select...</option><option>Spouse</option><option>Parent</option><option>Sibling</option><option>Friend</option><option>Other</option></select></div>
+            <div class="col-md-6"><label class="form-label">Phone *</label><input type="tel" class="form-control" id="emergencyPhone" required></div>
+          </div>
+          <button type="submit" class="btn-submit"><i class="bi bi-send me-2"></i>Submit Membership Interest</button>
+        </form>
+      </div>
+      <div class="card-clean mb-4">
+        <div class="section-eyebrow">Payment</div>
+        <h5 class="serif" style="font-size:1.1rem;font-weight:600;margin-bottom:4px">Membership Fee</h5>
+        <p style="font-size:0.88rem;color:var(--ink-muted);margin-bottom:14px">Annual fee: <strong style="color:var(--forest)">R100</strong></p>
+        <div class="bank-box my-3">
+          <p><strong>Bank:</strong> First National Bank (FNB)</p>
+          <p><strong>Account Name:</strong> Anointed in Living Christ</p>
+          <p><strong>Account Number:</strong> 62712345678</p>
+          <p><strong>Branch Code:</strong> 250655</p>
+          <p><strong>Reference:</strong> Your Full Name + "Membership"</p>
+        </div>
+      </div>
+      <div class="card-clean">
+        <div class="section-eyebrow">Church Rules</div>
+        <h5 class="serif" style="font-size:1.1rem;font-weight:600;margin-bottom:8px">Constitution & Bylaws</h5>
+        <p style="font-size:0.88rem;color:var(--ink-muted);margin-bottom:16px">Download our constitution to learn about our beliefs, governance, membership guidelines, and church rules.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <a href="constitution.pdf" download class="btn-submit" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;padding:10px 20px;font-size:0.8rem">
+            <i class="bi bi-download me-1"></i>Download PDF
+          </a>
+          <a href="constitution.pdf" target="_blank" class="btn-submit" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;padding:10px 20px;font-size:0.8rem;background:var(--gold);color:var(--ink)">
+            <i class="bi bi-eye me-1"></i>View Online
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ PRAYER REQUESTS ══════ -->
+  <section id="prayer" class="section">
+    <div class="section-wrap">
+      <div class="text-center mb-2"><div class="section-eyebrow">Support</div><h2 class="section-title">Prayer Requests</h2><div class="rule"></div></div>
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div class="card-clean h-100">
+            <div class="section-eyebrow">Share Your Heart</div>
+            <h4 class="serif" style="font-size:1.3rem;font-weight:600;margin-bottom:8px">Submit a Prayer Request</h4>
+            <p style="font-size:0.88rem;color:var(--ink-muted);margin-bottom:20px">Share your prayer needs with our community. All requests are kept confidential and prayed over by our prayer team.</p>
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Your Name *</label>
+                <input type="text" id="prayerName" class="form-control" placeholder="Your full name">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Email (Optional)</label>
+                <input type="email" id="prayerEmail" class="form-control" placeholder="your@email.com">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Category *</label>
+                <select class="form-select" id="prayerCategory">
+                  <option value="">Select a category...</option>
+                  <option value="healing">Healing & Health</option>
+                  <option value="family">Family & Relationships</option>
+                  <option value="work">Work & Career</option>
+                  <option value="spiritual">Spiritual Growth</option>
+                  <option value="financial">Financial Needs</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Prayer Request *</label>
+                <textarea class="form-control" id="prayerRequest" rows="4" placeholder="Please share your prayer need..."></textarea>
+              </div>
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="prayerAnonymous">
+                  <label class="form-check-label" for="prayerAnonymous" style="font-size:0.85rem;color:var(--ink-muted)">
+                    Submit anonymously (your name won't be shared)
+                  </label>
+                </div>
+              </div>
+              <div class="col-12">
+                <button class="btn-submit" onclick="submitPrayerRequest()">
+                  <i class="bi bi-heart me-2"></i>Submit Prayer Request
+                </button>
+                <p id="prayerMsg" class="mt-2" style="font-size:0.83rem;min-height:18px"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card-clean h-100">
+            <div class="section-eyebrow">Community</div>
+            <h4 class="serif" style="font-size:1.3rem;font-weight:600;margin-bottom:8px">How We Pray</h4>
+            <p style="font-size:0.88rem;color:var(--ink-muted);margin-bottom:20px">Your prayer requests are shared with our dedicated prayer team who intercedes on your behalf throughout the week.</p>
+
+            <div class="prayer-features">
+              <div class="prayer-feature">
+                <i class="bi bi-shield-check" style="color:var(--gold);font-size:1.2rem;margin-bottom:8px"></i>
+                <h6 style="font-weight:600;margin-bottom:4px">Confidential</h6>
+                <p style="font-size:0.8rem;color:var(--ink-muted)">All requests are kept strictly confidential</p>
+              </div>
+              <div class="prayer-feature">
+                <i class="bi bi-people" style="color:var(--gold);font-size:1.2rem;margin-bottom:8px"></i>
+                <h6 style="font-weight:600;margin-bottom:4px">Community Support</h6>
+                <p style="font-size:0.8rem;color:var(--ink-muted)">Prayed over by our prayer ministry team</p>
+              </div>
+              <div class="prayer-feature">
+                <i class="bi bi-clock" style="color:var(--gold);font-size:1.2rem;margin-bottom:8px"></i>
+                <h6 style="font-weight:600;margin-bottom:4px">Regular Prayer</h6>
+                <p style="font-size:0.8rem;color:var(--ink-muted)">Included in our weekly prayer meetings</p>
+              </div>
+            </div>
+
+            <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border)">
+              <h6 style="font-weight:600;margin-bottom:12px">Weekly Prayer Focus</h6>
+              <div id="weeklyPrayerFocus">
+                <div class="prayer-focus-item">
+                  <div style="font-size:0.9rem;font-weight:500;color:var(--ink)">Healing & Restoration</div>
+                  <div style="font-size:0.8rem;color:var(--ink-muted)">This week's prayer emphasis</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ QUIZ ══════ -->
+  <section id="quiz" class="section">
+    <div class="quiz-hero">
+      <div class="quiz-hero-eyebrow">Weekly Challenge</div>
+      <h2>Bible Quiz</h2>
+      <p>Test your knowledge · Climb the leaderboard · Glory to God</p>
+    </div>
+    <div class="quiz-tabs">
+      <button class="quiz-tab-btn active" id="tabQuiz" onclick="switchQuizTab('quiz')"><i class="bi bi-patch-question me-2"></i>Play Quiz</button>
+      <button class="quiz-tab-btn" id="tabLeaderboard" onclick="switchQuizTab('leaderboard')"><i class="bi bi-trophy me-2"></i>Leaderboard</button>
+    </div>
+    <div id="quizPanel">
+      <div class="quiz-body">
+        <div id="quizIntro">
+          <div class="quiz-intro-stats"><div class="quiz-stat"><div class="quiz-stat-num">30</div><div class="quiz-stat-label">Questions</div></div><div class="quiz-stat"><div class="quiz-stat-num">20<span style="font-size:1rem;font-weight:300">s</span></div><div class="quiz-stat-label">Per Question</div></div><div class="quiz-stat"><div class="quiz-stat-num"><i class="bi bi-trophy" style="font-size:1.4rem;color:var(--gold)"></i></div><div class="quiz-stat-label">Leaderboard</div></div></div>
+          <p style="text-align:center;color:var(--ink-muted);font-size:0.88rem;line-height:1.75;margin-bottom:32px">30 Bible questions, 20 seconds each. Your best score is saved to the leaderboard when you're logged in.</p>
+          <div style="text-align:center"><button class="btn-start-quiz" onclick="startQuiz()"><i class="bi bi-play-fill me-2"></i>Start Quiz</button></div>
+        </div>
+        <div id="quizActive" style="display:none">
+          <div class="quiz-score-bar"><div class="q-chip correct"><i class="bi bi-check-circle-fill"></i><span id="qCorrectCount">0</span></div><div class="q-chip wrong"><i class="bi bi-x-circle-fill"></i><span id="qWrongCount">0</span></div><div class="q-chip streak"><i class="bi bi-lightning-fill"></i><span id="qStreak">0</span> streak</div></div>
+          <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgressFill" style="width:0%"></div></div>
+          <div class="quiz-meta-row"><div class="quiz-q-num" id="quizQMeta">Question 1 of 30</div><div class="quiz-timer-display"><div class="quiz-timer-circle" id="quizTimerCircle">20</div></div></div>
+          <div class="quiz-question" id="quizQuestion"></div>
+          <div class="quiz-opts" id="quizOptions"></div>
+          <div id="quizFeedback" class="quiz-feedback"></div>
+          <button id="quizNextBtn" class="btn-next-q" onclick="nextQuestion()">Next Question <i class="bi bi-arrow-right ms-1"></i></button>
+        </div>
+        <div id="quizResult" style="display:none">
+          <div class="result-score-block"><div class="result-label">Your Score</div><div class="result-score-large" id="resultNum">0<span class="result-score-denom">/30</span></div><div class="result-title-text" id="resultTitle">Well Done!</div><p class="result-verse-text" id="resultVerse"></p></div>
+          <div class="result-stats-row mb-4"><div class="result-stat c"><div class="result-stat-num" id="resultCorrect">0</div><div class="result-stat-label">Correct</div></div><div class="result-stat w"><div class="result-stat-num" id="resultWrong">0</div><div class="result-stat-label">Wrong</div></div><div class="result-stat s"><div class="result-stat-num" id="resultBest">0</div><div class="result-stat-label">Best Streak</div></div></div>
+          <p id="resultSavedMsg" style="font-size:0.82rem;color:var(--ink-muted);text-align:center;margin-bottom:20px"></p>
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn-play-again" onclick="startQuiz()"><i class="bi bi-arrow-repeat me-2"></i>Play Again</button><button class="btn-lb-view" onclick="switchQuizTab('leaderboard')"><i class="bi bi-trophy me-2"></i>Leaderboard</button></div>
+        </div>
+      </div>
+    </div>
+    <div id="leaderboardPanel" style="display:none">
+      <div style="max-width:580px;margin:0 auto;padding:48px 24px 80px">
+        <div class="section-eyebrow">Rankings</div>
+        <h3 class="serif" style="font-size:1.8rem;font-weight:600;margin-bottom:4px">Hall of Faith</h3>
+        <p style="font-size:0.82rem;color:var(--ink-muted);margin-bottom:28px">Top Bible scholars in our church community</p>
+        <div id="lbList"><div class="lb-empty">Loading leaderboard...</div></div>
+        <div id="lbYourPosition" style="display:none;margin-top:20px"><div style="font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Your Position</div><div class="lb-your-row" id="lbYourRow"></div></div>
+        <div style="text-align:center;margin-top:24px"><button onclick="loadLeaderboard()" style="background:var(--warm);border:1px solid var(--border);color:var(--ink-muted);border-radius:2px;padding:9px 22px;font-size:0.73rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif;font-weight:500"><i class="bi bi-arrow-clockwise me-2"></i>Refresh</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ STORE ══════ -->
+  <section id="store" class="section" style="padding-top:0">
+    <div class="store-hero">
+      <div style="position:relative;z-index:1">
+        <!-- Trolley menu -->
+        <div class="store-menu-container">
+          <button class="store-menu-btn" onclick="toggleStoreMenu()">
+            <i class="bi bi-cart3"></i>
+          </button>
+          <div class="store-menu-dropdown" id="storeMenuDropdown">
+            <a onclick="show('cart')" class="store-menu-item">
+              <i class="bi bi-cart me-2"></i>Cart <span id="cartCount" class="cart-badge-nav" style="background:var(--gold-lt)">0</span>
+            </a>
+            <a onclick="show('wishlist')" class="store-menu-item">
+              <i class="bi bi-heart me-2"></i>Wishlist <span id="wishlistCount" class="cart-badge-nav" style="background:var(--gold-lt)">0</span>
+            </a>
+            <a onclick="show('orders')" class="store-menu-item">
+              <i class="bi bi-box-seam me-2"></i>Orders
+            </a>
+          </div>
+        </div>
+        <div class="section-eyebrow" style="color:rgba(255,255,255,0.5)">Merchandise</div>
+        <h2>Church Store</h2>
+        <p>Wear your faith — quality merchandise for every member</p>
+        <div style="position:relative;display:inline-block;margin-top:16px"><i class="bi bi-search" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.4);font-size:0.82rem"></i><input type="text" class="store-search" id="storeSearchInput" placeholder="Search products..." onkeyup="applyStoreFilters()"></div>
+      </div>
+    </div>
+    <div class="section-wrap" style="padding-top:32px;padding-bottom:60px">
+      <div class="filter-bar">
+        <div class="filter-tabs" id="categoryTabs">
+          <button class="filter-tab active" data-cat="All" onclick="setCategory('All')">All</button>
+          <button class="filter-tab" data-cat="Clothing" onclick="setCategory('Clothing')">Clothing</button>
+          <button class="filter-tab" data-cat="Jackets" onclick="setCategory('Jackets')">Jackets</button>
+          <button class="filter-tab" data-cat="Bags & Accessories" onclick="setCategory('Bags & Accessories')">Bags &amp; Accessories</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="font-size:0.72rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-muted)">Sort</span><select id="sortSelect" class="sort-select" onchange="applyStoreFilters()"><option value="default">Featured</option><option value="price-asc">Price: Low–High</option><option value="price-desc">Price: High–Low</option><option value="rating">Top Rated</option><option value="name">Name A–Z</option></select></div>
+      </div>
+      <p id="storeResultsCount" style="color:var(--ink-muted);font-size:0.8rem;margin-bottom:20px"></p>
+      <div class="row g-4" id="productList"></div>
+    </div>
+  </section>
+
+  <!-- ══════ CART ══════ -->
+  <section id="cart" class="section">
+    <div class="section-wrap-sm">
+      <div class="text-center mb-2"><div class="section-eyebrow">Shopping</div><h2 class="section-title">Your Cart</h2><div class="rule"></div></div>
+      <div id="cartItems"></div>
+      <div class="mt-4" id="checkoutSection" style="display:none">
+        <div class="card-clean">
+          <!-- Step 1: Choose member/guest -->
+          <div id="checkoutStep1">
+            <div class="section-eyebrow">Checkout</div>
+            <h5 class="serif" style="font-size:1.2rem;font-weight:600;margin-bottom:20px">How would you like to checkout?</h5>
+            <div class="row g-3 mb-4">
+              <div class="col-6"><div class="checkout-type-card" id="cardMember" onclick="selectCheckoutType('member')"><i class="bi bi-person-check" style="font-size:1.8rem;color:var(--gold);margin-bottom:8px;display:block"></i><div style="font-weight:600;font-size:0.9rem;color:var(--ink)">Member</div><div style="font-size:0.75rem;color:var(--ink-muted);margin-top:3px">Login to your account</div></div></div>
+              <div class="col-6"><div class="checkout-type-card" id="cardGuest" onclick="selectCheckoutType('guest')"><i class="bi bi-person" style="font-size:1.8rem;color:var(--gold);margin-bottom:8px;display:block"></i><div style="font-weight:600;font-size:0.9rem;color:var(--ink)">Guest</div><div style="font-size:0.75rem;color:var(--ink-muted);margin-top:3px">Continue without account</div></div></div>
+            </div>
+          </div>
+
+          <!-- Member checkout -->
+          <div id="memberCheckout" style="display:none">
+            <div id="memberLoggedIn" style="display:none"><div style="background:var(--warm);border-radius:3px;padding:12px 16px;margin-bottom:20px;display:flex;align-items:center;gap:12px"><i class="bi bi-person-check-fill" style="color:var(--gold);font-size:1.3rem"></i><div><div style="font-weight:600;font-size:0.9rem" id="memberCheckoutName"></div><div style="color:var(--ink-muted);font-size:0.78rem" id="memberCheckoutEmail"></div></div><span style="margin-left:auto;background:var(--forest);color:white;font-size:0.65rem;font-weight:700;padding:3px 10px;border-radius:2px;letter-spacing:0.08em">MEMBER</span></div></div>
+            <div id="memberNotLoggedIn" style="display:none">
+              <div class="section-eyebrow">Login</div>
+              <div class="mb-3"><label class="form-label">Email</label><input type="email" id="checkoutLoginEmail" class="form-control" placeholder="your@email.com"></div>
+              <div class="mb-3"><label class="form-label">Password</label><input type="password" id="checkoutLoginPass" class="form-control"></div>
+              <p id="checkoutLoginErr" class="text-danger" style="font-size:0.82rem;min-height:18px"></p>
+              <button class="btn-submit mb-3" onclick="checkoutMemberLogin()"><i class="bi bi-box-arrow-in-right me-2"></i>Login &amp; Continue</button>
+              <p style="font-size:0.82rem;color:var(--ink-muted);text-align:center">No account? <a href="#" onclick="show('profile');switchProfileTab('register')" style="color:var(--forest);font-weight:500">Register free</a></p>
+            </div>
+            <div id="memberBankDetails" style="display:none">
+              <div class="section-eyebrow mt-3">Delivery</div>
+              <div class="row g-3 mb-4">
+                <div class="col-12"><label class="form-label">Delivery Method *</label><div class="d-flex gap-3 mt-1"><label class="delivery-option" id="mOptDelivery" onclick="selectMemberDelivery('delivery')"><i class="bi bi-truck" style="font-size:1.3rem;color:var(--gold)"></i><span style="font-weight:600;font-size:0.85rem">Delivery</span><span style="font-size:0.73rem;color:var(--ink-muted)">3–5 working days</span></label><label class="delivery-option" id="mOptPickup" onclick="selectMemberDelivery('pickup')"><i class="bi bi-building" style="font-size:1.3rem;color:var(--gold)"></i><span style="font-weight:600;font-size:0.85rem">Church Pickup</span><span style="font-size:0.73rem;color:var(--ink-muted)">Ready in 1–2 days</span></label></div></div>
+                <div class="col-12" id="mDeliveryAddressField" style="display:none"><label class="form-label">Delivery Address *</label><textarea id="memberAddress" class="form-control" rows="2"></textarea></div>
+                <div class="col-12" id="mPickupBranchField" style="display:none"><label class="form-label">Pickup Branch *</label><select id="memberPickupBranch" class="form-select"><option value="">Select branch...</option><option>Headquarters – Pretoria</option><option>Mpumalanga – Nelspruit</option><option>Gauteng – Soshanguve</option><option>KwaZulu-Natal – Newcastle</option></select></div>
+                <div class="col-12" id="mEstimatedDelivery" style="display:none"><div style="background:var(--warm);border-left:3px solid var(--gold);border-radius:2px;padding:12px 16px"><div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.14em;color:var(--ink-muted);margin-bottom:4px">Estimated Date</div><div id="mEstimatedDateText" style="font-weight:600;color:var(--forest)"></div></div></div>
+              </div>
+
+              <!-- SA PAYMENT METHODS -->
+              <div class="section-eyebrow">Payment Method</div>
+              <p style="font-size:0.82rem;color:var(--ink-muted);margin-bottom:16px">Select your preferred payment method</p>
+              <div class="payment-method-grid" id="memberPaymentGrid">
+                <div class="payment-method-card" onclick="selectPaymentMethod('member','eft')"><span class="pm-icon">🏦</span><div class="pm-name">EFT / Bank Transfer</div><div class="pm-sub">FNB, ABSA, Standard Bank</div></div>
+                <div class="payment-method-card" onclick="selectPaymentMethod('member','snapscan')"><span class="pm-icon">📱</span><div class="pm-name">SnapScan</div><div class="pm-sub">Scan &amp; pay instantly</div></div>
+                <div class="payment-method-card" onclick="selectPaymentMethod('member','zapper')"><span class="pm-icon">⚡</span><div class="pm-name">Zapper</div><div class="pm-sub">QR code payment</div></div>
+                <div class="payment-method-card" onclick="selectPaymentMethod('member','ozow')"><span class="pm-icon">🔗</span><div class="pm-name">Ozow</div><div class="pm-sub">Instant EFT</div></div>
+                <div class="payment-method-card" onclick="selectPaymentMethod('member','payflex')"><span class="pm-icon">🛒</span><div class="pm-name">PayFlex</div><div class="pm-sub">Pay in 4 instalments</div></div>
+                <div class="payment-method-card" onclick="selectPaymentMethod('member','cash')"><span class="pm-icon">💵</span><div class="pm-name">Cash on Pickup</div><div class="pm-sub">Pay at branch</div></div>
+              </div>
+
+              <!-- Payment detail boxes -->
+              <div id="pmDetail-member-eft" class="payment-detail-box">
+                <p><strong>Bank:</strong> FNB</p>
+                <p><strong>Account Name:</strong> Anointed in Living Christ</p>
+                <p><strong>Account Number:</strong> 62712345678</p>
+                <p><strong>Branch Code:</strong> 250655</p>
+                <p><strong>Reference:</strong> Your Full Name + Order</p>
+                <p style="margin-top:10px;font-size:0.8rem;color:var(--ink-muted)">Email proof of payment to <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="22444b4c434c414762434c4d4b4c5647464e4b544b4c45414a504b51560c4d5045">[email&#160;protected]</a></strong></p>
+              </div>
+              <div id="pmDetail-member-snapscan" class="payment-detail-box">
+                <p style="margin-bottom:8px"><strong>SnapScan ID:</strong> ALC-Church</p>
+                <p style="font-size:0.85rem;color:var(--ink-muted)">Open your SnapScan app, scan our QR code or search for <strong>ALC-Church</strong>, then send proof of payment to <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="05636c6b646b666045646b6a6c6b716061696c736c6b62666d776c76712b6a7762">[email&#160;protected]</a></p>
+              </div>
+              <div id="pmDetail-member-zapper" class="payment-detail-box">
+                <p style="margin-bottom:8px"><strong>Zapper Merchant:</strong> Anointed in Living Christ</p>
+                <p style="font-size:0.85rem;color:var(--ink-muted)">Open Zapper, scan the merchant QR code or search for our church, then email proof to <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2046494e414e434560414e4f494e5445444c4956494e474348524953540e4f5247">[email&#160;protected]</a></p>
+              </div>
+              <div id="pmDetail-member-ozow" class="payment-detail-box">
+                <p style="margin-bottom:8px"><strong>Ozow Instant EFT</strong></p>
+                <p style="font-size:0.85rem;color:var(--ink-muted)">Pay directly from your bank account via Ozow (supports all major SA banks). Send your payment reference to <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e5838c8b848b8680a5848b8a8c8b918081898c938c8b82868d978c9691cb8a9782">[email&#160;protected]</a></p>
+              </div>
+              <div id="pmDetail-member-payflex" class="payment-detail-box">
+                <p style="margin-bottom:8px"><strong>PayFlex — Pay in 4</strong></p>
+                <p style="font-size:0.85rem;color:var(--ink-muted)">Split your purchase into 4 equal fortnightly instalments. Contact us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="accac5c2cdc2cfc9eccdc2c3c5c2d8c9c8c0c5dac5c2cbcfc4dec5dfd882c3decb">[email&#160;protected]</a> to arrange PayFlex for your order.</p>
+              </div>
+              <div id="pmDetail-member-cash" class="payment-detail-box">
+                <p style="margin-bottom:8px"><strong>Cash on Pickup</strong></p>
+                <p style="font-size:0.85rem;color:var(--ink-muted)">Pay cash when you collect your order at any of our church branches. Please bring exact change if possible.</p>
+              </div>
+
+              <div class="col-12 mt-3"><label class="form-label">Order Notes (optional)</label><textarea id="memberNotes" class="form-control" rows="2"></textarea></div>
+              <button class="btn-submit mt-3" onclick="confirmOrder()"><i class="bi bi-check-circle me-2"></i>Confirm Order</button>
+            </div>
+          </div>
+
+          <!-- Guest checkout -->
+          <div id="guestCheckout" style="display:none">
+            <div class="section-eyebrow">Your Details</div>
+            <div class="row g-3 mb-4">
+              <div class="col-md-6"><label class="form-label">Full Name *</label><input type="text" id="guestName" class="form-control" placeholder="Your full name"></div>
+              <div class="col-md-6"><label class="form-label">Phone Number *</label><input type="tel" id="guestPhone" class="form-control" placeholder="+27 ..."></div>
+              <div class="col-12"><label class="form-label">Email *</label><input type="email" id="guestEmail" class="form-control" placeholder="your@email.com"></div>
+              <div class="col-12"><label class="form-label">Delivery Method *</label><div class="d-flex gap-3 mt-1"><label class="delivery-option" id="optDelivery" onclick="selectDelivery('delivery')"><i class="bi bi-truck" style="font-size:1.3rem;color:var(--gold)"></i><span style="font-weight:600;font-size:0.85rem">Delivery</span><span style="font-size:0.73rem;color:var(--ink-muted)">3–5 working days</span></label><label class="delivery-option" id="optPickup" onclick="selectDelivery('pickup')"><i class="bi bi-building" style="font-size:1.3rem;color:var(--gold)"></i><span style="font-weight:600;font-size:0.85rem">Church Pickup</span><span style="font-size:0.73rem;color:var(--ink-muted)">Ready in 1–2 days</span></label></div></div>
+              <div class="col-12" id="deliveryAddressField" style="display:none"><label class="form-label">Delivery Address *</label><textarea id="guestAddress" class="form-control" rows="2"></textarea></div>
+              <div class="col-12" id="pickupBranchField" style="display:none"><label class="form-label">Pickup Branch *</label><select id="guestPickupBranch" class="form-select"><option value="">Select branch...</option><option>Headquarters – Pretoria</option><option>Mpumalanga – Nelspruit</option><option>Gauteng – Soshanguve</option><option>KwaZulu-Natal – Newcastle</option></select></div>
+              <div class="col-12" id="estimatedDelivery" style="display:none"><div style="background:var(--warm);border-left:3px solid var(--gold);border-radius:2px;padding:12px 16px"><div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.14em;color:var(--ink-muted);margin-bottom:4px">Estimated Date</div><div id="estimatedDateText" style="font-weight:600;color:var(--forest)"></div></div></div>
+            </div>
+
+            <!-- SA PAYMENT METHODS - GUEST -->
+            <div class="section-eyebrow">Payment Method</div>
+            <p style="font-size:0.82rem;color:var(--ink-muted);margin-bottom:16px">Select your preferred payment method</p>
+            <div class="payment-method-grid" id="guestPaymentGrid">
+              <div class="payment-method-card" onclick="selectPaymentMethod('guest','eft')"><span class="pm-icon">🏦</span><div class="pm-name">EFT / Bank Transfer</div><div class="pm-sub">FNB, ABSA, Standard Bank</div></div>
+              <div class="payment-method-card" onclick="selectPaymentMethod('guest','snapscan')"><span class="pm-icon">📱</span><div class="pm-name">SnapScan</div><div class="pm-sub">Scan &amp; pay instantly</div></div>
+              <div class="payment-method-card" onclick="selectPaymentMethod('guest','zapper')"><span class="pm-icon">⚡</span><div class="pm-name">Zapper</div><div class="pm-sub">QR code payment</div></div>
+              <div class="payment-method-card" onclick="selectPaymentMethod('guest','ozow')"><span class="pm-icon">🔗</span><div class="pm-name">Ozow</div><div class="pm-sub">Instant EFT</div></div>
+              <div class="payment-method-card" onclick="selectPaymentMethod('guest','payflex')"><span class="pm-icon">🛒</span><div class="pm-name">PayFlex</div><div class="pm-sub">Pay in 4 instalments</div></div>
+              <div class="payment-method-card" onclick="selectPaymentMethod('guest','cash')"><span class="pm-icon">💵</span><div class="pm-name">Cash on Pickup</div><div class="pm-sub">Pay at branch</div></div>
+            </div>
+
+            <div id="pmDetail-guest-eft" class="payment-detail-box"><p><strong>Bank:</strong> FNB</p><p><strong>Account Name:</strong> Anointed in Living Christ</p><p><strong>Account Number:</strong> 62712345678</p><p><strong>Branch Code:</strong> 250655</p><p><strong>Reference:</strong> Your Full Name + Order</p><p style="margin-top:10px;font-size:0.8rem;color:var(--ink-muted)">Email proof to <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4e2827202f202d2b0e2f202127203a2b2a2227382720292d263c273d3a60213c29">[email&#160;protected]</a></strong></p></div>
+            <div id="pmDetail-guest-snapscan" class="payment-detail-box"><p style="margin-bottom:8px"><strong>SnapScan ID:</strong> ALC-Church</p><p style="font-size:0.85rem;color:var(--ink-muted)">Open SnapScan, search <strong>ALC-Church</strong>, then send proof to <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b3d5daddd2ddd0d6f3d2dddcdaddc7d6d7dfdac5daddd4d0dbc1dac0c79ddcc1d4">[email&#160;protected]</a></p></div>
+            <div id="pmDetail-guest-zapper" class="payment-detail-box"><p style="margin-bottom:8px"><strong>Zapper Merchant:</strong> Anointed in Living Christ</p><p style="font-size:0.85rem;color:var(--ink-muted)">Open Zapper, scan or search our church, then email proof to <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="83e5eaede2ede0e6c3e2edeceaedf7e6e7efeaf5eaede4e0ebf1eaf0f7adecf1e4">[email&#160;protected]</a></p></div>
+            <div id="pmDetail-guest-ozow" class="payment-detail-box"><p style="margin-bottom:8px"><strong>Ozow Instant EFT</strong></p><p style="font-size:0.85rem;color:var(--ink-muted)">Pay directly from your SA bank account. Send payment reference to <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4b2d22252a25282e0b2a252422253f2e2f27223d22252c28233922383f6524392c">[email&#160;protected]</a></p></div>
+            <div id="pmDetail-guest-payflex" class="payment-detail-box"><p style="margin-bottom:8px"><strong>PayFlex — Pay in 4</strong></p><p style="font-size:0.85rem;color:var(--ink-muted)">Split into 4 fortnightly instalments. Contact <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7016191e111e131530111e1f191e0415141c1906191e171318021903045e1f0217">[email&#160;protected]</a> to arrange.</p></div>
+            <div id="pmDetail-guest-cash" class="payment-detail-box"><p style="margin-bottom:8px"><strong>Cash on Pickup</strong></p><p style="font-size:0.85rem;color:var(--ink-muted)">Pay cash when collecting at any church branch. Bring exact change if possible.</p></div>
+
+            <div class="mt-3"><label class="form-label">Order Notes (optional)</label><textarea id="guestNotes" class="form-control" rows="2"></textarea></div>
+            <button class="btn-submit mt-3" onclick="confirmOrder()"><i class="bi bi-check-circle me-2"></i>Confirm Order</button>
+          </div>
+        </div>
+      </div>
+      <button class="btn-primary-g mt-4" onclick="toggleCheckout()" style="border-radius:2px">Proceed to Checkout</button>
+    </div>
+  </section>
+
+  <!-- ══════ GIVE ══════ -->
+  <section id="give" class="section">
+    <div class="section-wrap-sm">
+      <div class="text-center mb-2"><div class="section-eyebrow">Tithes &amp; Offerings</div><h2 class="section-title">Online Giving</h2><div class="rule"></div></div>
+      <p class="text-center mb-4" style="font-size:1rem;line-height:1.6;color:var(--ink-soft);max-width:480px;margin:0 auto">Your generous giving helps us reach and nurture children in our community, providing them with food, education, and spiritual guidance. Every contribution also supports our church's ministries, maintains our facilities, and enables us to spread God's word throughout the community. Together, we can make a lasting impact on lives and strengthen our church family.</p>
+      <div class="card-clean">
+        <div class="section-eyebrow">PayPal</div>
+        <h5 class="serif" style="font-size:1.1rem;font-weight:600;margin-bottom:16px">Donate via PayPal</h5>
+        <form action="https://www.paypal.com/donate" method="post" target="_top">
+          <input type="hidden" name="business" value="your-paypal-email@example.com">
+          <input type="hidden" name="currency_code" value="ZAR">
+          <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/images/btn_donateCC_LG.gif" border="0" name="submit" alt="Donate with PayPal">
+        </form>
+        <hr style="border-color:var(--border);margin:24px 0">
+        <div class="section-eyebrow">Bank Transfer</div>
+        <h5 class="serif" style="font-size:1.1rem;font-weight:600;margin-bottom:14px">EFT Payment</h5>
+        <div class="bank-box">
+          <p><strong>Bank:</strong> FNB</p>
+          <p><strong>Account Name:</strong> Anointed in Living Christ</p>
+          <p><strong>Account Number:</strong> 62712345678</p>
+          <p><strong>Branch Code:</strong> 250655</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ LOGIN ══════ -->
+  <section id="login" class="section">
+    <div class="section-wrap">
+      <div class="text-center mb-2"><div class="section-eyebrow">Restricted</div><h2 class="section-title">Admin Login</h2><div class="rule"></div></div>
+      <div class="login-box">
+        <div class="text-center mb-4"><i class="bi bi-shield-lock" style="font-size:2rem;color:var(--gold)"></i><p style="font-size:0.78rem;color:var(--ink-muted);margin-top:8px;letter-spacing:0.06em">Restricted access</p></div>
+        <label class="form-label">Username</label><input type="text" id="adminUser" class="form-control mb-3" placeholder="Username">
+        <label class="form-label">Password</label><input type="password" id="adminPass" class="form-control mb-3" placeholder="Password">
+        <button class="btn-submit" onclick="loginAdmin()">Login</button>
+        <p id="loginMsg" class="mt-3 text-danger text-center" style="font-size:0.82rem"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ ADMIN ══════ -->
+  <section id="admin" class="section">
+    <div class="section-wrap-sm">
+      <div class="text-center mb-2"><div class="section-eyebrow">Admin</div><h2 class="section-title">Admin Dashboard</h2><div class="rule"></div></div>
+      <div class="admin-card mb-4">
+        <div class="section-eyebrow">Store</div>
+        <h5 class="serif" style="font-size:1.1rem;font-weight:600;margin-bottom:4px">Add New Product</h5>
+        <div class="d-flex flex-column gap-3">
+          <input id="productName" class="form-control" placeholder="Product Name">
+          <input id="productPrice" class="form-control" placeholder="Price (e.g. 250)">
+          <input id="productImg" class="form-control" placeholder="Image URL">
+          <input id="productRating" class="form-control" placeholder="Rating (e.g. 4.5)">
+          <input id="productSizes" class="form-control" placeholder="Sizes (e.g. S,M,L,XL)">
+          <button class="btn-submit" onclick="addProduct()"><i class="bi bi-plus-circle me-2"></i>Add Product</button>
+          <p id="productNotifyMsg" style="font-size:0.8rem;min-height:18px"></p>
+        </div>
+      </div>
+      <div class="admin-card mb-4">
+        <div class="section-eyebrow">Events</div>
+        <h5 class="serif" style="font-size:1.1rem;font-weight:600;margin-bottom:4px">Announce a New Event</h5>
+        <div class="d-flex flex-column gap-3">
+          <input id="newEventName" class="form-control" placeholder="Event Name">
+          <input id="newEventDate" class="form-control" placeholder="Date (e.g. May 15, 2026)">
+          <input id="newEventTime" class="form-control" placeholder="Time (e.g. 6:00 PM)">
+          <input id="newEventVenue" class="form-control" placeholder="Venue">
+          <textarea id="newEventDesc" class="form-control" rows="2" placeholder="Short description..."></textarea>
+          <button class="btn-submit" onclick="announceEvent()"><i class="bi bi-send me-2"></i>Announce Event</button>
+          <p id="eventNotifyMsg" style="font-size:0.8rem;min-height:18px"></p>
+        </div>
+      </div>
+      <div class="admin-card">
+        <div class="section-eyebrow">Sermons</div>
+        <h5 class="serif" style="font-size:1.1rem;font-weight:600;margin-bottom:4px">Upload New Sermon</h5>
+        <div class="d-flex flex-column gap-3">
+          <input id="newSermonTitle" class="form-control" placeholder="Sermon Title">
+          <input id="newSermonSpeaker" class="form-control" placeholder="Speaker Name">
+          <input id="newSermonDate" class="form-control" placeholder="Date (e.g. March 22, 2026)">
+          <input id="newSermonVideo" class="form-control" placeholder="YouTube Video ID">
+          <textarea id="newSermonDesc" class="form-control" rows="3" placeholder="Sermon description..."></textarea>
+          <button class="btn-submit" onclick="addSermon()"><i class="bi bi-plus-circle me-2"></i>Add Sermon</button>
+          <p id="sermonNotifyMsg" style="font-size:0.8rem;min-height:18px"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ WISHLIST ══════ -->
+  <section id="wishlist" class="section">
+    <div style="background:var(--forest);padding:56px 36px 48px;text-align:center;position:relative;overflow:hidden">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(184,146,42,0.12) 0%,transparent 60%);pointer-events:none"></div>
+      <div style="position:relative;z-index:1">
+        <div style="font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Saved Items</div>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3rem);font-weight:400;color:white;margin-bottom:6px">My Wishlist</h2>
+        <p style="color:rgba(255,255,255,0.45);font-size:0.82rem">Items you've saved for later</p>
+      </div>
+    </div>
+    <div class="section-wrap" style="padding-top:40px;padding-bottom:60px;max-width:900px">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:28px">
+        <p id="wishlistCountLabel" style="font-size:0.82rem;color:var(--ink-muted)">0 saved items</p>
+        <button onclick="clearWishlist()" style="background:transparent;border:1px solid var(--border);color:var(--ink-muted);border-radius:2px;padding:7px 16px;font-size:0.72rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-family:'Jost',sans-serif;transition:all 0.2s" onmouseover="this.style.borderColor='#c94040';this.style.color='#c94040'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--ink-muted)'"><i class="bi bi-trash me-1"></i>Clear All</button>
+      </div>
+      <div id="wishlistContainer"></div>
+    </div>
+  </section>
+
+  <!-- ══════ ORDER TRACKING ══════ -->
+  <section id="orders" class="section">
+    <div class="track-hero">
+      <div style="position:relative;z-index:1">
+        <div style="font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px">Store</div>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3rem);font-weight:400;color:white;margin-bottom:6px">Order Tracking</h2>
+        <p style="color:rgba(255,255,255,0.45);font-size:0.82rem">Enter your order reference or sign in to view your orders</p>
+        <div class="track-input-row">
+          <input type="text" class="track-input" id="trackRefInput" placeholder="Enter order reference (e.g. ALC-2026-001)">
+          <button class="track-btn" onclick="trackOrderByRef()"><i class="bi bi-search me-1"></i>Track</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-wrap" style="padding-top:40px;padding-bottom:60px;max-width:860px">
+
+      <!-- Logged-in member orders -->
+      <div id="memberOrdersPanel" style="display:none">
+        <div class="section-eyebrow">Your Orders</div>
+        <h3 class="serif" style="font-size:1.8rem;font-weight:600;margin-bottom:4px">Order History</h3>
+        <p style="font-size:0.82rem;color:var(--ink-muted);margin-bottom:28px">All your purchases from the ALC Store</p>
+        <div id="memberOrdersList"></div>
+      </div>
+
+      <!-- Guest / lookup result -->
+      <div id="trackResult" style="display:none"></div>
+
+      <!-- Not logged in prompt -->
+      <div id="trackLoginPrompt">
+        <div class="card-clean text-center" style="max-width:480px;margin:0 auto;padding:40px">
+          <i class="bi bi-box-seam" style="font-size:2.5rem;color:var(--gold);display:block;margin-bottom:16px"></i>
+          <h4 class="serif" style="font-size:1.4rem;font-weight:600;margin-bottom:8px">Track Your Order</h4>
+          <p style="font-size:0.85rem;color:var(--ink-muted);margin-bottom:20px;line-height:1.7">Enter your order reference above, or sign in to see all your orders in one place.</p>
+          <button onclick="show('profile')" style="background:var(--forest);color:white;border:none;border-radius:2px;padding:11px 28px;font-family:'Jost',sans-serif;font-weight:500;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer"><i class="bi bi-person-circle me-2"></i>Sign In to View Orders</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- AUTH MODAL (kept for cart flow) -->
+  <div id="authModal" class="modal-overlay" onclick="closeAuthModal()">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <div class="modal-tabs"><button class="modal-tab-btn active" id="tabLogin" onclick="switchAuthTab('login')">Login</button><button class="modal-tab-btn" id="tabRegister" onclick="switchAuthTab('register')">Register</button></div>
+      <div id="panelLogin">
+        <div class="text-center mb-4"><i class="bi bi-person-circle" style="font-size:2rem;color:var(--gold)"></i><p style="font-size:0.78rem;color:var(--ink-muted);margin-top:6px">Welcome back</p></div>
+        <label class="form-label">Email</label><input type="email" id="loginEmail" class="form-control mb-3" placeholder="your@email.com">
+        <label class="form-label">Password</label><input type="password" id="loginPassword" class="form-control mb-3">
+        <p id="loginErrMsg" class="text-danger text-center mb-2" style="font-size:0.82rem;min-height:18px"></p>
+        <button class="btn-submit mb-2" onclick="firebaseLogin()">Login</button>
+        <p class="text-center mt-2" style="font-size:0.82rem;color:var(--ink-muted)">No account? <a href="#" onclick="switchAuthTab('register')" style="color:var(--forest);font-weight:500">Register here</a></p>
+      </div>
+      <div id="panelRegister" style="display:none">
+        <div class="text-center mb-4"><i class="bi bi-person-plus" style="font-size:2rem;color:var(--gold)"></i></div>
+        <label class="form-label">Full Name *</label><input type="text" id="regName" class="form-control mb-3">
+        <label class="form-label">Email *</label><input type="email" id="regEmail" class="form-control mb-3">
+        <label class="form-label">Password *</label><input type="password" id="regPassword" class="form-control mb-3" placeholder="Min. 6 characters">
+        <label class="form-label">Confirm Password *</label><input type="password" id="regConfirm" class="form-control mb-3">
+        <p id="regErrMsg" class="text-danger text-center mb-1" style="font-size:0.82rem;min-height:18px"></p>
+        <p id="regSuccessMsg" class="text-success text-center mb-1" style="font-size:0.82rem;min-height:18px"></p>
+        <button class="btn-submit mb-2" onclick="firebaseRegister()">Create Account</button>
+        <p class="text-center mt-2" style="font-size:0.82rem;color:var(--ink-muted)">Already registered? <a href="#" onclick="switchAuthTab('login')" style="color:var(--forest);font-weight:500">Login here</a></p>
+      </div>
+      <button class="btn-cancel" onclick="closeAuthModal()">Cancel</button>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <span>Anointed in Living Christ</span> &nbsp;·&nbsp; © 2026 All rights reserved
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <!-- Core -->
+  <script src="scripts/firebase.js"></script>
+  <script src="scripts/ui.js"></script>
+  <!-- Features -->
+  <script src="scripts/verse.js"></script>
+  <script src="scripts/bible.js"></script>
+  <script src="scripts/notifications.js"></script>
+  <script src="scripts/feedback.js"></script>
+  <script src="scripts/auth.js"></script>
+  <script src="scripts/leaders.js"></script>
+  <script src="scripts/sermons.js"></script>
+  <script src="scripts/events.js"></script>
+  <script src="scripts/products.js"></script>
+  <script src="scripts/wishlist.js"></script>
+  <script src="scripts/checkout.js"></script>
+  <script src="scripts/orders.js"></script>
+  <script src="scripts/quiz.js"></script>
+  <script src="scripts/admin.js"></script>
+  <!-- App init -->
+  <script src="scripts/app.js"></script>
+</body>
+</html>

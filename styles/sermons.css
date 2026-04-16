@@ -1,0 +1,9 @@
+/* ─── SERMONS ─── */
+    .sermon-card { background: var(--white); border: 1px solid var(--border); border-radius: 3px; overflow: hidden; height: 100%; display: flex; flex-direction: column; transition: box-shadow 0.2s; }
+    .sermon-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.07); }
+    .sermon-img { height: 160px; object-fit: cover; width: 100%; }
+    .sermon-body { padding: 18px; flex: 1; display: flex; flex-direction: column; }
+    .sermon-title { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+    .sermon-meta  { font-size: 0.73rem; color: var(--ink-muted); letter-spacing: 0.04em; margin-bottom: 12px; }
+    .btn-watch { background: var(--forest); color: white; border: none; border-radius: 2px; padding: 9px 18px; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; margin-top: auto; font-family: 'Jost', sans-serif; }
+    .btn-watch:hover { background: var(--ink); }
