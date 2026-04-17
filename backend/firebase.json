@@ -1,0 +1,28 @@
+{
+  "firestore": {
+    "rules": "backend/rules/firestore.rules",
+    "indexes": "backend/config/firestore.indexes.json"
+  },
+  "storage": {
+    "rules": "backend/rules/storage.rules"
+  },
+  "functions": {
+    "source": "backend/functions",
+    "runtime": "nodejs20"
+  },
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "backend/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/api/**",
+        "function": "api"
+      }
+    ]
+  }
+}

@@ -1,0 +1,130 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── HELPER FUNCTIONS ──
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return isAuthenticated() && request.auth.uid == uid;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    function hasRequiredFields(fields) {
+      return request.resource.data.keys().hasAll(fields);
+    }
+
+    // ── USERS ──
+    // Users can read and write only their own document
+    match /users/{userId} {
+      allow read:   if isOwner(userId);
+      allow create: if isOwner(userId)
+                    && hasRequiredFields(['uid', 'email', 'name']);
+      allow update: if isOwner(userId);
+      allow delete: if false;
+    }
+
+    // ── MEMBERS ──
+    // Created on registration; readable by admin only
+    match /members/{memberId} {
+      allow create: if isAuthenticated()
+                    && hasRequiredFields(['uid', 'name', 'email']);
+      allow read:   if isAdmin();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ── ORDERS ──
+    // Members see only their own orders; guests created without auth
+    match /orders/{orderId} {
+      allow create: if hasRequiredFields(['items', 'total', 'status', 'method', 'payMethod'])
+                    && request.resource.data.status == 'pending_payment';
+
+      // Logged-in member reads their own orders
+      allow read:   if isAuthenticated()
+                    && (resource.data.uid == request.auth.uid || isAdmin());
+
+      // Admin can read all orders and update status
+      allow update: if isAdmin();
+      allow delete: if false;
+    }
+
+    // ── QUIZ SCORES ──
+    // Users read/write their own score; all authenticated users can read leaderboard
+    match /quizScores/{userId} {
+      allow read:   if isAuthenticated();
+      allow create: if isOwner(userId)
+                    && hasRequiredFields(['uid', 'bestScore', 'plays']);
+      allow update: if isOwner(userId);
+      allow delete: if false;
+    }
+
+    // ── RSVPS ──
+    // Anyone can submit; only admin can read
+    match /rsvps/{rsvpId} {
+      allow create: if hasRequiredFields(['event', 'name', 'email', 'phone']);
+      allow read:   if isAdmin();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ── PRAYER REQUESTS ──
+    // Anyone can submit; only admin can read
+    match /prayerRequests/{reqId} {
+      allow create: if hasRequiredFields(['name', 'category', 'request']);
+      allow read:   if isAdmin();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ── FEEDBACK ──
+    // Anyone can submit; only admin can read
+    match /feedback/{feedbackId} {
+      allow create: if hasRequiredFields(['event', 'rating', 'feedback']);
+      allow read:   if isAdmin();
+      allow update: if false;
+      allow delete: if isAdmin();
+    }
+
+    // ── SERMONS ──
+    // Public read; only admin can write
+    match /sermons/{sermonId} {
+      allow read:   if true;
+      allow create: if isAdmin()
+                    && hasRequiredFields(['title', 'speaker', 'date']);
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ── ANNOUNCEMENTS / EVENTS ──
+    // Public read; only admin can write
+    match /announcements/{announcementId} {
+      allow read:   if true;
+      allow create: if isAdmin()
+                    && hasRequiredFields(['type', 'name', 'date']);
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    match /events/{eventId} {
+      allow read:   if true;
+      allow create: if isAdmin();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ── ADMINS ──
+    // Only admins can read this collection (used by isAdmin() above)
+    match /admins/{adminId} {
+      allow read:   if isAdmin();
+      allow write:  if false; // Managed manually via Firebase Console
+    }
+  }
+}

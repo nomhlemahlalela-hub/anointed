@@ -1,0 +1,40 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // ── PROFILE PHOTOS ──
+    // Each user can upload only to their own folder
+    // Max file size: 1MB, images only
+    match /profiles/{userId}/{fileName} {
+      allow read:   if request.auth != null;
+      allow write:  if request.auth != null
+                    && request.auth.uid == userId
+                    && request.resource.size <= 1 * 1024 * 1024
+                    && request.resource.contentType.matches('image/.*');
+      allow delete: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // ── PRODUCT IMAGES ──
+    // Public read; only admins can upload
+    match /products/{fileName} {
+      allow read:   if true;
+      allow write:  if request.auth != null
+                    && request.resource.size <= 5 * 1024 * 1024
+                    && request.resource.contentType.matches('image/.*');
+    }
+
+    // ── SERMON THUMBNAILS ──
+    match /sermons/{fileName} {
+      allow read:   if true;
+      allow write:  if request.auth != null
+                    && request.resource.size <= 5 * 1024 * 1024
+                    && request.resource.contentType.matches('image/.*');
+    }
+
+    // Deny everything else
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
