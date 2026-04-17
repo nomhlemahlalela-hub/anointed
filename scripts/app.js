@@ -8,7 +8,11 @@ function show(id) {
   if (id === 'cart')     displayCart();
   if (id === 'sermons')  renderSermons(sermons);
   if (id === 'store')    loadProducts();
-  if (id === 'leaders')  loadLeaders();
   if (id === 'orders')   loadOrdersPage();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+// ── INIT ──
+loadDailyVerse();
+checkLiveStatus();
+loadLeaders(); // pre-load so leaders are ready immediately on first visit
