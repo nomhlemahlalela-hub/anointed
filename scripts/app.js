@@ -4,12 +4,11 @@ function show(id) {
   const el = document.getElementById(id);
   if (!el) return;
   el.style.display = (id === 'home') ? 'flex' : 'block';
-  if (id === 'home')    el.style.flexDirection = 'column';
-  if (id === 'cart')    displayCart();
-  if (id === 'sermons') renderSermons(sermons);
-  if (id === 'store')   loadProducts();
-  if (id === 'orders')  loadOrdersPage();
-  if (id === 'leaders') loadLeaders();
+  if (id === 'home') el.style.flexDirection = 'column';
+  if (id === 'cart')     displayCart();
+  if (id === 'sermons')  renderSermons(sermons);
+  if (id === 'store')    loadProducts();
+  if (id === 'orders')   loadOrdersPage();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
