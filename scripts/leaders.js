@@ -1,19 +1,18 @@
 // ── LEADERS ──
 const leaders = [
-  { name:"Late Arch Bishop Mvuleni", title:"Founding Arch Bishop",     category:"Arch Bishops",  photo:"images/archbishop1.jpg" },
-  { name:"Lady Arch Bishop",         title:"Presiding Arch Bishop",    category:"Arch Bishops",  photo:"images/lady arch.jpeg" },
+  { name:"Late Arch Bishop Mvuleni",  title:"Founding Arch Bishop",     category:"Arch Bishops",  photo:"images/archbishop1.jpg" },
+  { name:"Lady Arch Bishop",          title:"Presiding Arch Bishop",    category:"Arch Bishops",  photo:"images/lady arch.jpeg" },
   { name:"Bishop Gantana",            title:"Senior Bishop",           category:"Bishops",      photo:"images/babe gantana.jpeg" },
-  { name:"Bishop Ndungwane",         title:"Bishop",                   category:"Bishops",       photo:"images/bishop2.jpg" },
-  { name:"Bishop ",                  title:"Bishop ",                  category:"Bishops",       photo:"images/bishop3.jpg" },
-  { name:"Pastor Lady Nkosi",       title:"Mpumalanga Branch Pastor",  category:"Pastors",       photo:"images/gogo.jpeg" },
-  { name:"Pastor Elvis Mamba ",    title:"Pretoria Branch Pastor", category:"Pastors",           photo:"images/pastor2.jpg" },
-  { name:"Pastor Dladla",   title:"Pretoria Branch Pastor",        category:"Pastors",           photo:"images/babe dladla.jpeg" },
-  { name:"Pastor Nelsiwe sthole",        title:"Mpumalanga Branch Pastor", category:"Pastors",   photo:"images/mama nelly.jpeg" },
-  { name:"Pastor Lady Mamba",        title:" Pastor",   category:"Pastors",                      photo:"images/pastor6.jpg" },
-  { name:"Preacher Goodman Mamba",   title:"Evangelist",               category:"Preachers",     photo:"images/preacher1.jpg" },
+  { name:"Bishop Ndungwane",          title:"Bishop",                    category:"Bishops",       photo:"images/bishop2.jpg" },
+  { name:"Bishop Sindane  ",          title:"Bishop ",                   category:"Bishops",       photo:"images/bishop3.jpg" },
+  { name:"Pastor Lady Nkosi",         title:"Mpumalanga Branch Pastor",  category:"Pastors",       photo:"images/gogo.jpeg" },
+  { name:"Pastor Elvis Mamba ",       title:"Pretoria Branch Pastor", category:"Pastors",           photo:"images/pastor2.jpg" },
+  { name:"Pastor Dladla",             title:"Pretoria Branch Pastor",        category:"Pastors",           photo:"images/babe dladla.jpeg" },
+  { name:"Pastor Nelsiwe sthole",     title:"Mpumalanga Branch Pastor", category:"Pastors",   photo:"images/mama nelly.jpeg" },
+  { name:"Pastor Lady Mamba",         title:" Pastor",   category:"Pastors",                      photo:"images/pastor6.jpg" },
+  { name:"Preacher Goodman Mamba",    title:"Evangelist",               category:"Preachers",     photo:"images/preacher1.jpg" },
   { name:"Preacher Nkuli",           title:"Youth Preacher",           category:"Preachers",     photo:"images/preacher2.jpg" },
-  { name:"Preacher Blessing",        title:"Evangelist",               category:"Preachers",     photo:"images/preacher3.jpg" },
-  { name:"Preacher Mthembu",         title:" Preacher", category:"Preachers",     photo:"images/preacher6.jpg" }
+  { name:"Preacher Blessing",        title:"Evangelist",               category:"Preachers",     photo:"images/preacher3.jpg" }  
 ];
 
 function loadLeaders() {
