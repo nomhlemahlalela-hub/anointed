@@ -264,6 +264,8 @@
         <div id="panelSettings" class="profile-panel">
           <div class="section-eyebrow">Account</div>
           <h3 class="serif" style="font-size:1.8rem;font-weight:600;margin-bottom:24px">Settings</h3>
+
+          <!-- NOTIFICATIONS CARD -->
           <div class="card-clean mb-4" style="max-width:520px">
             <div class="section-eyebrow">Notifications</div>
             <h5 style="font-weight:600;margin-bottom:16px">Stay Connected</h5>
@@ -271,13 +273,43 @@
               <div class="notification-item">
                 <div class="notification-info">
                   <div style="font-weight:500;font-size:0.9rem">Browser Notifications</div>
-                  <div style="font-size:0.8rem;color:var(--ink-muted)">Get notified about upcoming events and announcements</div>
+                  <div style="font-size:0.8rem;color:var(--ink-muted)">Get notified about upcoming events</div>
                 </div>
-                <button id="browserNotifBtn" class="btn-outline" onclick="toggleBrowserNotifications()" style="font-size:0.8rem;padding:6px 14px">
-                  <i class="bi bi-bell me-1"></i>Enable
-                </button>
+                <button id="browserNotifBtn" class="btn-outline" onclick="toggleBrowserNotifications()" style="font-size:0.8rem;padding:6px 14px"><i class="bi bi-bell me-1"></i>Enable</button>
               </div>
+              <div class="notification-item">
+                <div class="notification-info">
+                  <div style="font-weight:500;font-size:0.9rem">Email Updates</div>
+                  <div style="font-size:0.8rem;color:var(--ink-muted)">Receive weekly newsletters and event reminders</div>
+                </div>
+                <label class="switch"><input type="checkbox" id="emailNotifications" onchange="updateEmailPreferences()"><span class="slider"></span></label>
+              </div>
+              <div class="notification-item">
+                <div class="notification-info">
+                  <div style="font-weight:500;font-size:0.9rem">Event Reminders</div>
+                  <div style="font-size:0.8rem;color:var(--ink-muted)">Get reminded about events you've RSVP'd for</div>
+                </div>
+                <label class="switch"><input type="checkbox" id="eventReminders" checked onchange="updateEventReminders()"><span class="slider"></span></label>
+              </div>
+              <div class="notification-item">
+                <div class="notification-info">
+                  <div style="font-weight:500;font-size:0.9rem">Prayer Request Updates</div>
+                  <div style="font-size:0.8rem;color:var(--ink-muted)">Receive updates on your prayer requests</div>
+                </div>
+                <label class="switch"><input type="checkbox" id="prayerUpdates" onchange="updatePrayerUpdates()"><span class="slider"></span></label>
+              </div>
+              <div class="notification-item">
+                <div class="notification-info">
+                  <div style="font-weight:500;font-size:0.9rem">Browser Notifications</div>
+                  <div style="font-size:0.8rem;color:var(--ink-muted)">Get desktop notifications</div>
+                </div>
+                <label class="switch"><input type="checkbox" id="browserNotifications" onchange="updateBrowserNotifications()"><span class="slider"></span></label>
+              </div>
+            </div>
+          </div>
 
+<!-- PERSONAL INFO -->
+        
               <div class="notification-item">
                 <div class="notification-info">
                   <div style="font-weight:500;font-size:0.9rem">Email Updates</div>
@@ -1128,12 +1160,12 @@
       <div class="card-clean mb-4">
         <div class="section-eyebrow">Payment</div>
         <h5 class="serif" style="font-size:1.1rem;font-weight:600;margin-bottom:4px">Membership Fee</h5>
-        <p style="font-size:0.88rem;color:var(--ink-muted);margin-bottom:14px">Annual fee: <strong style="color:var(--forest)">R100</strong></p>
+        <p style="font-size:0.88rem;color:var(--ink-muted);margin-bottom:14px">Annual fee: <strong style="color:var(--forest)">R120</strong></p>
         <div class="bank-box my-3">
-          <p><strong>Bank:</strong> First National Bank (FNB)</p>
+          <p><strong>Bank:</strong> Standard Bank</p>
           <p><strong>Account Name:</strong> Anointed in Living Christ</p>
-          <p><strong>Account Number:</strong> 62712345678</p>
-          <p><strong>Branch Code:</strong> 250655</p>
+          <p><strong>Account Number:</strong> 046513396</p>
+          <p><strong>Branch Code:</strong> 051001</p>
           <p><strong>Reference:</strong> Your Full Name + "Membership"</p>
         </div>
       </div>
@@ -1476,10 +1508,10 @@
         <div class="section-eyebrow">Bank Transfer</div>
         <h5 class="serif" style="font-size:1.1rem;font-weight:600;margin-bottom:14px">EFT Payment</h5>
         <div class="bank-box">
-          <p><strong>Bank:</strong> FNB</p>
+          <p><strong>Bank:</strong> Standard Bank</p>
           <p><strong>Account Name:</strong> Anointed in Living Christ</p>
-          <p><strong>Account Number:</strong> 62712345678</p>
-          <p><strong>Branch Code:</strong> 250655</p>
+          <p><strong>Account Number:</strong> 046513396</p>
+          <p><strong>Branch Code:</strong> 051001</p>
         </div>
       </div>
     </div>

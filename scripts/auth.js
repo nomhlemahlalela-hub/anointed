@@ -178,10 +178,35 @@ function switchProfilePanel(panel) {
     btn.classList.toggle('active', i === ['overview','orders','quiz','settings'].indexOf(panel));
   });
 
-  // Load notification settings when settings panel is opened
-  if (panel === 'settings') {
-    loadNotificationSettings();
-  }
+ function loadNotificationSettings() {
+  if (!isLoggedIn || !currentMember) return;
+  db.collection('users').doc(currentMember.uid).get().then(doc => {
+    if (doc.exists) {
+      const d = doc.data();
+      // Notifications
+      if (document.getElementById('browserNotifications'))
+        document.getElementById('browserNotifications').checked = d.browserNotifications || false;
+      if (document.getElementById('emailNotifications'))
+        document.getElementById('emailNotifications').checked = d.emailNotifications || false;
+      if (document.getElementById('eventReminders'))
+        document.getElementById('eventReminders').checked = d.eventReminders || false;
+      // Personal info
+      if (d.phone)  document.getElementById('settingsPhone').value  = d.phone;
+      if (d.dob)    document.getElementById('settingsDob').value    = d.dob;
+      if (d.gender) document.getElementById('settingsGender').value = d.gender;
+      if (d.city)   document.getElementById('settingsCity').value   = d.city;
+      // Church info
+      if (d.branch)     document.getElementById('settingsBranch').value     = d.branch;
+      if (d.ministry)   document.getElementById('settingsMinistry').value   = d.ministry;
+      if (d.baptism)    document.getElementById('settingsBaptism').value    = d.baptism;
+      if (d.dateJoined) document.getElementById('settingsDateJoined').value = d.dateJoined;
+      // Last login
+      const lastLogin = auth.currentUser?.metadata?.lastSignInTime;
+      if (lastLogin) document.getElementById('lastLoginDisplay').innerText =
+        new Date(lastLogin).toLocaleString('en-ZA');
+    }
+  }).catch(err => console.error('Error loading settings:', err));
+ }
 }
 
 function loadNotificationSettings() {
@@ -258,4 +283,127 @@ async function firebaseRegister() {
 function getFriendlyError(code) {
   const map = {'auth/user-not-found':'No account found with this email.','auth/wrong-password':'Incorrect password. Please try again.','auth/email-already-in-use':'This email is already registered.','auth/invalid-email':'Please enter a valid email address.','auth/weak-password':'Password must be at least 6 characters.','auth/too-many-requests':'Too many attempts. Please try again later.','auth/invalid-credential':'Incorrect email or password.'};
   return map[code] || 'Something went wrong. Please try again.';
+}
+
+// ── UPDATE PERSONAL INFO ──
+async function updateProfileSettings() {
+  if (!isLoggedIn || !currentMember) return;
+  const name   = document.getElementById('settingsName').value.trim();
+  const phone  = document.getElementById('settingsPhone').value.trim();
+  const dob    = document.getElementById('settingsDob').value;
+  const gender = document.getElementById('settingsGender').value;
+  const city   = document.getElementById('settingsCity').value.trim();
+  const msg    = document.getElementById('personalInfoMsg');
+  try {
+    if (name) await auth.currentUser.updateProfile({ displayName: name });
+    await db.collection('users').doc(currentMember.uid).set({
+      name, phone, dob, gender, city,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }, { merge: true });
+    currentMember.name = name;
+    document.getElementById('profileDisplayName').innerText = name;
+    document.getElementById('profileInfoBox').innerHTML =
+      `<strong>Name:</strong> ${name}<br>
+       <strong>Email:</strong> ${currentMember.email}<br>
+       <strong>Phone:</strong> ${phone || '—'}<br>
+       <strong>City:</strong> ${city || '—'}<br>
+       <strong>Member Since:</strong> 2026`;
+    msg.style.color = 'var(--forest)';
+    msg.innerText = 'Personal info saved! ✓';
+    showToast('Profile updated successfully! 🙏');
+    setTimeout(() => msg.innerText = '', 3000);
+  } catch(e) {
+    msg.style.color = '#c94040';
+    msg.innerText = 'Could not save. Please try again.';
+  }
+}
+
+// ── UPDATE CHURCH INFO ──
+async function updateChurchInfo() {
+  if (!isLoggedIn || !currentMember) return;
+  const branch      = document.getElementById('settingsBranch').value;
+  const ministry    = document.getElementById('settingsMinistry').value;
+  const baptism     = document.getElementById('settingsBaptism').value;
+  const dateJoined  = document.getElementById('settingsDateJoined').value;
+  const msg         = document.getElementById('churchInfoMsg');
+  try {
+    await db.collection('users').doc(currentMember.uid).set({
+      branch, ministry, baptism, dateJoined,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }, { merge: true });
+    msg.style.color = 'var(--forest)';
+    msg.innerText = 'Church info saved! ✓';
+    showToast('Church info updated! 🙏');
+    setTimeout(() => msg.innerText = '', 3000);
+  } catch(e) {
+    msg.style.color = '#c94040';
+    msg.innerText = 'Could not save. Please try again.';
+  }
+}
+
+// ── CHANGE PASSWORD ──
+async function changePassword() {
+  const currentPass = document.getElementById('settingsCurrentPass').value;
+  const newPass     = document.getElementById('settingsNewPass').value;
+  const confirmPass = document.getElementById('settingsConfirmPass').value;
+  const msg         = document.getElementById('passwordMsg');
+  if (!currentPass || !newPass || !confirmPass) {
+    msg.style.color = '#c94040';
+    msg.innerText = 'Please fill in all password fields.'; return;
+  }
+  if (newPass.length < 6) {
+    msg.style.color = '#c94040';
+    msg.innerText = 'New password must be at least 6 characters.'; return;
+  }
+  if (newPass !== confirmPass) {
+    msg.style.color = '#c94040';
+    msg.innerText = 'New passwords do not match.'; return;
+  }
+  try {
+    const credential = firebase.auth.EmailAuthProvider.credential(
+      currentMember.email, currentPass
+    );
+    await auth.currentUser.reauthenticateWithCredential(credential);
+    await auth.currentUser.updatePassword(newPass);
+    msg.style.color = 'var(--forest)';
+    msg.innerText = 'Password changed successfully! ✓';
+    showToast('Password updated! 🔒');
+    document.getElementById('settingsCurrentPass').value = '';
+    document.getElementById('settingsNewPass').value = '';
+    document.getElementById('settingsConfirmPass').value = '';
+    setTimeout(() => msg.innerText = '', 3000);
+  } catch(e) {
+    msg.style.color = '#c94040';
+    msg.innerText = getFriendlyError(e.code);
+  }
+}
+
+// ── CHANGE EMAIL ──
+async function changeEmail() {
+  const newEmail = document.getElementById('settingsNewEmail').value.trim();
+  const password = document.getElementById('settingsEmailPass').value;
+  const msg      = document.getElementById('emailChangeMsg');
+  if (!newEmail || !password) {
+    msg.style.color = '#c94040';
+    msg.innerText = 'Please enter new email and your password.'; return;
+  }
+  try {
+    const credential = firebase.auth.EmailAuthProvider.credential(
+      currentMember.email, password
+    );
+    await auth.currentUser.reauthenticateWithCredential(credential);
+    await auth.currentUser.updateEmail(newEmail);
+    await db.collection('users').doc(currentMember.uid).set(
+      { email: newEmail }, { merge: true }
+    );
+    currentMember.email = newEmail;
+    document.getElementById('profileDisplayEmail').innerText = newEmail;
+    msg.style.color = 'var(--forest)';
+    msg.innerText = 'Email updated successfully! ✓';
+    showToast('Email address updated! ✉️');
+    setTimeout(() => msg.innerText = '', 3000);
+  } catch(e) {
+    msg.style.color = '#c94040';
+    msg.innerText = getFriendlyError(e.code);
+  }
 }
