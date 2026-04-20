@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="styles/orders.css">
   <link rel="stylesheet" href="styles/ui.css">
   <link rel="stylesheet" href="styles/bible.css">
+  <link rel="stylesheet" href="styles/constitution.css">
 
 </head>
 <body>
@@ -111,6 +112,7 @@
       <li><a onclick="show('music')">Music</a></li>
       <li><a onclick="show('store')">Store</a></li>
       <li><a onclick="show('quiz')">Quiz</a></li>
+      <li><a onclick="show('constitution')"><i class="bi bi-journal-text me-1"></i>Constitution</a></li>
     </ul>
   </div>
 </nav>
@@ -264,8 +266,6 @@
         <div id="panelSettings" class="profile-panel">
           <div class="section-eyebrow">Account</div>
           <h3 class="serif" style="font-size:1.8rem;font-weight:600;margin-bottom:24px">Settings</h3>
-
-          <!-- NOTIFICATIONS CARD -->
           <div class="card-clean mb-4" style="max-width:520px">
             <div class="section-eyebrow">Notifications</div>
             <h5 style="font-weight:600;margin-bottom:16px">Stay Connected</h5>
@@ -273,43 +273,13 @@
               <div class="notification-item">
                 <div class="notification-info">
                   <div style="font-weight:500;font-size:0.9rem">Browser Notifications</div>
-                  <div style="font-size:0.8rem;color:var(--ink-muted)">Get notified about upcoming events</div>
+                  <div style="font-size:0.8rem;color:var(--ink-muted)">Get notified about upcoming events and announcements</div>
                 </div>
-                <button id="browserNotifBtn" class="btn-outline" onclick="toggleBrowserNotifications()" style="font-size:0.8rem;padding:6px 14px"><i class="bi bi-bell me-1"></i>Enable</button>
+                <button id="browserNotifBtn" class="btn-outline" onclick="toggleBrowserNotifications()" style="font-size:0.8rem;padding:6px 14px">
+                  <i class="bi bi-bell me-1"></i>Enable
+                </button>
               </div>
-              <div class="notification-item">
-                <div class="notification-info">
-                  <div style="font-weight:500;font-size:0.9rem">Email Updates</div>
-                  <div style="font-size:0.8rem;color:var(--ink-muted)">Receive weekly newsletters and event reminders</div>
-                </div>
-                <label class="switch"><input type="checkbox" id="emailNotifications" onchange="updateEmailPreferences()"><span class="slider"></span></label>
-              </div>
-              <div class="notification-item">
-                <div class="notification-info">
-                  <div style="font-weight:500;font-size:0.9rem">Event Reminders</div>
-                  <div style="font-size:0.8rem;color:var(--ink-muted)">Get reminded about events you've RSVP'd for</div>
-                </div>
-                <label class="switch"><input type="checkbox" id="eventReminders" checked onchange="updateEventReminders()"><span class="slider"></span></label>
-              </div>
-              <div class="notification-item">
-                <div class="notification-info">
-                  <div style="font-weight:500;font-size:0.9rem">Prayer Request Updates</div>
-                  <div style="font-size:0.8rem;color:var(--ink-muted)">Receive updates on your prayer requests</div>
-                </div>
-                <label class="switch"><input type="checkbox" id="prayerUpdates" onchange="updatePrayerUpdates()"><span class="slider"></span></label>
-              </div>
-              <div class="notification-item">
-                <div class="notification-info">
-                  <div style="font-weight:500;font-size:0.9rem">Browser Notifications</div>
-                  <div style="font-size:0.8rem;color:var(--ink-muted)">Get desktop notifications</div>
-                </div>
-                <label class="switch"><input type="checkbox" id="browserNotifications" onchange="updateBrowserNotifications()"><span class="slider"></span></label>
-              </div>
-            </div>
-          </div>
 
-<!-- PERSONAL INFO -->
-        
               <div class="notification-item">
                 <div class="notification-info">
                   <div style="font-weight:500;font-size:0.9rem">Email Updates</div>
@@ -417,7 +387,7 @@
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:56px">
         <div style="background:var(--white);padding:28px 24px"><div class="section-eyebrow">Mission</div><h4 class="serif" style="font-size:1.1rem;font-weight:600;margin-bottom:10px">Proclaim the Gospel</h4><p style="font-size:0.85rem;color:var(--ink-muted);line-height:1.7;font-style:italic">"The Spirit of the LORD is upon Me, Because He has anointed Me to preach the gospel to the poor..." — Luke 4:18–19</p></div>
         <div style="background:var(--white);padding:28px 24px"><div class="section-eyebrow">Vision</div><h4 class="serif" style="font-size:1.1rem;font-weight:600;margin-bottom:10px">Make Disciples</h4><p style="font-size:0.85rem;color:var(--ink-muted);line-height:1.7;font-style:italic">"Go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit." — Matthew 28:19</p></div>
-        <div style="background:var(--warm);padding:28px 24px"><div class="section-eyebrow">Motto</div><h4 class="serif" style="font-size:1.1rem;font-weight:600;margin-bottom:10px">Our Calling</h4><p style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;font-style:italic;color:var(--forest)">"As for you, the anointing you received from him remains in you, and you do not need anyone to teach you. But as his anointing teaches you about all things and as that anointing is real, not counterfeit—just as it has taught you, remain in him." - 1 john 2 v 27</p></div>
+        <div style="background:var(--warm);padding:28px 24px"><div class="section-eyebrow">Motto</div><h4 class="serif" style="font-size:1.1rem;font-weight:600;margin-bottom:10px">Our Calling</h4><p style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;font-style:italic;color:var(--forest)">"To Know Christ and Make Him Known"</p></div>
       </div>
 
       <div class="text-center mb-4"><div class="section-eyebrow">Doctrine</div><h3 class="serif" style="font-size:1.8rem;font-weight:600;color:var(--ink)">What We Believe</h3></div>
@@ -457,7 +427,7 @@
       <div class="card-clean mb-5">
         <div class="section-eyebrow">Our Story</div>
         <h4 class="serif" style="font-size:1.3rem;font-weight:600;margin-bottom:12px">Our History</h4>
-        <p style="line-height:1.85;color:var(--ink-muted);font-size:0.9rem">Founded in 2010 by the Late Archbishop Mvuleni, Anointed in Living Christ started as a small home fellowship with just a few members. Through God's grace, we have grown into a multi-campus church with branches in Pretoria, Mpumalanga and KwaZulu-Natal, reaching thousands with the gospel.</p>
+        <p style="line-height:1.85;color:var(--ink-muted);font-size:0.9rem">Founded in 2018 by the Late Archbishop Mvuleni, Anointed in Living Christ started as a small home fellowship with just 12 members. Through God's grace, we have grown into a multi-campus church with branches in Pretoria and Mpumalanga, reaching thousands with the gospel.</p>
       </div>
 
       <div class="text-center">
@@ -489,11 +459,11 @@
         <div class="col-md-4"><div class="branch-card" style="border-color:var(--gold)"><div class="branch-region">Mpumalanga · <span style="color:var(--gold)">Head Branch</span></div><div class="branch-name">Msogwaba Pienaar</div><div class="branch-detail">Near Sindzawonye Primary School<br><i class="bi bi-person me-1"></i>Pastor Nelsiwe<br><i class="bi bi-telephone me-1" style="color:var(--gold)"></i>Thuli · 076 511 3198</div><a href="https://maps.google.com/?q=Msogwaba+Pienaar+Nelspruit" target="_blank" class="btn-map"><i class="bi bi-map"></i>View on Map</a></div></div>
         <div class="col-md-4"><div class="branch-card"><div class="branch-region">Mpumalanga</div><div class="branch-name">Kameelriver B (Kwandebele)</div><div class="branch-detail"><i class="bi bi-telephone me-2" style="color:var(--gold)"></i>Dr Mphuti · 072 817 7521</div><a href="https://maps.google.com/?q=Kameelriver+B+Kwandebele" target="_blank" class="btn-map"><i class="bi bi-map"></i>View on Map</a></div></div>
         <div class="col-md-4"><div class="branch-card"><div class="branch-region">Mpumalanga</div><div class="branch-name">Nkomazi (Jeppes Reef)</div><div class="branch-detail"><i class="bi bi-telephone me-2" style="color:var(--gold)"></i>Sbongile · 079 333 8567</div><a href="https://maps.google.com/?q=Jeppes+Reef+Mpumalanga" target="_blank" class="btn-map"><i class="bi bi-map"></i>View on Map</a></div></div>
-        <div class="col-md-4"><div class="branch-card"><div class="branch-region">Mpumalanga</div><div class="branch-name">Matsulu</div><div class="branch-detail"><i class="bi bi-person me-1"></i>Vusi Mamba</div><a href="https://maps.google.com/?q=Matsulu+Mpumalanga" target="_blank" class="btn-map"><i class="bi bi-map"></i>View on Map</a></div></div>
+        <div class="col-md-4"><div class="branch-card"><div class="branch-region">Mpumalanga</div><div class="branch-name">Matsulu</div><div class="branch-detail"><i class="bi bi-person me-1"></i>Pastor TBD</div><a href="https://maps.google.com/?q=Matsulu+Mpumalanga" target="_blank" class="btn-map"><i class="bi bi-map"></i>View on Map</a></div></div>
       </div>
       <div class="region-header mb-3"><i class="bi bi-geo-alt-fill" style="color:var(--gold)"></i><h3>Gauteng — Pretoria</h3></div>
       <div class="row g-4 mb-5">
-        <div class="col-md-6"><div class="branch-card" style="border-color:var(--gold)"><div class="branch-region">Gauteng · <span style="color:var(--gold)">Head Branch</span></div><div class="branch-name">Soshanguve Block AA</div><div class="branch-detail">Near Putco Bus Terminus, Pretoria<br><i class="bi bi-person me-1"></i>Pastor Mamba<br><i class="bi bi-telephone me-1" style="color:var(--gold)"></i>Busi · 076 506 4627</div><a href="https://maps.google.com/?q=Soshanguve+Block+1A+Pretoria" target="_blank" class="btn-map"><i class="bi bi-map"></i>View on Map</a></div></div>
+        <div class="col-md-6"><div class="branch-card" style="border-color:var(--gold)"><div class="branch-region">Gauteng · <span style="color:var(--gold)">Head Branch</span></div><div class="branch-name">Soshanguve Block 1A</div><div class="branch-detail">Near Putco Bus Terminus, Pretoria<br><i class="bi bi-person me-1"></i>Pastor Mamba<br><i class="bi bi-telephone me-1" style="color:var(--gold)"></i>Busi · 076 506 4627</div><a href="https://maps.google.com/?q=Soshanguve+Block+1A+Pretoria" target="_blank" class="btn-map"><i class="bi bi-map"></i>View on Map</a></div></div>
       </div>
       <div class="region-header mb-3"><i class="bi bi-geo-alt-fill" style="color:var(--gold)"></i><h3>KwaZulu-Natal — Newcastle</h3></div>
       <div class="row g-4">
@@ -797,8 +767,8 @@
     <div class="section-wrap">
       <div class="text-center mb-2"><div class="section-eyebrow">Worship</div><h2 class="section-title">Worship Music</h2><div class="rule"></div></div>
       <div class="row g-4">
-        <div class="col-md-6"><div class="card-clean h-100"><div class="section-eyebrow"><i class="bi bi-spotify me-2"></i>Spotify</div><h4 class="serif" style="font-size:1.2rem;font-weight:600;margin-bottom:16px">Listen on Spotify</h4><a href="https://open.spotify.com/artist/4Z2U8mtsETharalZmbsoiR?si=prV60oy-RF2OKek4-J37-g" target="_blank" class="btn btn-primary w-100"><i class="bi bi-spotify me-2"></i>Open on Spotify</a></div></div>
-        <div class="col-md-6"><div class="card-clean h-100"><div class="section-eyebrow">Award Winner</div><h4 class="serif" style="font-size:1.2rem;font-weight:600;margin-bottom:8px">Gospel Awards Winner</h4><p style="font-size:0.88rem;color:var(--ink-muted);margin-bottom:16px"><strong>"Alikho Elinye Igama"</strong> — won the Mpumalanga Gospel Award.</p></div></div>
+        <div class="col-md-6"><div class="card-clean h-100"><div class="section-eyebrow"><i class="bi bi-spotify me-2"></i>Spotify</div><h4 class="serif" style="font-size:1.2rem;font-weight:600;margin-bottom:16px">Listen on Spotify</h4><iframe style="border-radius:3px" src="https://open.spotify.com/embed/artist/4Z2U8mtsETharalZmbsoiR?utm_source=generator" width="100%" height="320" frameBorder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div></div>
+        <div class="col-md-6"><div class="card-clean h-100"><div class="section-eyebrow">Award Winner</div><h4 class="serif" style="font-size:1.2rem;font-weight:600;margin-bottom:8px">Gospel Awards Winner</h4><p style="font-size:0.88rem;color:var(--ink-muted);margin-bottom:16px"><strong>"Alokho Elinye Igama"</strong> — won the Mpumalanga Gospel Award.</p></div></div>
       </div>
 
       <!-- Worship Team -->
@@ -813,7 +783,7 @@
                   <i class="bi bi-music-note"></i>
                 </div>
                 <div>
-                  <h6 class="mb-1">Lazarus Mabuza</h6>
+                  <h6 class="mb-1">Pastor Lady Mamba</h6>
                   <p class="small text-muted mb-0">Music & Worship Pastor</p>
                 </div>
               </div>
@@ -1160,12 +1130,12 @@
       <div class="card-clean mb-4">
         <div class="section-eyebrow">Payment</div>
         <h5 class="serif" style="font-size:1.1rem;font-weight:600;margin-bottom:4px">Membership Fee</h5>
-        <p style="font-size:0.88rem;color:var(--ink-muted);margin-bottom:14px">Annual fee: <strong style="color:var(--forest)">R120</strong></p>
+        <p style="font-size:0.88rem;color:var(--ink-muted);margin-bottom:14px">Annual fee: <strong style="color:var(--forest)">R100</strong></p>
         <div class="bank-box my-3">
-          <p><strong>Bank:</strong> Standard Bank</p>
+          <p><strong>Bank:</strong> First National Bank (FNB)</p>
           <p><strong>Account Name:</strong> Anointed in Living Christ</p>
-          <p><strong>Account Number:</strong> 046513396</p>
-          <p><strong>Branch Code:</strong> 051001</p>
+          <p><strong>Account Number:</strong> 62712345678</p>
+          <p><strong>Branch Code:</strong> 250655</p>
           <p><strong>Reference:</strong> Your Full Name + "Membership"</p>
         </div>
       </div>
@@ -1508,10 +1478,10 @@
         <div class="section-eyebrow">Bank Transfer</div>
         <h5 class="serif" style="font-size:1.1rem;font-weight:600;margin-bottom:14px">EFT Payment</h5>
         <div class="bank-box">
-          <p><strong>Bank:</strong> Standard Bank</p>
+          <p><strong>Bank:</strong> FNB</p>
           <p><strong>Account Name:</strong> Anointed in Living Christ</p>
-          <p><strong>Account Number:</strong> 046513396</p>
-          <p><strong>Branch Code:</strong> 051001</p>
+          <p><strong>Account Number:</strong> 62712345678</p>
+          <p><strong>Branch Code:</strong> 250655</p>
         </div>
       </div>
     </div>
@@ -1663,6 +1633,43 @@
     </div>
   </div>
 
+
+  <!-- ══════ CONSTITUTION ══════ -->
+  <section id="constitution" class="section">
+    <div style="background:var(--forest);padding:64px 36px 56px;text-align:center;position:relative;overflow:hidden">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(184,146,42,0.13) 0%,transparent 60%);pointer-events:none"></div>
+      <div style="font-size:0.62rem;letter-spacing:0.24em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:14px;position:relative;z-index:1">Umthetho Webandla</div>
+      <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:400;color:white;margin-bottom:6px;position:relative;z-index:1">Church Constitution</h1>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:rgba(255,255,255,0.45);margin-bottom:18px;position:relative;z-index:1">Anointed in Living Christ — Abagqotshwa Ku-Krestu Ophilayo</div>
+      <div style="font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.3);position:relative;z-index:1">Reg No: <span style="color:var(--gold-lt)">NRIC/20100816/1031/10</span> &nbsp;·&nbsp; Arch Bishop: <span style="color:var(--gold-lt)">E.Z Mnisi</span></div>
+    </div>
+
+    <!-- Language Toggle -->
+    <div style="background:var(--white);border-bottom:1px solid var(--border);display:flex;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.04)">
+      <button onclick="constSwitchLang('en')"   id="const-btn-en"   class="const-lang-tab active-tab">🇿🇦 English</button>
+      <button onclick="constSwitchLang('zu')"   id="const-btn-zu"   class="const-lang-tab">🇿🇦 isiZulu</button>
+      <button onclick="constSwitchLang('both')" id="const-btn-both" class="const-lang-tab">Both</button>
+    </div>
+
+    <!-- Section Nav -->
+    <nav style="background:var(--warm);border-bottom:1px solid var(--border);overflow-x:auto;white-space:nowrap;scrollbar-width:none">
+      <div style="display:inline-flex;padding:0 24px">
+        <button class="const-nav-tab c-active" onclick="constScrollTo('cst-name')">Church Name</button>
+        <button class="const-nav-tab" onclick="constScrollTo('cst-vision')">Vision & Purpose</button>
+        <button class="const-nav-tab" onclick="constScrollTo('cst-services')">Services</button>
+        <button class="const-nav-tab" onclick="constScrollTo('cst-attire')">Attire</button>
+        <button class="const-nav-tab" onclick="constScrollTo('cst-bereavement')">Bereavement Fund</button>
+        <button class="const-nav-tab" onclick="constScrollTo('cst-conduct')">Member Conduct</button>
+        <button class="const-nav-tab" onclick="constScrollTo('cst-membership')">Membership</button>
+      </div>
+    </nav>
+
+    <!-- Content -->
+    <div id="const-panel-en"   class="const-content-panel" style="display:block"></div>
+    <div id="const-panel-zu"   class="const-content-panel" style="display:none"></div>
+    <div id="const-panel-both" class="const-content-panel" style="display:none"></div>
+  </section>
+
 </main>
 
 <footer>
@@ -1692,6 +1699,7 @@
   <script src="scripts/quiz.js"></script>
   <script src="scripts/admin.js"></script>
   <!-- App init -->
+  <script src="scripts/constitution.js"></script>
   <script src="scripts/app.js"></script>
 </body>
 </html>

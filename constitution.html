@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Constitution — Anointed in Living Christ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reuse site tokens ── */
+    :root {
+      --ink:       #0e0e0e;
+      --ink-soft:  #383838;
+      --ink-muted: #888;
+      --warm:      #f2ece0;
+      --gold:      #b8922a;
+      --gold-lt:   #d4ac52;
+      --ivory:     #fffdf8;
+      --border:    #e6e0d4;
+      --forest:    #1a3d2e;
+      --forest-lt: #2a5c44;
+      --white:     #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--ivory); font-family: 'Jost', sans-serif; color: var(--ink); font-weight: 300; }
+
+    /* ── CONSTITUTION HERO ── */
+    .const-hero {
+      background: var(--forest);
+      padding: 64px 36px 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .const-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 30%, rgba(184,146,42,0.13) 0%, transparent 60%),
+                  radial-gradient(ellipse at 20% 80%, rgba(42,92,68,0.4)    0%, transparent 50%);
+      pointer-events: none;
+    }
+    .const-hero-eyebrow {
+      font-size: 0.62rem; letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--gold); font-weight: 500; margin-bottom: 14px;
+      position: relative; z-index: 1;
+    }
+    .const-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 400; color: white; line-height: 1.1;
+      margin-bottom: 6px; position: relative; z-index: 1;
+    }
+    .const-hero-zulu {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; font-style: italic;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 18px; position: relative; z-index: 1;
+    }
+    .const-meta {
+      font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.3); position: relative; z-index: 1;
+    }
+    .const-meta span { color: var(--gold-lt); }
+
+    /* ── LANG TOGGLE (sticky tab bar) ── */
+    .const-lang-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+    .lang-btn {
+      flex: 1; padding: 15px 12px;
+      border: none; background: none;
+      font-family: 'Jost', sans-serif;
+      font-weight: 500; font-size: 0.73rem;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-muted);
+      border-bottom: 2px solid transparent;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .lang-btn.active { color: var(--forest); border-bottom-color: var(--forest); }
+    .lang-btn:hover:not(.active) { color: var(--ink); }
+
+    /* ── SECTION NAVIGATION ── */
+    .const-nav {
+      background: var(--warm);
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+    }
+    .const-nav::-webkit-scrollbar { display: none; }
+    .const-nav-inner {
+      display: inline-flex; gap: 0;
+      padding: 0 24px;
+    }
+    .const-nav-link {
+      display: inline-block;
+      padding: 12px 18px;
+      font-size: 0.68rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--ink-muted); text-decoration: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer; transition: all 0.2s;
+      white-space: nowrap;
+      background: none; border-top: none; border-left: none; border-right: none;
+      font-family: 'Jost', sans-serif;
+    }
+    .const-nav-link:hover  { color: var(--forest); border-bottom-color: var(--gold); }
+    .const-nav-link.active { color: var(--forest); border-bottom-color: var(--forest); }
+
+    /* ── MAIN LAYOUT ── */
+    .const-body {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 60px 36px 100px;
+    }
+
+    /* ── CONTENT PANELS ── */
+    .lang-panel { display: none; }
+    .lang-panel.active { display: block; }
+
+    /* ── SECTION BLOCKS ── */
+    .const-section {
+      margin-bottom: 64px;
+      scroll-margin-top: 100px;
+    }
+    .const-section-label {
+      font-size: 0.58rem; letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--gold); font-weight: 600; margin-bottom: 10px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .const-section-label::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+    .const-section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+      font-weight: 600; color: var(--ink); line-height: 1.2;
+      margin-bottom: 24px;
+    }
+    .const-section p {
+      font-size: 0.9rem; line-height: 1.9;
+      color: var(--ink-soft); margin-bottom: 14px;
+    }
+
+    /* ── BULLET LIST ── */
+    .const-list {
+      list-style: none; padding: 0; margin: 0 0 14px;
+    }
+    .const-list li {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+      font-size: 0.88rem; line-height: 1.7; color: var(--ink-soft);
+    }
+    .const-list li:last-child { border-bottom: none; }
+    .const-list li::before {
+      content: '';
+      display: block; width: 5px; height: 5px;
+      border-radius: 50%; background: var(--gold);
+      margin-top: 9px; flex-shrink: 0;
+    }
+
+    /* ── INFO CARDS (uniform grid) ── */
+    .const-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+    .const-card {
+      background: var(--white);
+      padding: 22px 20px;
+    }
+    .const-card-label {
+      font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--gold); font-weight: 600; margin-bottom: 7px;
+    }
+    .const-card-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-weight: 600; color: var(--ink);
+    }
+
+    /* ── UNIFORM TABLE ── */
+    .const-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 0.88rem; margin-bottom: 24px;
+    }
+    .const-table th {
+      background: var(--forest); color: white;
+      padding: 12px 16px; text-align: left;
+      font-size: 0.65rem; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+    }
+    .const-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--ink-soft);
+    }
+    .const-table tr:last-child td { border-bottom: none; }
+    .const-table tr:nth-child(even) td { background: var(--ivory); }
+    .const-table .amount {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem; font-weight: 700;
+      color: var(--forest);
+    }
+
+    /* ── DUAL-COLUMN UNIFORM ATTIRE ── */
+    .attire-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+    .attire-col { background: var(--white); padding: 24px 20px; }
+    .attire-col h4 {
+      font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--gold); font-weight: 600; margin-bottom: 14px;
+    }
+
+    /* ── HIGHLIGHTED RULE ── */
+    .const-highlight {
+      background: var(--warm);
+      border-left: 3px solid var(--gold);
+      border-radius: 2px;
+      padding: 16px 20px;
+      font-size: 0.88rem; line-height: 1.8;
+      color: var(--ink-soft);
+      margin-bottom: 16px;
+    }
+    .const-highlight strong { color: var(--ink); }
+
+    /* ── WARNING RULE ── */
+    .const-warning {
+      background: #fff8e1;
+      border-left: 3px solid var(--gold);
+      border-radius: 2px;
+      padding: 16px 20px;
+      font-size: 0.88rem; line-height: 1.8;
+      color: #5a4200;
+      margin-bottom: 16px;
+    }
+
+    /* ── REG BADGE ── */
+    .reg-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--forest); color: var(--gold-lt);
+      border-radius: 2px; padding: 8px 16px;
+      font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .const-body { padding: 40px 20px 80px; }
+      .attire-grid { grid-template-columns: 1fr; }
+      .const-hero { padding: 48px 20px 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════ HERO ══════ -->
+<div class="const-hero">
+  <div class="const-hero-eyebrow">Umthetho Webandla</div>
+  <h1>Church Constitution</h1>
+  <div class="const-hero-zulu">Anointed in Living Christ — Abagqotshwa Ku-Krestu Ophilayo</div>
+  <div class="const-meta">Reg No: <span>NRIC/20100816/1031/10</span> &nbsp;·&nbsp; Arch Bishop: <span>E.Z Mnisi</span></div>
+</div>
+
+<!-- ══════ LANGUAGE TOGGLE ══════ -->
+<div class="const-lang-bar" role="tablist">
+  <button class="lang-btn active" onclick="switchLang('en')" id="btn-en" role="tab" aria-selected="true">
+    🇿🇦 English
+  </button>
+  <button class="lang-btn" onclick="switchLang('zu')" id="btn-zu" role="tab" aria-selected="false">
+    🇿🇦 isiZulu
+  </button>
+  <button class="lang-btn" onclick="switchLang('both')" id="btn-both" role="tab" aria-selected="false">
+    Both
+  </button>
+</div>
+
+<!-- ══════ SECTION NAV ══════ -->
+<nav class="const-nav" aria-label="Constitution sections">
+  <div class="const-nav-inner">
+    <button class="const-nav-link active" onclick="scrollTo('sec-name')">Church Name</button>
+    <button class="const-nav-link" onclick="scrollTo('sec-vision')">Vision & Purpose</button>
+    <button class="const-nav-link" onclick="scrollTo('sec-services')">Services</button>
+    <button class="const-nav-link" onclick="scrollTo('sec-attire')">Attire</button>
+    <button class="const-nav-link" onclick="scrollTo('sec-bereavement')">Bereavement Fund</button>
+    <button class="const-nav-link" onclick="scrollTo('sec-conduct')">Member Conduct</button>
+    <button class="const-nav-link" onclick="scrollTo('sec-membership')">Membership</button>
+  </div>
+</nav>
+
+<!-- ══════ BODY ══════ -->
+<div class="const-body">
+
+  <!-- ── ENGLISH PANEL ── -->
+  <div class="lang-panel active" id="panel-en">
+
+    <!-- 1. Church Name -->
+    <div class="const-section" id="sec-name-en">
+      <div class="const-section-label">Section 1</div>
+      <h2>Church Name</h2>
+      <div class="reg-badge">
+        <span>&#9632;</span> Anointed in Living Christ (AILC)
+      </div>
+      <div class="const-cards">
+        <div class="const-card">
+          <div class="const-card-label">Full Name</div>
+          <div class="const-card-value">Anointed in Living Christ</div>
+        </div>
+        <div class="const-card">
+          <div class="const-card-label">Abbreviation</div>
+          <div class="const-card-value">AILC</div>
+        </div>
+        <div class="const-card">
+          <div class="const-card-label">Registration No.</div>
+          <div class="const-card-value">NRIC/20100816/1031/10</div>
+        </div>
+        <div class="const-card">
+          <div class="const-card-label">Arch Bishop</div>
+          <div class="const-card-value">E.Z Mnisi</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Vision & Purpose -->
+    <div class="const-section" id="sec-vision-en">
+      <div class="const-section-label">Section 2</div>
+      <h2>Vision & Purpose</h2>
+      <ul class="const-list">
+        <li>To worship Jehovah freely and in spirit</li>
+        <li>To preach the gospel in all places and to encourage the Christian faith</li>
+        <li>To work together with other churches in spreading the gospel</li>
+        <li>To restore moral character and values in people</li>
+        <li>To fight against poverty and hunger</li>
+        <li>To encourage the church in Bible studies and in the development of people's lives</li>
+        <li>To visit hospitals, prisons, orphans, the disabled, and the elderly</li>
+      </ul>
+    </div>
+
+    <!-- 3. Services -->
+    <div class="const-section" id="sec-services-en">
+      <div class="const-section-label">Section 3</div>
+      <h2>Church Services</h2>
+      <ul class="const-list">
+        <li>Wedding service</li>
+        <li>Funeral service</li>
+        <li>Holy Communion (Lord's Supper)</li>
+        <li>Child dedication / blessing service</li>
+        <li>Homecoming service after bereavement</li>
+        <li>Conference services (Women's, Youth, and Full Church)</li>
+        <li>Synod service</li>
+      </ul>
+    </div>
+
+    <!-- 4. Attire -->
+    <div class="const-section" id="sec-attire-en">
+      <div class="const-section-label">Section 4</div>
+      <h2>Church Attire</h2>
+
+      <div class="attire-grid">
+        <div class="attire-col">
+          <h4>Men (Abesilisa)</h4>
+          <ul class="const-list">
+            <li>Olive green shirt</li>
+            <li>White trousers</li>
+            <li>Jacket with belt (white/green)</li>
+            <li>Deacon's jacket (for fathers / Obaba)</li>
+          </ul>
+        </div>
+        <div class="attire-col">
+          <h4>Women (Abesifazane)</h4>
+          <ul class="const-list">
+            <li>Olive green shirt</li>
+            <li>Long dress / skirt with belt (white/green)</li>
+            <li>Deaconess jacket (for mothers / Omama)</li>
+            <li>Headscarf / doek (white/green)</li>
+          </ul>
+        </div>
+      </div>
+
+      <p style="font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);font-weight:600;margin:28px 0 14px">When to wear each colour</p>
+
+      <div class="const-cards" style="margin-bottom:16px">
+        <div class="const-card" style="border-top:3px solid #2a5c44">
+          <div class="const-card-label">Green Uniform — worn when</div>
+          <div style="font-size:0.85rem;line-height:1.9;color:var(--ink-soft);margin-top:8px">
+            Every Sunday<br>
+            Invited events and functions<br>
+            Funeral services (non-members)<br>
+            Saturday service on Good Friday
+          </div>
+        </div>
+        <div class="const-card" style="border-top:3px solid var(--gold)">
+          <div class="const-card-label">White Uniform — worn when</div>
+          <div style="font-size:0.85rem;line-height:1.9;color:var(--ink-soft);margin-top:8px">
+            Friday service on Good Friday<br>
+            Wedding service<br>
+            Funeral service of a church member<br>
+            Child blessing & First Sunday of the month
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Bereavement Fund -->
+    <div class="const-section" id="sec-bereavement-en">
+      <div class="const-section-label">Section 5</div>
+      <h2>Bereavement Fund (Izifo Ebandleni)</h2>
+      <p>As a church, we are committed to supporting our members in times of bereavement. The following family relationships qualify for church support:</p>
+
+      <table class="const-table">
+        <thead>
+          <tr>
+            <th>Relationship</th>
+            <th>Payout Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Church Member (Ilunga lebandla)</td>
+            <td class="amount">Up to R10 000</td>
+          </tr>
+          <tr>
+            <td>Spouse — Wife / Husband</td>
+            <td class="amount">R2 000</td>
+          </tr>
+          <tr>
+            <td>Parent — Father / Mother</td>
+            <td class="amount">R2 000</td>
+          </tr>
+          <tr>
+            <td>Sibling — Sister / Brother</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Child</td>
+            <td class="amount">R2 000</td>
+          </tr>
+          <tr>
+            <td>Dependent / Guardian</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="const-highlight">
+        <strong>Member Contribution per bereavement:</strong><br>
+        R100 per member &nbsp;|&nbsp; R50 for other bereavements when the fund is low
+      </div>
+      <div class="const-warning">
+        ⚠️ <strong>Note:</strong> This bereavement fund policy applies to the <strong>Gauteng Region only.</strong>
+      </div>
+    </div>
+
+    <!-- 6. Member Conduct -->
+    <div class="const-section" id="sec-conduct-en">
+      <div class="const-section-label">Section 6</div>
+      <h2>Member Conduct</h2>
+      <ul class="const-list">
+        <li>Members of the church must follow, respect, and adhere to the church's policies and procedures</li>
+        <li>No one is permitted to discriminate based on colour, race, or any other form of harassment</li>
+        <li>No one is permitted to use their power or position to coerce or oppress other members for personal gain</li>
+        <li>Members must conduct themselves in a manner that demonstrates respect and brings dignity to the church</li>
+        <li>No one is permitted to do anything that is contrary to the church's values for personal satisfaction</li>
+      </ul>
+    </div>
+
+    <!-- 7. Membership -->
+    <div class="const-section" id="sec-membership-en">
+      <div class="const-section-label">Section 7</div>
+      <h2>Membership</h2>
+      <ul class="const-list">
+        <li>All church members are bound by the church's constitution, policies, and vision</li>
+        <li>If a member does not abide by the church's policies and procedures, they will be suspended from the church</li>
+      </ul>
+      <div class="const-warning">
+        ⚠️ <strong>Important:</strong> If a member fails to attend church for <strong>three consecutive months</strong> without a valid reason, they must be <strong>re-admitted</strong> to the church.
+      </div>
+    </div>
+
+  </div><!-- /panel-en -->
+
+
+  <!-- ── ISIZULU PANEL ── -->
+  <div class="lang-panel" id="panel-zu">
+
+    <div class="const-section" id="sec-name-zu">
+      <div class="const-section-label">Isahluko 1</div>
+      <h2>Igama Lebandla</h2>
+      <div class="reg-badge"><span>&#9632;</span> Anointed in Living Christ (AILC)</div>
+      <div class="const-cards">
+        <div class="const-card">
+          <div class="const-card-label">Igama Eligcwele</div>
+          <div class="const-card-value">Anointed in Living Christ</div>
+        </div>
+        <div class="const-card">
+          <div class="const-card-label">Esikhudlwini</div>
+          <div class="const-card-value">AILC</div>
+        </div>
+        <div class="const-card">
+          <div class="const-card-label">Inombolo Yokubhaliswa</div>
+          <div class="const-card-value">NRIC/20100816/1031/10</div>
+        </div>
+        <div class="const-card">
+          <div class="const-card-label">Arch Bishop</div>
+          <div class="const-card-value">E.Z Mnisi</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="const-section" id="sec-vision-zu">
+      <div class="const-section-label">Isahluko 2</div>
+      <h2>Injongo Yebandla</h2>
+      <ul class="const-list">
+        <li>Ukukhonza uJehova ngokukhululeka</li>
+        <li>Ukushumayela ivangeli kuzo zonke izindawo kanye nokukhuthaza inkolo yobukrestu</li>
+        <li>Ukusebenza ngokuhlanganyela namanye amabandla ekushumayeleni ivangeli</li>
+        <li>Ukuvuselela isimilo kubantu</li>
+        <li>Ukulwa nobuphunya nendlala</li>
+        <li>Ukukhuthaza ibandla ezifundweni zebhayibheli kanye nezokuthuthukisa izimpilo zabantu</li>
+        <li>Ukuhambela ezibhedlela, emajele, izintandane, abakhubazekile kanye nabakhulile</li>
+      </ul>
+    </div>
+
+    <div class="const-section" id="sec-services-zu">
+      <div class="const-section-label">Isahluko 3</div>
+      <h2>Izinkonzo Ebandleni</h2>
+      <ul class="const-list">
+        <li>Inkonzo yomshado</li>
+        <li>Inkonzo yomncwabo</li>
+        <li>Inkonzo yesidlo senkosi</li>
+        <li>Inkonzo yokubusisa abantwana</li>
+        <li>Inkonzo yokubuyisa umzalwane ngemva yokushonelwa</li>
+        <li>Inkonzo ye-conference (yomama, yentsha kanye nebbandla lonke)</li>
+        <li>Inkonzo ye-Synod</li>
+      </ul>
+    </div>
+
+    <div class="const-section" id="sec-attire-zu">
+      <div class="const-section-label">Isahluko 4</div>
+      <h2>Izambatho Zebandla</h2>
+      <div class="attire-grid">
+        <div class="attire-col">
+          <h4>Abesilisa</h4>
+          <ul class="const-list">
+            <li>Ihembe eli Olive green</li>
+            <li>Ibhuluko elimhlophe</li>
+            <li>Ijazi ne bhande (white/green)</li>
+            <li>Ijazi lesiphika (Obaba)</li>
+          </ul>
+        </div>
+        <div class="attire-col">
+          <h4>Abesifazane</h4>
+          <ul class="const-list">
+            <li>Ihembe eli Olive green</li>
+            <li>Idress elide / isiketi ne bhande (white/green)</li>
+            <li>Ijazi lesiphika (Omama)</li>
+            <li>Iduku (white/green)</li>
+          </ul>
+        </div>
+      </div>
+
+      <p style="font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);font-weight:600;margin:28px 0 14px">Zigqokwa Nini Lezambatho</p>
+      <div class="const-cards">
+        <div class="const-card" style="border-top:3px solid #2a5c44">
+          <div class="const-card-label">Eziluhlaza — Green</div>
+          <div style="font-size:0.85rem;line-height:1.9;color:var(--ink-soft);margin-top:8px">
+            Njalo ngamasonto<br>
+            Imisebenzi lapho simenywe khona<br>
+            Imisebenxi yemingwabo ngaphandle kwamalunga ebandla<br>
+            Inkonzo yangomgqibelo ngo GoodFriday
+          </div>
+        </div>
+        <div class="const-card" style="border-top:3px solid var(--gold)">
+          <div class="const-card-label">Ezimhlophe — White</div>
+          <div style="font-size:0.85rem;line-height:1.9;color:var(--ink-soft);margin-top:8px">
+            Inkonzo yangolwesiHlanu ngo GoodFriday<br>
+            Inkonzo yomshado<br>
+            Inkonzo yomncwabo welunga<br>
+            Inkonzo yokubusisa abantwana kanye ne first Sunday
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="const-section" id="sec-bereavement-zu">
+      <div class="const-section-label">Isahluko 5</div>
+      <h2>Izifo Ebandleni</h2>
+      <p>Lapho sibopheleke khona siyibandla uma kuvele isifo:</p>
+      <table class="const-table">
+        <thead>
+          <tr>
+            <th>Ubudlelwano</th>
+            <th>Imali</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Ilunga lebandla</td><td class="amount">Kuya ku-R10 000</td></tr>
+          <tr><td>Inkosikazi / Umyeni</td><td class="amount">R2 000</td></tr>
+          <tr><td>Baba / Mama</td><td class="amount">R2 000</td></tr>
+          <tr><td>Sisi / Bhut</td><td>—</td></tr>
+          <tr><td>Umtwana</td><td class="amount">R2 000</td></tr>
+          <tr><td>Ophila ngaphansi kwakhe (Guardian)</td><td>—</td></tr>
+        </tbody>
+      </table>
+      <div class="const-highlight">
+        <strong>Iminikelo:</strong> R100 ilunga &nbsp;|&nbsp; R50 ezinye izifo uma isikwama sesingenamali noma incane
+      </div>
+      <div class="const-warning">
+        ⚠️ <strong>Qaphela:</strong> Imali yezifo iqhubeka kuphela <strong>KuGauteng Region.</strong>
+      </div>
+    </div>
+
+    <div class="const-section" id="sec-conduct-zu">
+      <div class="const-section-label">Isahluko 6</div>
+      <h2>Ukuziphatha Kwamalunga Ebandleni</h2>
+      <ul class="const-list">
+        <li>Amalunga ebandla kufanele alandele, ayihloniphe futhi enze inchubo mgomo yebandla</li>
+        <li>Akekho ovumeleke ukuhlukumeza ngokwebala, ngokweluhlanga noma enye indlela ehlukumezayo</li>
+        <li>Akekho ovumeleke ukusebenzisa amandla/isikhundla ukucindezela amanye amalunga ebandla ukufeza/ukunelisa izidingo zakhe</li>
+        <li>Amalunga kumele aziphathe ngendlela ebonakalisa inhlonipho futhi eletha isithunzi (dignity)</li>
+        <li>Akekho ovumeleke ukwenza izinto ezingahambisani nebandla ukunelisa izidingo zakhe</li>
+      </ul>
+    </div>
+
+    <div class="const-section" id="sec-membership-zu">
+      <div class="const-section-label">Isahluko 7</div>
+      <h2>Ubulunga Ebandleni</h2>
+      <ul class="const-list">
+        <li>Onke amalunga ebandla aphoxelelekile emthethweni, enchubeni nasenjongweni yebandla</li>
+        <li>Uma umzalwane angahambisi ngenqubomgomo webandla, uzawuncunywa ebandleni</li>
+      </ul>
+      <div class="const-warning">
+        ⚠️ <strong>Kubalulekile:</strong> Uma ilunga lihluleka ukuza ebandleni izinyanga ezintathu ngaphandle kwesizathu esicinile, <strong>lamukelwa kabusha ebandleni.</strong>
+      </div>
+    </div>
+
+  </div><!-- /panel-zu -->
+
+
+  <!-- ── BOTH PANEL ── -->
+  <div class="lang-panel" id="panel-both">
+
+    <div class="const-section" id="sec-name-both">
+      <div class="const-section-label">Section 1 · Isahluko 1</div>
+      <h2>Church Name &amp; <em style="font-weight:300">Igama Lebandla</em></h2>
+      <div class="reg-badge"><span>&#9632;</span> Anointed in Living Christ (AILC)</div>
+      <div class="const-cards">
+        <div class="const-card">
+          <div class="const-card-label">Full Name / Igama Eligcwele</div>
+          <div class="const-card-value">Anointed in Living Christ</div>
+        </div>
+        <div class="const-card">
+          <div class="const-card-label">Short / Esikhudlwini</div>
+          <div class="const-card-value">AILC</div>
+        </div>
+        <div class="const-card">
+          <div class="const-card-label">Reg No.</div>
+          <div class="const-card-value">NRIC/20100816/1031/10</div>
+        </div>
+        <div class="const-card">
+          <div class="const-card-label">Arch Bishop</div>
+          <div class="const-card-value">E.Z Mnisi</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="const-section" id="sec-vision-both">
+      <div class="const-section-label">Section 2 · Isahluko 2</div>
+      <h2>Vision &amp; Purpose / <em style="font-weight:300">Injongo Yebandla</em></h2>
+      <table class="const-table">
+        <thead><tr><th>English</th><th>isiZulu</th></tr></thead>
+        <tbody>
+          <tr><td>To worship Jehovah freely and in spirit</td><td>Ukukhonza uJehova ngokukhululeka</td></tr>
+          <tr><td>To preach the gospel in all places and encourage the Christian faith</td><td>Ukushumayela ivangeli kuzo zonke izindawo kanye nokukhuthaza inkolo yobukrestu</td></tr>
+          <tr><td>To work together with other churches in spreading the gospel</td><td>Ukusebenza ngokuhlanganyela namanye amabandla ekushumayeleni ivangeli</td></tr>
+          <tr><td>To restore moral character and values in people</td><td>Ukuvuselela isimilo kubantu</td></tr>
+          <tr><td>To fight against poverty and hunger</td><td>Ukulwa nobuphunya nendlala</td></tr>
+          <tr><td>To encourage the church in Bible studies and development of people's lives</td><td>Ukukhuthaza ibandla ezifundweni zebhayibheli kanye nezokuthuthukisa izimpilo zabantu</td></tr>
+          <tr><td>To visit hospitals, prisons, orphans, the disabled and the elderly</td><td>Ukuhambela ezibhedlela, emajele, izintandane, abakhubazekile kanye nabakhulile</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="const-section" id="sec-services-both">
+      <div class="const-section-label">Section 3 · Isahluko 3</div>
+      <h2>Church Services / <em style="font-weight:300">Izinkonzo Ebandleni</em></h2>
+      <table class="const-table">
+        <thead><tr><th>English</th><th>isiZulu</th></tr></thead>
+        <tbody>
+          <tr><td>Wedding service</td><td>Inkonzo yomshado</td></tr>
+          <tr><td>Funeral service</td><td>Inkonzo yomncwabo</td></tr>
+          <tr><td>Holy Communion (Lord's Supper)</td><td>Inkonzo yesidlo senkosi</td></tr>
+          <tr><td>Child dedication / blessing service</td><td>Inkonzo yokubusisa abantwana</td></tr>
+          <tr><td>Homecoming service after bereavement</td><td>Inkonzo yokubuyisa umzalwane ngemva yokushonelwa</td></tr>
+          <tr><td>Conference services (Women's, Youth, Full Church)</td><td>Inkonzo ye-conference (yomama, yentsha kanye nebbandla lonke)</td></tr>
+          <tr><td>Synod service</td><td>Inkonzo ye-Synod</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="const-section" id="sec-attire-both">
+      <div class="const-section-label">Section 4 · Isahluko 4</div>
+      <h2>Church Attire / <em style="font-weight:300">Izambatho Zebandla</em></h2>
+      <table class="const-table">
+        <thead><tr><th>English</th><th>isiZulu</th></tr></thead>
+        <tbody>
+          <tr><td colspan="2" style="background:var(--warm);font-weight:600;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--forest)">Men / Abesilisa</td></tr>
+          <tr><td>Olive green shirt</td><td>Ihembe eli Olive green</td></tr>
+          <tr><td>White trousers</td><td>Ibhuluko elimhlophe</td></tr>
+          <tr><td>Jacket with belt (white/green)</td><td>Ijazi ne bhande (white/green)</td></tr>
+          <tr><td>Deacon's jacket (Fathers)</td><td>Ijazi lesiphika (Obaba)</td></tr>
+          <tr><td colspan="2" style="background:var(--warm);font-weight:600;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--forest)">Women / Abesifazane</td></tr>
+          <tr><td>Olive green shirt</td><td>Ihembe eli Olive green</td></tr>
+          <tr><td>Long dress / skirt with belt (white/green)</td><td>Idress elide / isiketi ne bhande (white/green)</td></tr>
+          <tr><td>Deaconess jacket (Mothers)</td><td>Ijazi lesiphika (Omama)</td></tr>
+          <tr><td>Headscarf / Doek (white/green)</td><td>Iduku (white/green)</td></tr>
+          <tr><td colspan="2" style="background:var(--warm);font-weight:600;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--forest)">Green — worn when / Eziluhlaza — zigqokwa uma</td></tr>
+          <tr><td>Every Sunday</td><td>Njalo ngamasonto</td></tr>
+          <tr><td>Invited events and functions</td><td>Imisebenzi lapho simenywe khona</td></tr>
+          <tr><td>Funeral services (non-members)</td><td>Imisebenxi yemingwabo ngaphandle kwamalunga ebandla</td></tr>
+          <tr><td>Saturday service on Good Friday</td><td>Inkonzo yangomgqibelo ngo GoodFriday</td></tr>
+          <tr><td colspan="2" style="background:var(--warm);font-weight:600;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--forest)">White — worn when / Ezimhlophe — zigqokwa uma</td></tr>
+          <tr><td>Friday service on Good Friday</td><td>Inkonzo yangolwesiHlanu ngo GoodFriday</td></tr>
+          <tr><td>Wedding service</td><td>Inkonzo yomshado</td></tr>
+          <tr><td>Funeral service of a church member</td><td>Inkonzo yomncwabo welunga</td></tr>
+          <tr><td>Child blessing & First Sunday of the month</td><td>Inkonzo yokubusisa abantwana kanye ne first Sunday</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="const-section" id="sec-bereavement-both">
+      <div class="const-section-label">Section 5 · Isahluko 5</div>
+      <h2>Bereavement Fund / <em style="font-weight:300">Izifo Ebandleni</em></h2>
+      <div class="const-warning">⚠️ Gauteng Region only / KuGauteng Region kuphela</div>
+      <table class="const-table">
+        <thead><tr><th>English</th><th>isiZulu</th><th>Amount</th></tr></thead>
+        <tbody>
+          <tr><td>Church Member</td><td>Ilunga lebandla</td><td class="amount">Up to R10 000</td></tr>
+          <tr><td>Spouse</td><td>Inkosikazi / Umyeni</td><td class="amount">R2 000</td></tr>
+          <tr><td>Parent</td><td>Baba / Mama</td><td class="amount">R2 000</td></tr>
+          <tr><td>Sibling</td><td>Sisi / Bhut</td><td>—</td></tr>
+          <tr><td>Child</td><td>Umtwana</td><td class="amount">R2 000</td></tr>
+          <tr><td>Dependent / Guardian</td><td>Ophila ngaphansi kwakhe</td><td>—</td></tr>
+        </tbody>
+      </table>
+      <div class="const-highlight">
+        <strong>Contribution per bereavement / Iminikelo:</strong><br>
+        R100 per member / ilunga &nbsp;|&nbsp; R50 when fund is low / uma isikwama sesingenamali noma incane
+      </div>
+    </div>
+
+    <div class="const-section" id="sec-conduct-both">
+      <div class="const-section-label">Section 6 · Isahluko 6</div>
+      <h2>Member Conduct / <em style="font-weight:300">Ukuziphatha Kwamalunga</em></h2>
+      <table class="const-table">
+        <thead><tr><th>English</th><th>isiZulu</th></tr></thead>
+        <tbody>
+          <tr><td>Members must follow, respect, and adhere to church policies</td><td>Amalunga ebandla kufanele alandele, ayihloniphe futhi enze inchubo mgomo yebandla</td></tr>
+          <tr><td>No discrimination based on colour, race, or any form of harassment</td><td>Akekho ovumeleke ukuhlukumeza ngokwebala, ngokweluhlanga noma enye indlela ehlukumezayo</td></tr>
+          <tr><td>No one may use power or position to coerce other members</td><td>Akekho ovumeleke ukusebenzisa amandla/isikhundla ukucindezela amanye amalunga</td></tr>
+          <tr><td>Members must conduct themselves with respect and dignity</td><td>Amalunga kumele aziphathe ngendlela ebonakalisa inhlonipho futhi eletha isithunzi</td></tr>
+          <tr><td>No one may act contrary to the church's values for personal gain</td><td>Akekho ovumeleke ukwenza izinto ezingahambisani nebandla ukunelisa izidingo zakhe</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="const-section" id="sec-membership-both">
+      <div class="const-section-label">Section 7 · Isahluko 7</div>
+      <h2>Membership / <em style="font-weight:300">Ubulunga Ebandleni</em></h2>
+      <table class="const-table">
+        <thead><tr><th>English</th><th>isiZulu</th></tr></thead>
+        <tbody>
+          <tr><td>All members are bound by the church's constitution, policies, and vision</td><td>Onke amalunga ebandla aphoxelelekile emthethweni, enchubeni nasenjongweni yebandla</td></tr>
+          <tr><td>Members who do not abide by church policies will be suspended</td><td>Uma umzalwane angahambisi ngenqubomgomo webandla, uzawuncunywa ebandleni</td></tr>
+          <tr><td>Absent for 3 months without reason → must be re-admitted</td><td>Uma ilunga lihluleka ukuza izinyanga ezintathu ngaphandle kwesizathu esicinile, lamukelwa kabusha ebandleni</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div><!-- /panel-both -->
+
+</div><!-- /const-body -->
+
+<script>
+  // ── Language switcher ──
+  function switchLang(lang) {
+    ['en','zu','both'].forEach(l => {
+      document.getElementById('panel-' + l).classList.toggle('active', l === lang);
+      document.getElementById('btn-' + l).classList.toggle('active', l === lang);
+    });
+  }
+
+  // ── Section scroll + active nav link ──
+  function scrollTo(id) {
+    // Find the right panel's section
+    const activeLang = ['en','zu','both'].find(l =>
+      document.getElementById('panel-' + l).classList.contains('active')
+    );
+    const el = document.getElementById(id + '-' + activeLang);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    document.querySelectorAll('.const-nav-link').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+
+  // ── Highlight active nav on scroll ──
+  const sectionIds = ['sec-name','sec-vision','sec-services','sec-attire','sec-bereavement','sec-conduct','sec-membership'];
+  const navLinks = document.querySelectorAll('.const-nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const base = entry.target.id.replace(/-en|-zu|-both/, '');
+        navLinks.forEach(l => {
+          l.classList.toggle('active', l.getAttribute('onclick').includes(base));
+        });
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+
+  document.querySelectorAll('.const-section').forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
