@@ -1,20 +1,20 @@
 // ── PRODUCTS ──
 let products = [
-  { name:"Long T-Shirt",      price:250, img:"images/Long T-shirt.jpeg",   rating:4.5, sizes:["S","M","L","XL"],  category:"Clothing" },
-  { name:"White Jacket",      price:550, img:"images/white jacket.jpeg",   rating:4.0, sizes:["M","L","XL"],      category:"Jackets" },
+  { name:"Long T-Shirt",      price:300, img:"images/Long T-shirt.jpeg",   rating:4.5, sizes:["S","M","L","XL"],  category:"Clothing" },
+  { name:"White Jacket",      price:850, img:"images/white jacket.jpeg",   rating:4.0, sizes:["M","L","XL"],      category:"Jackets" },
   { name:"Hat",               price:180, img:"images/Hat.jpeg",            rating:3.5, sizes:["One Size"],        category:"Bags & Accessories" },
-  { name:"Black Jacket",      price:420, img:"images/jacket black.jpeg",   rating:4.8, sizes:["S","M","L","XL"],  category:"Jackets" },
-  { name:"Jacket",            price:220, img:"images/bumba jacket 2.jpeg", rating:4.7, sizes:["S","M","L","XL"],  category:"Clothing" },
-  { name:"Anointed Socks",    price:150, img:"images/white socks.jpeg",    rating:4.2, sizes:["One Size"],        category:"Bags & Accessories" },
-  { name:"Green Socks",       price:480, img:"images/socks green.jpeg",    rating:4.9, sizes:["One Size"],        category:"Clothing" },
-  { name:"Travelling Bag",    price:190, img:"images/bag.jpeg",            rating:4.6, sizes:["One Size"],        category:"Bags & Accessories" },
-  { name:"Grace Mug",         price:90,  img:"https://via.placeholder.com/300x240?text=Grace+Mug",       rating:4.3, sizes:["One Size"], category:"Bags & Accessories" },
-  { name:"Hope Journal",      price:130, img:"https://via.placeholder.com/300x240?text=Hope+Journal",    rating:4.8, sizes:["One Size"], category:"Bags & Accessories" },
-  { name:"Salvation T-Shirt", price:260, img:"https://via.placeholder.com/300x240?text=Salvation+Tee",  rating:4.5, sizes:["S","M","L","XL"], category:"Clothing" },
+  { name:"Black Jacket",      price:850, img:"images/jacket black.jpeg",   rating:4.8, sizes:["S","M","L","XL"],  category:"Jackets" },
+  { name:"Jacket",            price:750, img:"images/bumba jacket 2.jpeg", rating:4.7, sizes:["S","M","L","XL"],  category:"Clothing" },
+  { name:"Anointed Socks",    price:130, img:"images/white socks.jpeg",    rating:4.2, sizes:["One Size"],        category:"Bags & Accessories" },
+  { name:"Green Socks",       price:130, img:"images/socks green.jpeg",    rating:4.9, sizes:["One Size"],        category:"Clothing" },
+  { name:"Travelling Bag",    price:700, img:"images/bag.jpeg",            rating:4.6, sizes:["One Size"],        category:"Bags & Accessories" },
+  { name:" dress",         price:700,  img:"https://via.placeholder.com/300x240?text=Grace+Mug",       rating:4.3, sizes:["One Size"], category:"Bags & Accessories" },
+  { name:"Table cloths",      price:350, img:"https://via.placeholder.com/300x240?text=Hope+Journal",    rating:4.8, sizes:["One Size"], category:"Bags & Accessories" },
+  { name:"T-Shirt", price:280, img:"https://via.placeholder.com/300x240?text=Salvation+Tee",  rating:4.5, sizes:["S","M","L","XL"], category:"Clothing" },
   { name:"Worship Hoodie",    price:530, img:"https://via.placeholder.com/300x240?text=Worship+Hoodie", rating:4.7, sizes:["M","L","XL"], category:"Jackets" },
-  { name:"Faith Keychain",    price:60,  img:"https://via.placeholder.com/300x240?text=Faith+Keychain", rating:4.4, sizes:["One Size"], category:"Bags & Accessories" },
-  { name:"Scripture Poster",  price:210, img:"https://via.placeholder.com/300x240?text=Scripture+Poster",rating:4.9, sizes:["One Size"], category:"Bags & Accessories" },
-  { name:"Anointed Cap",      price:170, img:"https://via.placeholder.com/300x240?text=Anointed+Cap",   rating:4.2, sizes:["One Size"], category:"Bags & Accessories" }
+  { name:"Faith chain",    price:60,  img:"https://via.placeholder.com/300x240?text=Faith+Keychain", rating:4.4, sizes:["One Size"], category:"Bags & Accessories" },
+  { name:"Ailc Calendar",  price:210, img:"https://via.placeholder.com/300x240?text=Scripture+Poster",rating:4.9, sizes:["One Size"], category:"Bags & Accessories" },
+  { name:"Flee Blanked",      price:170, img:"https://via.placeholder.com/300x240?text=Anointed+Cap",   rating:4.2, sizes:["One Size"], category:"Bags & Accessories" }
 ];
 
 function getStars(r) { const f=Math.floor(r),h=r-f>=0.5; return '★'.repeat(f)+(h?'½':'')+'☆'.repeat(5-f-(h?1:0)); }
