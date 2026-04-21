@@ -8,10 +8,10 @@ let products = [
   { name:"Anointed Socks",    price:130, img:"images/white socks.jpeg",    rating:4.2, sizes:["One Size"],        category:"Bags & Accessories" },
   { name:"Green Socks",       price:130, img:"images/socks green.jpeg",    rating:4.9, sizes:["One Size"],        category:"Clothing" },
   { name:"Travelling Bag",    price:700, img:"images/bag.jpeg",            rating:4.6, sizes:["One Size"],        category:"Bags & Accessories" },
-  { name:"Dress",         price:700,  img:"images/dress.jpeg",       rating:4.3, sizes:["S","M",""], category:"Bags & Accessories" },
-  { name:"Table cloths",      price:350, img:"https://via.placeholder.com/300x240?text=Hope+Journal",    rating:4.8, sizes:["One Size"], category:"Bags & Accessories" },
+  { name:"Dress",         price:700,  img:"images/dress.jpeg",       rating:4.3, sizes:["S","M","L","XL"], category:"Bags & Accessories" },
+  { name:"Table cloths",      price:350, img:"images/table cloth2.jpeg",    rating:4.8, sizes:["One Size"], category:"Bags & Accessories" },
   { name:"T-Shirt", price:280, img:"https://via.placeholder.com/300x240?text=Salvation+Tee",  rating:4.5, sizes:["S","M","L","XL"], category:"Clothing" },
-  { name:"Worship Hoodie",    price:530, img:"https://via.placeholder.com/300x240?text=Worship+Hoodie", rating:4.7, sizes:["M","L","XL"], category:"Jackets" },
+  { name:"Table Cloth",    price:530, img:"https://via.placeholder.com/300x240?text=Worship+Hoodie", rating:4.7, sizes:["M","L","XL"], category:"Jackets" },
   { name:"Faith chain",    price:60,  img:"https://via.placeholder.com/300x240?text=Faith+Keychain", rating:4.4, sizes:["One Size"], category:"Bags & Accessories" },
   { name:"Ailc Calendar",  price:210, img:"https://via.placeholder.com/300x240?text=Scripture+Poster",rating:4.9, sizes:["One Size"], category:"Bags & Accessories" },
   { name:"Flee Blanked",      price:170, img:"https://via.placeholder.com/300x240?text=Anointed+Cap",   rating:4.2, sizes:["One Size"], category:"Bags & Accessories" }
