@@ -751,26 +751,26 @@
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-label">Total Products</div>
-          <div class="stat-val" id="stat-products">15</div>
-          <div class="stat-change"><i class="bi bi-arrow-up-short"></i>3 added this month</div>
+          <div class="stat-val" id="stat-products">0</div>
+          <div class="stat-change"><i class="bi bi-bag"></i> Active store items</div>
           <i class="bi bi-bag stat-icon"></i>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Members</div>
-          <div class="stat-val">47</div>
-          <div class="stat-change"><i class="bi bi-arrow-up-short"></i>12 new this week</div>
+          <div class="stat-label">Registered Members</div>
+          <div class="stat-val" id="stat-members">0</div>
+          <div class="stat-change"><i class="bi bi-people"></i> Via Firebase Auth</div>
           <i class="bi bi-people stat-icon"></i>
         </div>
         <div class="stat-card">
           <div class="stat-label">Events Scheduled</div>
-          <div class="stat-val" id="stat-events">3</div>
-          <div class="stat-change"><i class="bi bi-calendar-check"></i> Next: Sunday Service</div>
+          <div class="stat-val" id="stat-events">0</div>
+          <div class="stat-change"><i class="bi bi-calendar-check"></i> Upcoming events</div>
           <i class="bi bi-calendar-event stat-icon"></i>
         </div>
         <div class="stat-card">
           <div class="stat-label">Sermons Uploaded</div>
-          <div class="stat-val" id="stat-sermons">8</div>
-          <div class="stat-change"><i class="bi bi-play-circle"></i> 2 new this month</div>
+          <div class="stat-val" id="stat-sermons">0</div>
+          <div class="stat-change"><i class="bi bi-play-circle"></i> In sermon library</div>
           <i class="bi bi-play-circle stat-icon"></i>
         </div>
       </div>
@@ -780,15 +780,14 @@
           <div class="card-head">
             <div>
               <div class="card-head-title">Recent Activity</div>
-              <div class="card-head-sub">Last actions in the system</div>
+              <div class="card-head-sub">Actions logged in this session</div>
             </div>
           </div>
           <div id="activityFeed">
-            <div class="activity-row"><div class="activity-dot green"></div><div class="activity-text"><strong>New member</strong> registered — Thabo M.</div><div class="activity-time">2m ago</div></div>
-            <div class="activity-row"><div class="activity-dot"></div><div class="activity-text"><strong>Product added</strong> — Faith Keychain</div><div class="activity-time">1h ago</div></div>
-            <div class="activity-row"><div class="activity-dot blue"></div><div class="activity-text"><strong>Event announced</strong> — Youth Night</div><div class="activity-time">3h ago</div></div>
-            <div class="activity-row"><div class="activity-dot green"></div><div class="activity-text"><strong>Order placed</strong> — R530 · Worship Hoodie</div><div class="activity-time">5h ago</div></div>
-            <div class="activity-row"><div class="activity-dot"></div><div class="activity-text"><strong>Sermon uploaded</strong> — Walking by Faith</div><div class="activity-time">Yesterday</div></div>
+            <div style="text-align:center;padding:40px 24px;color:var(--muted);font-size:0.82rem">
+              <i class="bi bi-clock-history" style="font-size:1.8rem;display:block;margin-bottom:10px;opacity:0.4"></i>
+              No activity yet — actions you take will appear here.
+            </div>
           </div>
         </div>
 
@@ -797,38 +796,18 @@
             <div class="card-head">
               <div><div class="card-head-title">Store Categories</div></div>
             </div>
-            <div class="card-body-p">
-              <div style="margin-bottom:14px">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-                  <span style="font-size:0.78rem;color:var(--muted)">Clothing</span>
-                  <span style="font-size:0.78rem;color:var(--text);font-weight:500">5 items</span>
-                </div>
-                <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:33%"></div></div>
-              </div>
-              <div style="margin-bottom:14px">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-                  <span style="font-size:0.78rem;color:var(--muted)">Jackets</span>
-                  <span style="font-size:0.78rem;color:var(--text);font-weight:500">3 items</span>
-                </div>
-                <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:20%"></div></div>
-              </div>
-              <div>
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-                  <span style="font-size:0.78rem;color:var(--muted)">Bags & Accessories</span>
-                  <span style="font-size:0.78rem;color:var(--text);font-weight:500">7 items</span>
-                </div>
-                <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:47%"></div></div>
-              </div>
+            <div class="card-body-p" id="categoryBreakdown">
+              <div style="text-align:center;padding:20px;color:var(--muted);font-size:0.82rem">Loading...</div>
             </div>
           </div>
           <div class="mini-cards">
             <div class="mini-card">
               <div class="mini-card-label">Price Range</div>
-              <div class="mini-card-val">R60–550</div>
+              <div class="mini-card-val" id="statPriceRange">—</div>
             </div>
             <div class="mini-card">
               <div class="mini-card-label">Avg Rating</div>
-              <div class="mini-card-val">4.5 ★</div>
+              <div class="mini-card-val" id="statAvgRating">—</div>
             </div>
           </div>
         </div>
@@ -918,48 +897,21 @@
         <div class="card-head">
           <div>
             <div class="card-head-title">Order Management</div>
-            <div class="card-head-sub">Track and manage store orders</div>
+            <div class="card-head-sub">Real orders placed through the store</div>
+          </div>
+          <div class="search-wrap">
+            <i class="bi bi-search"></i>
+            <input class="search-input" id="orderSearch" placeholder="Search orders..." oninput="renderOrdersTable()">
           </div>
         </div>
-        <div class="card-body-p" style="text-align:center;padding:60px 24px">
-          <i class="bi bi-box-seam" style="font-size:3rem;color:var(--gold);opacity:0.4;display:block;margin-bottom:16px"></i>
-          <p style="font-size:0.85rem;color:var(--muted);margin-bottom:8px">Order management connects to your Firebase backend.</p>
-          <p style="font-size:0.78rem;color:var(--muted)">Orders placed through the store will appear here once integrated.</p>
-        </div>
-      </div>
-      <div class="card-g">
-        <div class="card-head"><div class="card-head-title">Sample Order Layout</div></div>
-        <div style="overflow-x:auto">
-          <table class="data-table">
+        <div id="ordersTableWrap" style="overflow-x:auto">
+          <table class="data-table" id="ordersTable">
             <thead><tr><th>Order Ref</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
-            <tbody>
-              <tr>
-                <td style="color:var(--gold);font-weight:500">ALC-2026-001</td>
-                <td>Thabo Mokoena</td>
-                <td>Worship Hoodie (L)</td>
-                <td>R530</td>
-                <td><span class="cat-pill cat-clothing">Shipped</span></td>
-                <td style="color:var(--muted)">Apr 14, 2026</td>
-                <td><button class="action-btn edit">View</button></td>
-              </tr>
-              <tr>
-                <td style="color:var(--gold);font-weight:500">ALC-2026-002</td>
-                <td>Lindiwe Dlamini</td>
-                <td>Black Jacket (M) + Hat</td>
-                <td>R600</td>
-                <td><span class="cat-pill cat-jackets">Processing</span></td>
-                <td style="color:var(--muted)">Apr 15, 2026</td>
-                <td><button class="action-btn edit">View</button></td>
-              </tr>
-              <tr>
-                <td style="color:var(--gold);font-weight:500">ALC-2026-003</td>
-                <td>Sipho Ndlovu</td>
-                <td>Faith Keychain + Green Socks</td>
-                <td>R540</td>
-                <td><span class="cat-pill cat-bags">Pending</span></td>
-                <td style="color:var(--muted)">Apr 16, 2026</td>
-                <td><button class="action-btn edit">View</button></td>
-              </tr>
+            <tbody id="ordersTableBody">
+              <tr><td colspan="7" style="text-align:center;padding:50px;color:var(--muted)">
+                <i class="bi bi-box-seam" style="font-size:2rem;display:block;margin-bottom:10px;opacity:0.35"></i>
+                No orders yet. Orders placed on the website will appear here.
+              </td></tr>
             </tbody>
           </table>
         </div>
@@ -1110,37 +1062,17 @@
           </div>
           <div class="search-wrap">
             <i class="bi bi-search"></i>
-            <input class="search-input" placeholder="Search members...">
+            <input class="search-input" id="memberSearch" placeholder="Search members..." oninput="renderMembersTable()">
           </div>
         </div>
         <div style="overflow-x:auto">
           <table class="data-table">
             <thead><tr><th>Name</th><th>Email</th><th>Branch</th><th>Joined</th><th>Orders</th><th>Status</th></tr></thead>
-            <tbody>
-              <tr>
-                <td><div style="display:flex;align-items:center;gap:9px"><div style="width:28px;height:28px;background:rgba(184,146,42,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:600;color:var(--gold)">TM</div>Thabo Mokoena</div></td>
-                <td style="color:var(--muted)">thabo@example.com</td>
-                <td>Soshanguve</td>
-                <td style="color:var(--muted)">Jan 2026</td>
-                <td style="color:var(--gold)">2</td>
-                <td><span class="cat-pill cat-clothing">Active</span></td>
-              </tr>
-              <tr>
-                <td><div style="display:flex;align-items:center;gap:9px"><div style="width:28px;height:28px;background:rgba(42,92,68,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:600;color:#5ec98a">LD</div>Lindiwe Dlamini</div></td>
-                <td style="color:var(--muted)">lindiwe@example.com</td>
-                <td>Matsulu</td>
-                <td style="color:var(--muted)">Feb 2026</td>
-                <td style="color:var(--gold)">1</td>
-                <td><span class="cat-pill cat-clothing">Active</span></td>
-              </tr>
-              <tr>
-                <td><div style="display:flex;align-items:center;gap:9px"><div style="width:28px;height:28px;background:rgba(255,255,255,0.07);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:600;color:var(--muted)">SN</div>Sipho Ndlovu</div></td>
-                <td style="color:var(--muted)">sipho@example.com</td>
-                <td>Madadeni</td>
-                <td style="color:var(--muted)">Mar 2026</td>
-                <td style="color:var(--gold)">0</td>
-                <td><span class="cat-pill cat-bags">New</span></td>
-              </tr>
+            <tbody id="membersTableBody">
+              <tr><td colspan="6" style="text-align:center;padding:50px;color:var(--muted)">
+                <i class="bi bi-people" style="font-size:2rem;display:block;margin-bottom:10px;opacity:0.35"></i>
+                No members registered yet. Members who sign up on the website will appear here.
+              </td></tr>
             </tbody>
           </table>
         </div>
@@ -1153,30 +1085,30 @@
         <div class="card-g">
           <div class="card-head">
             <div class="card-head-title">Site Settings</div>
-            <div class="card-head-sub">General church website configuration</div>
+            <div class="card-head-sub">Changes sync instantly to the main website</div>
           </div>
           <div class="card-body-p">
             <div style="display:flex;flex-direction:column;gap:16px">
               <div class="form-group">
                 <label class="f-label">Church Name</label>
-                <input class="f-input" value="Anointed in Living Christ">
+                <input class="f-input" id="setChurchName">
               </div>
               <div class="form-group">
                 <label class="f-label">Tagline</label>
-                <input class="f-input" value="To Know Christ and Make Him Known">
-              </div>
-              <div class="form-group">
-                <label class="f-label">Verse of the Day (Reference)</label>
-                <input class="f-input" placeholder="e.g. John 3:16">
+                <input class="f-input" id="setTagline">
               </div>
               <div class="form-group">
                 <label class="f-label">Live Stream Active</label>
-                <select class="f-select">
-                  <option>Yes — Show live banner</option>
-                  <option selected>No — Hide banner</option>
+                <select class="f-select" id="setLiveActive">
+                  <option value="yes">Yes — Show live banner on website</option>
+                  <option value="no" selected>No — Hide banner</option>
                 </select>
               </div>
-              <button class="btn-g"><i class="bi bi-check2 me-2"></i>Save Settings</button>
+              <div class="form-group">
+                <label class="f-label">Live Banner Text</label>
+                <input class="f-input" id="setLiveText" placeholder="e.g. Live Now — Sunday Service is streaming. Watch here">
+              </div>
+              <button class="btn-g" onclick="saveSettingsAdmin()"><i class="bi bi-check2 me-2"></i>Save Settings</button>
             </div>
           </div>
         </div>
@@ -1184,23 +1116,23 @@
         <div class="card-g">
           <div class="card-head">
             <div class="card-head-title">Admin Access</div>
-            <div class="card-head-sub">Change admin credentials</div>
+            <div class="card-head-sub">Change admin login password</div>
           </div>
           <div class="card-body-p">
             <div style="display:flex;flex-direction:column;gap:16px">
               <div class="form-group">
                 <label class="f-label">Current Password</label>
-                <input class="f-input" type="password" placeholder="••••••••">
+                <input class="f-input" type="password" id="passCurrentAdmin" placeholder="••••••••">
               </div>
               <div class="form-group">
                 <label class="f-label">New Password</label>
-                <input class="f-input" type="password" placeholder="Min. 8 characters">
+                <input class="f-input" type="password" id="passNewAdmin" placeholder="Min. 6 characters">
               </div>
               <div class="form-group">
                 <label class="f-label">Confirm New Password</label>
-                <input class="f-input" type="password" placeholder="Repeat new password">
+                <input class="f-input" type="password" id="passConfirmAdmin" placeholder="Repeat new password">
               </div>
-              <button class="btn-outline-g"><i class="bi bi-lock me-2"></i>Update Password</button>
+              <button class="btn-outline-g" onclick="updatePasswordAdmin()"><i class="bi bi-lock me-2"></i>Update Password</button>
             </div>
           </div>
         </div>
@@ -1237,8 +1169,13 @@
 </div>
 
 <script>
-  // ── DATA ──
-  let products = [
+  // ══════════════════════════════════════════════════════════
+  // ALC ADMIN — Real data only. localStorage bridges to site.
+  // Keys: alc_products | alc_events | alc_sermons | alc_settings
+  // Members & Orders: loaded from Firebase Firestore
+  // ══════════════════════════════════════════════════════════
+
+  const DEFAULT_PRODUCTS = [
     { name:"Long T-Shirt",      price:250, img:"images/Long T-shirt.jpeg",   rating:4.5, sizes:["S","M","L","XL"],  category:"Clothing" },
     { name:"White Jacket",      price:550, img:"images/white jacket.jpeg",   rating:4.0, sizes:["M","L","XL"],      category:"Jackets" },
     { name:"Hat",               price:180, img:"images/Hat.jpeg",            rating:3.5, sizes:["One Size"],        category:"Bags & Accessories" },
@@ -1247,23 +1184,70 @@
     { name:"Anointed Socks",    price:150, img:"images/white socks.jpeg",    rating:4.2, sizes:["One Size"],        category:"Bags & Accessories" },
     { name:"Green Socks",       price:480, img:"images/socks green.jpeg",    rating:4.9, sizes:["One Size"],        category:"Clothing" },
     { name:"Travelling Bag",    price:190, img:"images/bag.jpeg",            rating:4.6, sizes:["One Size"],        category:"Bags & Accessories" },
-    { name:"Grace Mug",         price:90,  img:"https://via.placeholder.com/300x240?text=Grace+Mug",       rating:4.3, sizes:["One Size"], category:"Bags & Accessories" },
-    { name:"Hope Journal",      price:130, img:"https://via.placeholder.com/300x240?text=Hope+Journal",    rating:4.8, sizes:["One Size"], category:"Bags & Accessories" },
-    { name:"Salvation T-Shirt", price:260, img:"https://via.placeholder.com/300x240?text=Salvation+Tee",  rating:4.5, sizes:["S","M","L","XL"], category:"Clothing" },
-    { name:"Worship Hoodie",    price:530, img:"https://via.placeholder.com/300x240?text=Worship+Hoodie", rating:4.7, sizes:["M","L","XL"], category:"Jackets" },
-    { name:"Faith Keychain",    price:60,  img:"https://via.placeholder.com/300x240?text=Faith+Keychain", rating:4.4, sizes:["One Size"], category:"Bags & Accessories" },
+    { name:"Grace Mug",         price:90,  img:"https://via.placeholder.com/300x240?text=Grace+Mug",        rating:4.3, sizes:["One Size"], category:"Bags & Accessories" },
+    { name:"Hope Journal",      price:130, img:"https://via.placeholder.com/300x240?text=Hope+Journal",     rating:4.8, sizes:["One Size"], category:"Bags & Accessories" },
+    { name:"Salvation T-Shirt", price:260, img:"https://via.placeholder.com/300x240?text=Salvation+Tee",   rating:4.5, sizes:["S","M","L","XL"], category:"Clothing" },
+    { name:"Worship Hoodie",    price:530, img:"https://via.placeholder.com/300x240?text=Worship+Hoodie",  rating:4.7, sizes:["M","L","XL"], category:"Jackets" },
+    { name:"Faith Keychain",    price:60,  img:"https://via.placeholder.com/300x240?text=Faith+Keychain",  rating:4.4, sizes:["One Size"], category:"Bags & Accessories" },
     { name:"Scripture Poster",  price:210, img:"https://via.placeholder.com/300x240?text=Scripture+Poster",rating:4.9, sizes:["One Size"], category:"Bags & Accessories" },
-    { name:"Anointed Cap",      price:170, img:"https://via.placeholder.com/300x240?text=Anointed+Cap",   rating:4.2, sizes:["One Size"], category:"Bags & Accessories" }
+    { name:"Anointed Cap",      price:170, img:"https://via.placeholder.com/300x240?text=Anointed+Cap",    rating:4.2, sizes:["One Size"], category:"Bags & Accessories" }
   ];
+
+  const DEFAULT_EVENTS = [
+    { name:"Sunday Service",      date:"April 20, 2026", time:"10:00 AM", venue:"Soshanguve Block 1A", desc:"" },
+    { name:"Youth Night",         date:"April 25, 2026", time:"6:00 PM",  venue:"Main Hall",           desc:"" },
+    { name:"Workers' Day Prayer", date:"May 1, 2026",    time:"9:00 AM",  venue:"Online + Soshanguve", desc:"" }
+  ];
+
+  const DEFAULT_SERMONS = [
+    { title:"The Power of Prayer", speaker:"Pastor Ndlovu", date:"March 22, 2026", video:"", desc:"" },
+    { title:"Rooted in Grace",     speaker:"Elder Dlamini", date:"March 15, 2026", video:"", desc:"" },
+    { title:"Be Still and Know",   speaker:"Pastor Ndlovu", date:"March 8, 2026",  video:"", desc:"" }
+  ];
+
+  const DEFAULT_SETTINGS = {
+    churchName: "Anointed in Living Christ",
+    tagline: "To Know Christ and Make Him Known",
+    liveActive: false,
+    liveText: "Live Now — Sunday Service is streaming. Watch here"
+  };
+
+  let products = [], events = [], sermons = [], settings = {};
+  let activityLog = []; // session-only activity feed
+
+  // ── STORAGE HELPERS ──
+  function saveProducts()  { localStorage.setItem('alc_products', JSON.stringify(products)); }
+  function saveEvents()    { localStorage.setItem('alc_events',   JSON.stringify(events));   }
+  function saveSermons()   { localStorage.setItem('alc_sermons',  JSON.stringify(sermons));  }
+  function saveSettings()  { localStorage.setItem('alc_settings', JSON.stringify(settings)); }
+
+  function loadAll() {
+    try { products = JSON.parse(localStorage.getItem('alc_products')) || DEFAULT_PRODUCTS; } catch(e) { products = DEFAULT_PRODUCTS; }
+    try { events   = JSON.parse(localStorage.getItem('alc_events'))   || DEFAULT_EVENTS;   } catch(e) { events   = DEFAULT_EVENTS;   }
+    try { sermons  = JSON.parse(localStorage.getItem('alc_sermons'))  || DEFAULT_SERMONS;  } catch(e) { sermons  = DEFAULT_SERMONS;  }
+    try { settings = JSON.parse(localStorage.getItem('alc_settings')) || DEFAULT_SETTINGS; } catch(e) { settings = DEFAULT_SETTINGS; }
+    // Seed defaults if first time
+    if (!localStorage.getItem('alc_products')) saveProducts();
+    if (!localStorage.getItem('alc_events'))   saveEvents();
+    if (!localStorage.getItem('alc_sermons'))  saveSermons();
+    if (!localStorage.getItem('alc_settings')) saveSettings();
+  }
 
   // ── LOGIN ──
   function doLogin() {
     const u = document.getElementById('adminUser').value.trim();
     const p = document.getElementById('adminPass').value;
-    if (u === 'admin' && p === 'church123') {
+    const storedPass = localStorage.getItem('alc_admin_pass') || 'church123';
+    if (u === 'admin' && p === storedPass) {
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('app').style.display = 'flex';
+      loadAll();
       renderProductTable();
+      renderEventList();
+      renderSermonList();
+      renderSettingsPanel();
+      updateDashboardStats();
+      loadFirebaseData();
       updateClock();
       setInterval(updateClock, 1000);
     } else {
@@ -1280,17 +1264,40 @@
     document.getElementById('adminUser').value = '';
     document.getElementById('adminPass').value = '';
     document.getElementById('loginErr').textContent = '';
+    activityLog = [];
+  }
+
+  // ── FIREBASE LIVE DATA (members + orders) ──
+  function loadFirebaseData() {
+    // Check if Firebase is available (loaded by the page's firebase.js)
+    if (typeof firebase === 'undefined' || !firebase.firestore) return;
+    const db = firebase.firestore();
+
+    // Load members from 'users' collection
+    db.collection('users').orderBy('createdAt', 'desc').get().then(snap => {
+      const members = [];
+      snap.forEach(doc => members.push({ id: doc.id, ...doc.data() }));
+      renderMembersTable(members);
+      document.getElementById('stat-members').textContent = members.length;
+    }).catch(() => {});
+
+    // Load orders from 'orders' collection
+    db.collection('orders').orderBy('createdAt', 'desc').get().then(snap => {
+      const orders = [];
+      snap.forEach(doc => orders.push({ id: doc.id, ...doc.data() }));
+      renderOrdersTable(orders);
+    }).catch(() => {});
   }
 
   // ── NAV ──
   const panelMeta = {
-    overview:  { title: 'Dashboard',      crumb: 'Overview · Anointed in Living Christ' },
-    products:  { title: 'Products',       crumb: 'Store Management · Products' },
-    orders:    { title: 'Orders',         crumb: 'Store Management · Orders' },
-    events:    { title: 'Events',         crumb: 'Content Management · Events' },
-    sermons:   { title: 'Sermons',        crumb: 'Content Management · Sermons' },
-    members:   { title: 'Members',        crumb: 'Community · Registered Members' },
-    settings:  { title: 'Site Settings',  crumb: 'Configuration · Admin Settings' }
+    overview:  { title: 'Dashboard',     crumb: 'Overview · Anointed in Living Christ' },
+    products:  { title: 'Products',      crumb: 'Store Management · Products' },
+    orders:    { title: 'Orders',        crumb: 'Store Management · Orders' },
+    events:    { title: 'Events',        crumb: 'Content Management · Events' },
+    sermons:   { title: 'Sermons',       crumb: 'Content Management · Sermons' },
+    members:   { title: 'Members',       crumb: 'Community · Registered Members' },
+    settings:  { title: 'Site Settings', crumb: 'Configuration · Admin Settings' }
   };
 
   function showPanel(id) {
@@ -1304,15 +1311,80 @@
       if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + id + "'")) n.classList.add('active');
     });
     if (id === 'products') renderProductTable();
+    if (id === 'events')   renderEventList();
+    if (id === 'sermons')  renderSermonList();
+    if (id === 'settings') renderSettingsPanel();
+    if (id === 'members' || id === 'orders') loadFirebaseData();
+  }
+
+  // ── DASHBOARD STATS ──
+  function updateDashboardStats() {
+    document.getElementById('stat-products').textContent = products.length;
+    document.getElementById('stat-events').textContent   = events.length;
+    document.getElementById('stat-sermons').textContent  = sermons.length;
+    updateCategoryBreakdown();
+    updatePriceStats();
+  }
+
+  function updateCategoryBreakdown() {
+    const counts = {};
+    products.forEach(p => { counts[p.category] = (counts[p.category] || 0) + 1; });
+    const total = products.length || 1;
+    const el = document.getElementById('categoryBreakdown');
+    if (!el) return;
+    if (!products.length) {
+      el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted);font-size:0.82rem">No products yet.</div>';
+      return;
+    }
+    el.innerHTML = Object.entries(counts).map(([cat, count]) => `
+      <div style="margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <span style="font-size:0.78rem;color:var(--muted)">${cat}</span>
+          <span style="font-size:0.78rem;color:var(--text);font-weight:500">${count} item${count !== 1 ? 's' : ''}</span>
+        </div>
+        <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${Math.round(count/total*100)}%"></div></div>
+      </div>`).join('');
+  }
+
+  function updatePriceStats() {
+    if (!products.length) return;
+    const prices  = products.map(p => p.price);
+    const ratings = products.map(p => p.rating).filter(Boolean);
+    const avgRating = ratings.length ? (ratings.reduce((a,b) => a+b,0) / ratings.length).toFixed(1) : '—';
+    document.getElementById('statPriceRange').textContent = `R${Math.min(...prices)}–${Math.max(...prices)}`;
+    document.getElementById('statAvgRating').textContent  = avgRating + (avgRating !== '—' ? ' ★' : '');
+  }
+
+  // ── ACTIVITY LOG ──
+  function logActivity(msg, type = 'gold') {
+    const now = new Date();
+    const time = now.toLocaleTimeString('en-ZA', { hour:'2-digit', minute:'2-digit', hour12: false });
+    activityLog.unshift({ msg, type, time });
+    if (activityLog.length > 20) activityLog.pop();
+    renderActivityFeed();
+  }
+
+  function renderActivityFeed() {
+    const feed = document.getElementById('activityFeed');
+    if (!feed) return;
+    if (!activityLog.length) {
+      feed.innerHTML = '<div style="text-align:center;padding:40px 24px;color:var(--muted);font-size:0.82rem"><i class="bi bi-clock-history" style="font-size:1.8rem;display:block;margin-bottom:10px;opacity:0.4"></i>No activity yet.</div>';
+      return;
+    }
+    feed.innerHTML = activityLog.map(a => `
+      <div class="activity-row">
+        <div class="activity-dot ${a.type === 'green' ? 'green' : a.type === 'blue' ? 'blue' : ''}"></div>
+        <div class="activity-text">${a.msg}</div>
+        <div class="activity-time">${a.time}</div>
+      </div>`).join('');
   }
 
   // ── PRODUCTS ──
   function getCatClass(cat) {
     if (cat === 'Clothing') return 'cat-clothing';
-    if (cat === 'Jackets') return 'cat-jackets';
+    if (cat === 'Jackets')  return 'cat-jackets';
     return 'cat-bags';
   }
-
   function getStarStr(r) {
     return '★'.repeat(Math.floor(r)) + (r % 1 >= 0.5 ? '½' : '') + '☆'.repeat(Math.max(0, 5 - Math.ceil(r)));
   }
@@ -1327,17 +1399,18 @@
       tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:30px">No products found</td></tr>';
       return;
     }
-    tbody.innerHTML = filtered.map((p, i) => `
-      <tr>
+    tbody.innerHTML = filtered.map(p => {
+      const realIdx = products.indexOf(p);
+      return `<tr>
         <td><img src="${p.img}" class="product-thumb" onerror="this.src='https://via.placeholder.com/38?text=?'"></td>
         <td style="font-weight:500;color:var(--text)">${p.name}</td>
         <td style="color:var(--gold);font-weight:600">R${p.price}</td>
         <td><span class="cat-pill ${getCatClass(p.category)}">${p.category}</span></td>
         <td style="color:var(--muted);font-size:0.75rem">${p.sizes.join(', ')}</td>
         <td><span class="stars-sm">${getStarStr(p.rating)}</span> <span style="color:var(--muted);font-size:0.72rem">${p.rating}</span></td>
-        <td><button class="action-btn" onclick="deleteProduct(${products.indexOf(p)})"><i class="bi bi-trash"></i> Delete</button></td>
-      </tr>
-    `).join('');
+        <td><button class="action-btn" onclick="deleteProduct(${realIdx})"><i class="bi bi-trash"></i> Delete</button></td>
+      </tr>`;
+    }).join('');
   }
 
   function addProductAdmin() {
@@ -1347,89 +1420,237 @@
     const cat    = document.getElementById('pCat').value;
     const sizes  = (document.getElementById('pSizes').value.trim() || 'S,M,L,XL').split(',').map(s => s.trim());
     const rating = parseFloat(document.getElementById('pRating').value) || 4.0;
-    const msg    = document.getElementById('pMsg');
     if (!name || !price || !img) { showToastAdmin('Please fill Name, Price & Image URL', true); return; }
     products.push({ name, price, img, rating, sizes, category: cat });
+    saveProducts();
     renderProductTable();
+    updateDashboardStats();
     ['pName','pPrice','pImg','pSizes','pRating'].forEach(id => document.getElementById(id).value = '');
-    msg.textContent = '✓ "' + name + '" added!';
-    showToastAdmin('"' + name + '" added to store!');
-    setTimeout(() => msg.textContent = '', 3000);
+    document.getElementById('pMsg').textContent = '✓ "' + name + '" added!';
+    logActivity(`<strong>Product added</strong> — ${name}`, 'gold');
+    showToastAdmin(`"${name}" added to store — website updated ✓`);
+    setTimeout(() => document.getElementById('pMsg').textContent = '', 3000);
   }
 
   function deleteProduct(i) {
     const name = products[i].name;
     products.splice(i, 1);
+    saveProducts();
     renderProductTable();
-    showToastAdmin('"' + name + '" removed.');
+    updateDashboardStats();
+    logActivity(`<strong>Product removed</strong> — ${name}`, 'gold');
+    showToastAdmin(`"${name}" removed from store.`);
   }
 
   // ── EVENTS ──
+  function renderEventList() {
+    const list = document.getElementById('eventListAdmin');
+    if (!events.length) {
+      list.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);font-size:0.82rem">No events yet. Add one using the form.</div>';
+      return;
+    }
+    list.innerHTML = events.map((ev, i) => {
+      const parts = (ev.date || '').split(' ');
+      const day = parts[1] ? parts[1].replace(',','').padStart(2,'0') : '--';
+      const mon = parts[0] ? parts[0].substring(0,3) : '---';
+      return `<div class="event-row">
+        <div class="event-date-box"><div class="event-date-day">${day}</div><div class="event-date-mon">${mon}</div></div>
+        <div class="event-info"><div class="event-name">${ev.name}</div><div class="event-meta">${ev.time} · ${ev.venue}</div></div>
+        <button class="action-btn" onclick="removeEvent(${i})"><i class="bi bi-trash"></i></button>
+      </div>`;
+    }).join('');
+    updateDashboardStats();
+  }
+
   function addEventAdmin() {
     const name  = document.getElementById('evName').value.trim();
     const date  = document.getElementById('evDate').value.trim();
     const time  = document.getElementById('evTime').value.trim();
     const venue = document.getElementById('evVenue').value.trim();
-    const msg   = document.getElementById('evMsg');
+    const desc  = document.getElementById('evDesc').value.trim();
     if (!name || !date || !time || !venue) { showToastAdmin('Fill all required event fields', true); return; }
-    const parts = date.split(' ');
-    const day   = parts[1] ? parts[1].replace(',','').padStart(2,'0') : '??';
-    const mon   = parts[0] ? parts[0].substring(0,3) : '???';
-    const list  = document.getElementById('eventListAdmin');
-    const row   = document.createElement('div');
-    row.className = 'event-row';
-    row.innerHTML = `<div class="event-date-box"><div class="event-date-day">${day}</div><div class="event-date-mon">${mon}</div></div><div class="event-info"><div class="event-name">${name}</div><div class="event-meta">${time} · ${venue}</div></div><button class="action-btn" onclick="removeEvent(this)"><i class="bi bi-trash"></i></button>`;
-    list.appendChild(row);
+    events.push({ name, date, time, venue, desc });
+    saveEvents();
+    renderEventList();
     ['evName','evDate','evTime','evVenue','evDesc'].forEach(id => document.getElementById(id).value = '');
-    msg.textContent = '✓ "' + name + '" announced!';
-    showToastAdmin('Event "' + name + '" announced!');
-    document.getElementById('stat-events').textContent = document.querySelectorAll('.event-row').length;
-    setTimeout(() => msg.textContent = '', 3000);
+    document.getElementById('evMsg').textContent = '✓ "' + name + '" announced!';
+    logActivity(`<strong>Event announced</strong> — ${name}`, 'blue');
+    showToastAdmin(`Event "${name}" announced — website updated ✓`);
+    setTimeout(() => document.getElementById('evMsg').textContent = '', 3000);
   }
 
-  function removeEvent(btn) {
-    btn.closest('.event-row').remove();
-    document.getElementById('stat-events').textContent = document.querySelectorAll('.event-row').length;
-    showToastAdmin('Event removed.');
+  function removeEvent(i) {
+    const name = events[i].name;
+    events.splice(i, 1);
+    saveEvents();
+    renderEventList();
+    logActivity(`<strong>Event removed</strong> — ${name}`, 'blue');
+    showToastAdmin(`Event "${name}" removed.`);
   }
 
   // ── SERMONS ──
+  function renderSermonList() {
+    const list = document.getElementById('sermonListAdmin');
+    if (!sermons.length) {
+      list.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);font-size:0.82rem">No sermons yet. Add one using the form.</div>';
+      return;
+    }
+    list.innerHTML = sermons.map((s, i) => `
+      <div class="sermon-row">
+        <div class="sermon-thumb"><i class="bi bi-play-fill"></i></div>
+        <div class="sermon-info"><div class="sermon-title">${s.title}</div><div class="sermon-meta">${s.speaker} · ${s.date}</div></div>
+        <button class="action-btn" onclick="removeSermon(${i})"><i class="bi bi-trash"></i></button>
+      </div>`).join('');
+    updateDashboardStats();
+  }
+
   function addSermonAdmin() {
     const title   = document.getElementById('sTitle').value.trim();
     const speaker = document.getElementById('sSpeaker').value.trim();
     const date    = document.getElementById('sDate').value.trim();
-    const msg     = document.getElementById('sMsg');
+    const video   = document.getElementById('sVideo').value.trim();
+    const desc    = document.getElementById('sDesc').value.trim();
     if (!title || !speaker || !date) { showToastAdmin('Fill Title, Speaker & Date', true); return; }
-    const list = document.getElementById('sermonListAdmin');
-    const row  = document.createElement('div');
-    row.className = 'sermon-row';
-    row.innerHTML = `<div class="sermon-thumb"><i class="bi bi-play-fill"></i></div><div class="sermon-info"><div class="sermon-title">${title}</div><div class="sermon-meta">${speaker} · ${date}</div></div><button class="action-btn" onclick="removeSermon(this)"><i class="bi bi-trash"></i></button>`;
-    list.insertBefore(row, list.firstChild);
+    sermons.unshift({ title, speaker, date, video, desc });
+    saveSermons();
+    renderSermonList();
     ['sTitle','sSpeaker','sDate','sVideo','sDesc'].forEach(id => document.getElementById(id).value = '');
-    msg.textContent = '✓ "' + title + '" added!';
-    showToastAdmin('Sermon "' + title + '" added!');
-    document.getElementById('stat-sermons').textContent = document.querySelectorAll('.sermon-row').length;
-    setTimeout(() => msg.textContent = '', 3000);
+    document.getElementById('sMsg').textContent = '✓ "' + title + '" added!';
+    logActivity(`<strong>Sermon added</strong> — ${title}`, 'green');
+    showToastAdmin(`Sermon "${title}" added — website updated ✓`);
+    setTimeout(() => document.getElementById('sMsg').textContent = '', 3000);
   }
 
-  function removeSermon(btn) {
-    btn.closest('.sermon-row').remove();
-    document.getElementById('stat-sermons').textContent = document.querySelectorAll('.sermon-row').length;
-    showToastAdmin('Sermon removed.');
+  function removeSermon(i) {
+    const title = sermons[i].title;
+    sermons.splice(i, 1);
+    saveSermons();
+    renderSermonList();
+    logActivity(`<strong>Sermon removed</strong> — ${title}`, 'green');
+    showToastAdmin(`Sermon "${title}" removed.`);
+  }
+
+  // ── MEMBERS (from Firebase) ──
+  function renderMembersTable(members) {
+    const q = (document.getElementById('memberSearch')?.value || '').toLowerCase();
+    const tbody = document.getElementById('membersTableBody');
+    if (!tbody) return;
+    const filtered = (members || []).filter(m =>
+      (m.name || m.displayName || m.email || '').toLowerCase().includes(q)
+    );
+    if (!filtered.length) {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:50px;color:var(--muted)">
+        <i class="bi bi-people" style="font-size:2rem;display:block;margin-bottom:10px;opacity:0.35"></i>
+        ${members && members.length ? 'No members match your search.' : 'No members registered yet.'}
+      </td></tr>`;
+      return;
+    }
+    tbody.innerHTML = filtered.map(m => {
+      const name   = m.name || m.displayName || 'Unknown';
+      const initials = name.split(' ').map(w => w[0]).join('').substring(0,2).toUpperCase();
+      const email  = m.email || '—';
+      const branch = m.branch || '—';
+      const joined = m.createdAt ? new Date(m.createdAt.seconds * 1000).toLocaleDateString('en-ZA', { month:'short', year:'numeric' }) : '—';
+      const orders = m.orderCount || 0;
+      return `<tr>
+        <td><div style="display:flex;align-items:center;gap:9px">
+          <div style="width:28px;height:28px;background:rgba(184,146,42,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:600;color:var(--gold)">${initials}</div>
+          ${name}</div></td>
+        <td style="color:var(--muted)">${email}</td>
+        <td>${branch}</td>
+        <td style="color:var(--muted)">${joined}</td>
+        <td style="color:var(--gold)">${orders}</td>
+        <td><span class="cat-pill cat-clothing">Active</span></td>
+      </tr>`;
+    }).join('');
+    document.getElementById('stat-members').textContent = members.length;
+  }
+
+  function renderMembersTable_empty() { renderMembersTable([]); }
+
+  // ── ORDERS (from Firebase) ──
+  function renderOrdersTable(orders) {
+    const q = (document.getElementById('orderSearch')?.value || '').toLowerCase();
+    const tbody = document.getElementById('ordersTableBody');
+    if (!tbody) return;
+    const filtered = (orders || []).filter(o =>
+      (o.ref || o.id || o.customerName || o.email || '').toLowerCase().includes(q)
+    );
+    if (!filtered.length) {
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:50px;color:var(--muted)">
+        <i class="bi bi-box-seam" style="font-size:2rem;display:block;margin-bottom:10px;opacity:0.35"></i>
+        ${orders && orders.length ? 'No orders match your search.' : 'No orders yet. Orders placed on the website will appear here.'}
+      </td></tr>`;
+      return;
+    }
+    tbody.innerHTML = filtered.map(o => {
+      const ref    = o.ref || o.id || '—';
+      const name   = o.customerName || o.name || '—';
+      const items  = Array.isArray(o.items) ? o.items.map(i => i.name + (i.size ? ` (${i.size})` : '')).join(', ') : (o.itemsSummary || '—');
+      const total  = o.total ? `R${o.total}` : '—';
+      const status = o.status || 'Pending';
+      const date   = o.createdAt ? new Date(o.createdAt.seconds * 1000).toLocaleDateString('en-ZA', { day:'numeric', month:'short', year:'numeric' }) : '—';
+      const pillClass = status === 'Shipped' ? 'cat-clothing' : status === 'Processing' ? 'cat-jackets' : 'cat-bags';
+      return `<tr>
+        <td style="color:var(--gold);font-weight:500">${ref}</td>
+        <td>${name}</td>
+        <td style="color:var(--muted);font-size:0.78rem">${items}</td>
+        <td>${total}</td>
+        <td><span class="cat-pill ${pillClass}">${status}</span></td>
+        <td style="color:var(--muted)">${date}</td>
+        <td><button class="action-btn edit" onclick="viewOrder('${o.id}')">View</button></td>
+      </tr>`;
+    }).join('');
+  }
+
+  function viewOrder(id) {
+    showToastAdmin('Open order ' + id + ' — detail view coming soon.');
+  }
+
+  // ── SETTINGS ──
+  function renderSettingsPanel() {
+    document.getElementById('setChurchName').value = settings.churchName || '';
+    document.getElementById('setTagline').value    = settings.tagline    || '';
+    document.getElementById('setLiveActive').value = settings.liveActive ? 'yes' : 'no';
+    document.getElementById('setLiveText').value   = settings.liveText   || '';
+  }
+
+  function saveSettingsAdmin() {
+    settings.churchName = document.getElementById('setChurchName').value.trim();
+    settings.tagline    = document.getElementById('setTagline').value.trim();
+    settings.liveActive = document.getElementById('setLiveActive').value === 'yes';
+    settings.liveText   = document.getElementById('setLiveText').value.trim();
+    saveSettings();
+    logActivity('<strong>Settings saved</strong>', 'gold');
+    showToastAdmin('Settings saved — website updated ✓');
+  }
+
+  function updatePasswordAdmin() {
+    const current = document.getElementById('passCurrentAdmin').value;
+    const newPass = document.getElementById('passNewAdmin').value;
+    const confirm = document.getElementById('passConfirmAdmin').value;
+    const stored  = localStorage.getItem('alc_admin_pass') || 'church123';
+    if (current !== stored)   { showToastAdmin('Current password is incorrect.', true); return; }
+    if (newPass.length < 6)   { showToastAdmin('New password must be at least 6 characters.', true); return; }
+    if (newPass !== confirm)   { showToastAdmin('Passwords do not match.', true); return; }
+    localStorage.setItem('alc_admin_pass', newPass);
+    ['passCurrentAdmin','passNewAdmin','passConfirmAdmin'].forEach(id => document.getElementById(id).value = '');
+    logActivity('<strong>Admin password changed</strong>', 'gold');
+    showToastAdmin('Password updated successfully!');
   }
 
   // ── TOAST ──
   let toastTimer;
   function showToastAdmin(msg, err = false) {
-    const t = document.getElementById('toastAdmin');
-    const m = document.getElementById('toastAdminMsg');
+    const t    = document.getElementById('toastAdmin');
+    const m    = document.getElementById('toastAdminMsg');
     const icon = t.querySelector('i');
-    m.textContent = msg;
-    icon.className = err ? 'bi bi-exclamation-circle-fill' : 'bi bi-check-circle-fill';
+    m.textContent   = msg;
+    icon.className  = err ? 'bi bi-exclamation-circle-fill' : 'bi bi-check-circle-fill';
     icon.style.color = err ? 'var(--danger)' : 'var(--gold)';
     t.classList.add('show');
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
   }
 
   // ── CLOCK ──
@@ -1438,5 +1659,10 @@
     document.getElementById('clockEl').textContent = now.toLocaleTimeString('en-ZA', { hour:'2-digit', minute:'2-digit', second:'2-digit', hour12: false });
   }
 </script>
+<!-- Firebase SDK — needed to read real members & orders -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="scripts/firebase.js"></script>
 </body>
 </html>

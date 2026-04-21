@@ -1783,6 +1783,49 @@
   <span>Anointed in Living Christ</span> &nbsp;·&nbsp; © 2026 All rights reserved
 </footer>
 
+  <!-- ══ ADMIN → WEBSITE SYNC ══
+       Reads data written by admin.html via localStorage keys:
+       alc_products | alc_events | alc_sermons | alc_settings
+  -->
+  <script>
+  (function alcAdminSync() {
+    // ── SETTINGS (live banner, church name) ──
+    try {
+      const s = JSON.parse(localStorage.getItem('alc_settings'));
+      if (s) {
+        const banner = document.getElementById('liveBanner');
+        if (banner) {
+          if (s.liveActive) {
+            banner.style.display = 'block';
+            const textNode = banner.childNodes[banner.childNodes.length - 1];
+            if (s.liveText) banner.innerHTML = '<span class="live-dot"></span>' + s.liveText;
+          } else {
+            banner.style.display = 'none';
+          }
+        }
+      }
+    } catch(e) {}
+
+    // ── PRODUCTS: override window.alcProducts so products.js uses admin data ──
+    try {
+      const p = JSON.parse(localStorage.getItem('alc_products'));
+      if (p && p.length) window.alcAdminProducts = p;
+    } catch(e) {}
+
+    // ── EVENTS: override so events.js uses admin data ──
+    try {
+      const ev = JSON.parse(localStorage.getItem('alc_events'));
+      if (ev && ev.length) window.alcAdminEvents = ev;
+    } catch(e) {}
+
+    // ── SERMONS: override so sermons.js uses admin data ──
+    try {
+      const sr = JSON.parse(localStorage.getItem('alc_sermons'));
+      if (sr && sr.length) window.alcAdminSermons = sr;
+    } catch(e) {}
+  })();
+  </script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
@@ -1808,5 +1851,62 @@
   <!-- App init -->
   <script src="scripts/constitution.js"></script>
   <script src="scripts/app.js"></script>
+  <!-- ══ ADMIN DATA RENDERER ══ -->
+  <script>
+  // Runs after all other scripts so it can override their output
+  window.addEventListener('DOMContentLoaded', function() {
+    // Give external scripts 200ms to mount, then apply admin overrides
+    setTimeout(alcApplyAdminData, 200);
+  });
+
+  function alcApplyAdminData() {
+    // ─── PRODUCTS ───
+    // If window.alcAdminProducts is set AND the site has a products render function, call it
+    if (window.alcAdminProducts) {
+      // Try to call the site's own renderProducts with the admin data
+      if (typeof renderProducts === 'function') {
+        try { renderProducts(window.alcAdminProducts); } catch(e) {}
+      }
+      // Also expose as global so products.js can pick up
+      window.storeProducts = window.alcAdminProducts;
+    }
+
+    // ─── EVENTS ───
+    if (window.alcAdminEvents) {
+      if (typeof renderEvents === 'function') {
+        try { renderEvents(window.alcAdminEvents); } catch(e) {}
+      }
+      window.churchEvents = window.alcAdminEvents;
+      // Render into #events section if it exists and is empty / has a list container
+      const evSection = document.querySelector('#events .events-list, #events .event-grid, #events [data-events]');
+      if (evSection) {
+        evSection.innerHTML = window.alcAdminEvents.map(ev => {
+          const parts = (ev.date || '').split(' ');
+          const day   = parts[1] ? parts[1].replace(',','').padStart(2,'0') : '--';
+          const mon   = parts[0] ? parts[0].substring(0,3) : '---';
+          return `<div class="event-card" style="border:1px solid var(--border);border-radius:4px;padding:16px;display:flex;align-items:center;gap:14px;margin-bottom:12px">
+            <div style="background:rgba(184,146,42,0.12);border:1px solid var(--gold);border-radius:4px;width:48px;height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0">
+              <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:var(--gold);line-height:1">${day}</div>
+              <div style="font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold)">${mon}</div>
+            </div>
+            <div>
+              <div style="font-weight:600;color:var(--ink)">${ev.name}</div>
+              <div style="font-size:0.78rem;color:var(--ink-muted)">${ev.time} · ${ev.venue}</div>
+              ${ev.desc ? `<div style="font-size:0.78rem;color:var(--ink-muted);margin-top:4px">${ev.desc}</div>` : ''}
+            </div>
+          </div>`;
+        }).join('');
+      }
+    }
+
+    // ─── SERMONS ───
+    if (window.alcAdminSermons) {
+      if (typeof renderSermons === 'function') {
+        try { renderSermons(window.alcAdminSermons); } catch(e) {}
+      }
+      window.churchSermons = window.alcAdminSermons;
+    }
+  }
+  </script>
 </body>
 </html>
