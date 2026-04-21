@@ -11,7 +11,7 @@ let products = [
   { name:"Dress",         price:700,  img:"images/dress.jpeg",       rating:4.3, sizes:["S","M","L","XL"], category:"Bags & Accessories" },
   { name:"Table cloths",      price:350, img:"images/table cloth2.jpeg",    rating:4.8, sizes:["One Size"], category:"Bags & Accessories" },
   { name:"T-Shirt", price:280, img:"https://via.placeholder.com/300x240?text=Salvation+Tee",  rating:4.5, sizes:["S","M","L","XL"], category:"Clothing" },
-  { name:"Table Cloth",    price:530, img:"https://via.placeholder.com/300x240?text=Worship+Hoodie", rating:4.7, sizes:["M","L","XL"], category:"Jackets" },
+  { name:"Table Cloth",    price:530, img:"images/Table cloth3.jpeg", rating:4.7, sizes:["One Size"], category:"clothing" },
   { name:"Faith chain",    price:60,  img:"https://via.placeholder.com/300x240?text=Faith+Keychain", rating:4.4, sizes:["One Size"], category:"Bags & Accessories" },
   { name:"Ailc Calendar",  price:210, img:"https://via.placeholder.com/300x240?text=Scripture+Poster",rating:4.9, sizes:["One Size"], category:"Bags & Accessories" },
   { name:"Flee Blanked",      price:170, img:"https://via.placeholder.com/300x240?text=Anointed+Cap",   rating:4.2, sizes:["One Size"], category:"Bags & Accessories" }
