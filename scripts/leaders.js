@@ -8,11 +8,11 @@ const leaders = [
   { name:"Pastor Lady Nkosi",         title:"Mpumalanga Branch Pastor",  category:"Pastors",       photo:"images/gogo.jpeg" },
   { name:"Pastor Elvis Mamba ",       title:"Pretoria Branch Pastor",    category:"Pastors",       photo:"images/BABE MAMBA.jpeg" },
   { name:"Pastor Dladla",             title:"Pretoria Branch Pastor",    category:"Pastors",       photo:"images/babe dladla.jpeg" },
-  { name:"Pastor Nelsiwe sthole",     title:"Mpumalanga Branch Pastor",  category:"Pastors",       photo:"images/mama nelly.jpeg" },
+  { name:"Pastor Nelsiwe Nkosi",     title:"Mpumalanga Branch Pastor",  category:"Pastors",       photo:"images/mama nelly.jpeg" },
   { name:"Pastor Lady Mamba",         title:" Pastor",                   category:"Pastors",       photo:"images/MAKE MAMBA .jpeg" },
   { name:"Preacher Goodman Mamba",    title:"Evangelist",                category:"Preachers",     photo:"images/goodman.jpeg" },
-  { name:"Preacher Nkuli",           title:"Youth Preacher",             category:"Preachers",     photo:"images/nkuli.jpeg" },
-  { name:"Preacher Blessing",        title:"Evangelist",                 category:"Preachers",     photo:"images/bless.jpeg"}  
+  { name:"Preacher Nkuli",           title:"Preacher",             category:"Preachers",     photo:"images/nkuli.jpeg" },
+  { name:"Preacher Blessing ",        title:"Evangelist",                 category:"Preachers",     photo:"images/bless.jpeg"}  
 ];
 
 function loadLeaders() {

@@ -18,8 +18,8 @@
     .sitenav { background: var(--forest); border-bottom: 1px solid rgba(255,255,255,0.06); }
     .sitenav-inner { max-width: 1320px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 36px; }
     .sitenav-links { display: flex; align-items: center; list-style: none; margin: 0; padding: 0; gap: 0; }
-    .sitenav-links li a { display: block; padding: 13px 15px; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.65); text-decoration: none; cursor: pointer; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
-    .sitenav-links li a:hover { color: var(--gold-lt); border-bottom-color: var(--gold); }
+    .sitenav-links li a { display: block; padding: 13px 15px; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.65) !important; text-decoration: none; cursor: pointer; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
+    .sitenav-links li a:hover { color: var(--gold-lt) !important; border-bottom-color: var(--gold); }
     .cart-badge-nav { background: var(--gold); color: var(--ink); font-size: 0.6rem; font-weight: 700; padding: 1px 5px; border-radius: 10px; margin-left: 4px; }
 
     
