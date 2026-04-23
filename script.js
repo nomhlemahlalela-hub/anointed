@@ -1,11 +1,11 @@
 // ── FIREBASE CONFIG ──
 const firebaseConfig = {
-  apiKey:            "YOUR_API_KEY",
-  authDomain:        "YOUR_PROJECT.firebaseapp.com",
-  projectId:         "YOUR_PROJECT_ID",
-  storageBucket:     "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId:             "YOUR_APP_ID"
+  apiKey:            "AIzaSyAXgQEkeXd58-zDemTvoiy26Fbb5Scupqc",
+  authDomain:        "anointed-361fa.firebaseapp.com",
+  projectId:         "anointed-361fa",
+  storageBucket:     "anointed-361fa.firebasestorage.app",
+  messagingSenderId: "463194333436",
+  appId:             "1:463194333436:web:217fa6d32be7051720b779"
 };
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();

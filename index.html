@@ -1784,20 +1784,22 @@
 </footer>
 
   <!-- ══ ADMIN → WEBSITE SYNC ══
-       Reads data written by admin.html via localStorage keys:
-       alc_products | alc_events | alc_sermons | alc_settings
+       admin.html writes: alc_products | alc_events | alc_sermons | alc_settings
+       This script reads those keys and overrides the live site data.
+       Runs BEFORE other scripts (inline, synchronous) so arrays are ready.
   -->
   <script>
+  // ── 1. Read all admin data up-front (sync, before any other script) ──
   (function alcAdminSync() {
-    // ── SETTINGS (live banner, church name) ──
+    // SETTINGS: live banner
     try {
       const s = JSON.parse(localStorage.getItem('alc_settings'));
       if (s) {
+        window._alcSettings = s;
         const banner = document.getElementById('liveBanner');
         if (banner) {
           if (s.liveActive) {
             banner.style.display = 'block';
-            const textNode = banner.childNodes[banner.childNodes.length - 1];
             if (s.liveText) banner.innerHTML = '<span class="live-dot"></span>' + s.liveText;
           } else {
             banner.style.display = 'none';
@@ -1806,22 +1808,22 @@
       }
     } catch(e) {}
 
-    // ── PRODUCTS: override window.alcProducts so products.js uses admin data ──
+    // PRODUCTS: store in window so products.js can pick them up
     try {
       const p = JSON.parse(localStorage.getItem('alc_products'));
-      if (p && p.length) window.alcAdminProducts = p;
+      if (p && p.length) window._alcProducts = p;
     } catch(e) {}
 
-    // ── EVENTS: override so events.js uses admin data ──
+    // EVENTS: store in window so events.js can pick them up
     try {
       const ev = JSON.parse(localStorage.getItem('alc_events'));
-      if (ev && ev.length) window.alcAdminEvents = ev;
+      if (ev && ev.length) window._alcEvents = ev;
     } catch(e) {}
 
-    // ── SERMONS: override so sermons.js uses admin data ──
+    // SERMONS: store in window so sermons.js can pick them up
     try {
       const sr = JSON.parse(localStorage.getItem('alc_sermons'));
-      if (sr && sr.length) window.alcAdminSermons = sr;
+      if (sr && sr.length) window._alcSermons = sr;
     } catch(e) {}
   })();
   </script>
@@ -1841,8 +1843,25 @@
   <script src="scripts/auth.js"></script>
   <script src="scripts/leaders.js"></script>
   <script src="scripts/sermons.js"></script>
+  <script>
+    if (window._alcSermons && window._alcSermons.length && typeof sermons !== 'undefined') {
+      const mapped = window._alcSermons.map(s => ({
+        title: s.title, speaker: s.speaker, date: s.date,
+        videoId: s.video || s.videoId || 'hEl_ULInpng',
+        img: s.img || 'https://via.placeholder.com/400x180?text=' + encodeURIComponent(s.title),
+        desc: s.desc || 'A message from ' + s.speaker + '.'
+      }));
+      sermons.splice(0, sermons.length, ...mapped);
+    }
+  </script>
   <script src="scripts/events.js"></script>
+  <!-- Post-patch: override products array right after products.js defines it -->
   <script src="scripts/products.js"></script>
+  <script>
+    if (window._alcProducts && window._alcProducts.length && typeof products !== 'undefined') {
+      products.splice(0, products.length, ...window._alcProducts);
+    }
+  </script>
   <script src="scripts/wishlist.js"></script>
   <script src="scripts/checkout.js"></script>
   <script src="scripts/orders.js"></script>
@@ -1851,61 +1870,113 @@
   <!-- App init -->
   <script src="scripts/constitution.js"></script>
   <script src="scripts/app.js"></script>
-  <!-- ══ ADMIN DATA RENDERER ══ -->
+  <!-- ══ ADMIN DATA RENDERER ══
+       Runs after all site scripts have loaded.
+       Overrides the products / events / sermons arrays and re-renders the UI.
+  -->
   <script>
-  // Runs after all other scripts so it can override their output
-  window.addEventListener('DOMContentLoaded', function() {
-    // Give external scripts 200ms to mount, then apply admin overrides
-    setTimeout(alcApplyAdminData, 200);
+  window.addEventListener('load', function() {
+    setTimeout(alcApplyAdminData, 150);
   });
 
   function alcApplyAdminData() {
-    // ─── PRODUCTS ───
-    // If window.alcAdminProducts is set AND the site has a products render function, call it
-    if (window.alcAdminProducts) {
-      // Try to call the site's own renderProducts with the admin data
-      if (typeof renderProducts === 'function') {
-        try { renderProducts(window.alcAdminProducts); } catch(e) {}
-      }
-      // Also expose as global so products.js can pick up
-      window.storeProducts = window.alcAdminProducts;
+
+    // ─── PRODUCTS ───────────────────────────────────────────────────────────
+    // products.js exposes a module-level `products` array and renderProductCards().
+    // We replace the array in-place so filters/search also use admin data.
+    if (window._alcProducts && window._alcProducts.length) {
+      try {
+        // Splice admin data into the existing `products` array (defined in products.js)
+        if (typeof products !== 'undefined' && Array.isArray(products)) {
+          products.splice(0, products.length, ...window._alcProducts);
+        }
+        // Re-run the store filter/render pipeline
+        if (typeof applyStoreFilters === 'function') applyStoreFilters();
+        else if (typeof renderProductCards === 'function') renderProductCards(window._alcProducts);
+      } catch(e) {}
     }
 
-    // ─── EVENTS ───
-    if (window.alcAdminEvents) {
-      if (typeof renderEvents === 'function') {
-        try { renderEvents(window.alcAdminEvents); } catch(e) {}
-      }
-      window.churchEvents = window.alcAdminEvents;
-      // Render into #events section if it exists and is empty / has a list container
-      const evSection = document.querySelector('#events .events-list, #events .event-grid, #events [data-events]');
-      if (evSection) {
-        evSection.innerHTML = window.alcAdminEvents.map(ev => {
-          const parts = (ev.date || '').split(' ');
-          const day   = parts[1] ? parts[1].replace(',','').padStart(2,'0') : '--';
-          const mon   = parts[0] ? parts[0].substring(0,3) : '---';
-          return `<div class="event-card" style="border:1px solid var(--border);border-radius:4px;padding:16px;display:flex;align-items:center;gap:14px;margin-bottom:12px">
-            <div style="background:rgba(184,146,42,0.12);border:1px solid var(--gold);border-radius:4px;width:48px;height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0">
-              <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:var(--gold);line-height:1">${day}</div>
-              <div style="font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold)">${mon}</div>
-            </div>
-            <div>
-              <div style="font-weight:600;color:var(--ink)">${ev.name}</div>
-              <div style="font-size:0.78rem;color:var(--ink-muted)">${ev.time} · ${ev.venue}</div>
-              ${ev.desc ? `<div style="font-size:0.78rem;color:var(--ink-muted);margin-top:4px">${ev.desc}</div>` : ''}
-            </div>
-          </div>`;
-        }).join('');
-      }
+    // ─── EVENTS ─────────────────────────────────────────────────────────────
+    // Inject admin events into the events section as a list below the featured block.
+    if (window._alcEvents && window._alcEvents.length) {
+      try {
+        // If site has its own renderEvents, call it
+        if (typeof renderEvents === 'function') {
+          renderEvents(window._alcEvents);
+        } else {
+          // Fallback: inject a card list into #events after the calendar
+          let adminEvBox = document.getElementById('adminEventsBox');
+          if (!adminEvBox) {
+            adminEvBox = document.createElement('div');
+            adminEvBox.id = 'adminEventsBox';
+            adminEvBox.style.cssText = 'margin-top:32px';
+            const evSection = document.getElementById('events');
+            const wrap = evSection ? evSection.querySelector('.section-wrap') : null;
+            if (wrap) wrap.appendChild(adminEvBox);
+          }
+          adminEvBox.innerHTML = `
+            <div class="section-eyebrow" style="margin-bottom:16px">Upcoming Events</div>
+            <div id="adminEventsList">
+              ${window._alcEvents.map(ev => {
+                const parts = (ev.date || '').split(' ');
+                const day = parts[1] ? parts[1].replace(',','').padStart(2,'0') : '--';
+                const mon = parts[0] ? parts[0].substring(0,3).toUpperCase() : '---';
+                return `<div style="display:flex;align-items:center;gap:16px;padding:14px 20px;border:1px solid var(--border);border-radius:3px;margin-bottom:10px;background:var(--warm)">
+                  <div style="background:rgba(184,146,42,0.12);border:1px solid rgba(184,146,42,0.4);border-radius:3px;min-width:48px;height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0">
+                    <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:var(--gold);line-height:1">${day}</div>
+                    <div style="font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold)">${mon}</div>
+                  </div>
+                  <div>
+                    <div style="font-weight:600;color:var(--ink);font-size:0.95rem">${ev.name}</div>
+                    <div style="font-size:0.78rem;color:var(--ink-muted);margin-top:2px">${ev.time} · ${ev.venue}</div>
+                    ${ev.desc ? `<div style="font-size:0.78rem;color:var(--ink-muted);margin-top:4px;font-style:italic">${ev.desc}</div>` : ''}
+                  </div>
+                </div>`;
+              }).join('')}
+            </div>`;
+        }
+      } catch(e) {}
+
+      // Also seed the calendar with event dates so gold dots appear
+      try {
+        if (typeof churchEvents === 'undefined') window.churchEvents = [];
+        window._alcEvents.forEach(ev => {
+          if (!window.churchEvents.find(e => e.name === ev.name)) {
+            window.churchEvents.push(ev);
+          }
+        });
+        // Re-render calendar if available
+        if (typeof renderCalendar === 'function') renderCalendar();
+      } catch(e) {}
     }
 
-    // ─── SERMONS ───
-    if (window.alcAdminSermons) {
-      if (typeof renderSermons === 'function') {
-        try { renderSermons(window.alcAdminSermons); } catch(e) {}
-      }
-      window.churchSermons = window.alcAdminSermons;
+    // ─── SERMONS ────────────────────────────────────────────────────────────
+    if (window._alcSermons && window._alcSermons.length) {
+      try {
+        // Map admin sermon format → site sermon format
+        const mapped = window._alcSermons.map(s => ({
+          title:   s.title,
+          speaker: s.speaker,
+          date:    s.date,
+          videoId: s.video  || s.videoId || 'hEl_ULInpng',
+          img:     s.img    || `https://via.placeholder.com/400x180?text=${encodeURIComponent(s.title)}`,
+          desc:    s.desc   || `A message from ${s.speaker}.`
+        }));
+
+        // Try the site's renderSermons function
+        if (typeof renderSermons === 'function') {
+          // Also patch the global sermons array if it exists
+          if (typeof sermons !== 'undefined' && Array.isArray(sermons)) {
+            sermons.splice(0, sermons.length, ...mapped);
+          }
+          renderSermons(mapped);
+        }
+      } catch(e) {}
     }
+
+    // ─── SETTINGS ───────────────────────────────────────────────────────────
+    // Live banner is already applied before scripts load (see sync block above).
+    // Nothing else to patch in index.html from settings.
   }
   </script>
 </body>

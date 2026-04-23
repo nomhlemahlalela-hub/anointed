@@ -646,7 +646,30 @@
     .mini-card-label { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
     .mini-card-val { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 700; color: var(--text); }
 
-    /* ── RESPONSIVE ── */
+    /* ── MEMBER APPROVAL ── */
+    .status-pending { background: rgba(184,146,42,0.2); color: var(--gold-lt); }
+    .status-approved { background: rgba(45,122,79,0.2); color: var(--success); }
+    .status-rejected { background: rgba(201,64,64,0.2); color: var(--danger); }
+    .approve-btn {
+      background: var(--success);
+      color: white;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 2px;
+      font-size: 0.68rem;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+    .reject-btn {
+      background: var(--danger);
+      color: white;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 2px;
+      font-size: 0.68rem;
+      cursor: pointer;
+    }
+
     @media (max-width: 900px) {
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .two-col { grid-template-columns: 1fr; }
@@ -758,7 +781,7 @@
         <div class="stat-card">
           <div class="stat-label">Registered Members</div>
           <div class="stat-val" id="stat-members">0</div>
-          <div class="stat-change"><i class="bi bi-people"></i> Via Firebase Auth</div>
+          <div class="stat-change"><i class="bi bi-people"></i> Total registered users</div>
           <i class="bi bi-people stat-icon"></i>
         </div>
         <div class="stat-card">
@@ -875,18 +898,10 @@
         <div style="overflow-x:auto">
           <table class="data-table" id="productTable">
             <thead>
-              <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Category</th>
-                <th>Sizes</th>
-                <th>Rating</th>
-                <th>Actions</th>
-              </tr>
+              <tr><th>Image</th><th>Name</th><th>Price</th><th>Category</th><th>Sizes</th><th>Rating</th><th>Actions</th></tr>
             </thead>
             <tbody id="productTableBody"></tbody>
-          </table>
+           </table>
         </div>
       </div>
     </div>
@@ -913,7 +928,7 @@
                 No orders yet. Orders placed on the website will appear here.
               </td></tr>
             </tbody>
-          </table>
+           </table>
         </div>
       </div>
     </div>
@@ -1058,7 +1073,7 @@
         <div class="card-head">
           <div>
             <div class="card-head-title">Member Accounts</div>
-            <div class="card-head-sub">Registered users via Firebase Auth</div>
+            <div class="card-head-sub">Registered users from Firebase Auth + Firestore</div>
           </div>
           <div class="search-wrap">
             <i class="bi bi-search"></i>
@@ -1067,14 +1082,14 @@
         </div>
         <div style="overflow-x:auto">
           <table class="data-table">
-            <thead><tr><th>Name</th><th>Email</th><th>Branch</th><th>Joined</th><th>Orders</th><th>Status</th></tr></thead>
+            <thead><tr><th>Name</th><th>Email</th><th>Branch</th><th>Registered</th><th>Last Login</th><th>Orders</th><th>Status</th></tr></thead>
             <tbody id="membersTableBody">
-              <tr><td colspan="6" style="text-align:center;padding:50px;color:var(--muted)">
+              <tr><td colspan="7" style="text-align:center;padding:50px;color:var(--muted)">
                 <i class="bi bi-people" style="font-size:2rem;display:block;margin-bottom:10px;opacity:0.35"></i>
-                No members registered yet. Members who sign up on the website will appear here.
+                Loading members from Firebase...
               </td></tr>
             </tbody>
-          </table>
+           </table>
         </div>
       </div>
     </div>
@@ -1154,7 +1169,7 @@
               <tr><td>Matsulu</td><td>Mpumalanga</td><td>Matsulu</td><td><span class="cat-pill cat-clothing">Active</span></td></tr>
               <tr><td>Madadeni Newcastle</td><td>KwaZulu-Natal</td><td>nr. Qaphelani Primary</td><td><span class="cat-pill cat-clothing">Active</span></td></tr>
             </tbody>
-          </table>
+           </table>
         </div>
       </div>
     </div>
@@ -1265,28 +1280,141 @@
     document.getElementById('adminPass').value = '';
     document.getElementById('loginErr').textContent = '';
     activityLog = [];
+    _membersList = [];
+    _cachedOrders = null;
   }
 
   // ── FIREBASE LIVE DATA (members + orders) ──
+  let _membersList = [];      // Store all members
+  let _cachedOrders = null;
+  let _fbReady = false;
+  let _fbRetries = 0;
+
   function loadFirebaseData() {
-    // Check if Firebase is available (loaded by the page's firebase.js)
-    if (typeof firebase === 'undefined' || !firebase.firestore) return;
+    // Wait for Firebase SDK + firebase.js to fully initialise
+    if (typeof firebase === 'undefined' || !firebase.apps || !firebase.apps.length) {
+      if (_fbRetries++ < 10) setTimeout(loadFirebaseData, 600);
+      return;
+    }
+    if (_fbReady) return;
+    _fbReady = true;
+
     const db = firebase.firestore();
+    const auth = firebase.auth();
 
-    // Load members from 'users' collection
-    db.collection('users').orderBy('createdAt', 'desc').get().then(snap => {
+    // ─── METHOD 1: Listen to Firestore 'users' collection ───
+    db.collection('users').onSnapshot(snap => {
       const members = [];
-      snap.forEach(doc => members.push({ id: doc.id, ...doc.data() }));
-      renderMembersTable(members);
-      document.getElementById('stat-members').textContent = members.length;
-    }).catch(() => {});
+      snap.forEach(doc => {
+        const data = doc.data();
+        members.push({
+          id: doc.id,
+          uid: doc.id,
+          name: data.name || data.displayName || 'Unknown',
+          email: data.email || '',
+          branch: data.branch || '—',
+          createdAt: data.createdAt,
+          lastLogin: data.lastLogin,
+          orderCount: data.orderCount || 0,
+          status: data.status || 'active'
+        });
+      });
+      
+      // Also fetch from the main 'members' collection
+      db.collection('members').get().then(snap2 => {
+        snap2.forEach(doc => {
+          const data = doc.data();
+          const existing = members.find(m => m.id === doc.id || m.email === data.email);
+          if (!existing) {
+            members.push({
+              id: doc.id,
+              uid: data.uid || doc.id,
+              name: data.name || 'Unknown',
+              email: data.email || '',
+              branch: data.branch || '—',
+              createdAt: data.createdAt,
+              lastLogin: data.lastLogin,
+              orderCount: data.orderCount || 0,
+              status: data.status || 'active'
+            });
+          }
+        });
+        
+        // Remove duplicates by id
+        const uniqueMembers = [];
+        const seen = new Set();
+        for (const m of members) {
+          if (!seen.has(m.id)) {
+            seen.add(m.id);
+            uniqueMembers.push(m);
+          }
+        }
+        
+        _membersList = uniqueMembers.sort((a, b) => {
+          const ta = a.createdAt?.seconds || 0;
+          const tb = b.createdAt?.seconds || 0;
+          return tb - ta;
+        });
+        
+        renderMembersTable();
+        const el = document.getElementById('stat-members');
+        if (el) el.textContent = _membersList.length;
+      }).catch(err => {
+        console.error('Error fetching members collection:', err);
+        renderMembersTable();
+      });
+    }, err => {
+      console.error('Error listening to users collection:', err);
+      // Fallback: try to get members from auth
+      fallbackLoadMembers();
+    });
 
-    // Load orders from 'orders' collection
-    db.collection('orders').orderBy('createdAt', 'desc').get().then(snap => {
+    // ─── METHOD 2: Listen to Auth state to capture new registrations ───
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        // Ensure user document exists in Firestore
+        const userRef = db.collection('users').doc(user.uid);
+        userRef.get().then(doc => {
+          if (!doc.exists) {
+            userRef.set({
+              uid: user.uid,
+              name: user.displayName || user.email?.split('@')[0] || 'Member',
+              email: user.email || '',
+              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true }).catch(() => {});
+          } else {
+            userRef.update({
+              lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+            }).catch(() => {});
+          }
+        }).catch(() => {});
+      }
+    });
+
+    // ─── STEP 3: Load orders ──────────────────────────────────────────────
+    db.collection('orders').orderBy('createdAt', 'desc').onSnapshot(snap => {
       const orders = [];
       snap.forEach(doc => orders.push({ id: doc.id, ...doc.data() }));
-      renderOrdersTable(orders);
-    }).catch(() => {});
+      _cachedOrders = orders;
+      renderOrdersTable();
+    }, err => console.error('Orders listener error:', err));
+  }
+
+  function fallbackLoadMembers() {
+    // Try to get users from Auth API (requires admin SDK, limited)
+    // Instead, show a helpful message
+    const tbody = document.getElementById('membersTableBody');
+    if (tbody && (!_membersList || _membersList.length === 0)) {
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--muted)">
+        <i class="bi bi-shield-lock" style="font-size:2rem;display:block;margin-bottom:10px;color:var(--gold);opacity:0.6"></i>
+        <div style="margin-bottom:6px;font-size:0.85rem">Unable to load members from Firestore.</div>
+        <div style="font-size:0.75rem;color:var(--muted)">Please check that:<br>
+        • Firestore security rules allow reads<br>
+        • The 'users' collection exists<br>
+        • Users are being created when they register</div>
+       </td></tr>`;
+    }
   }
 
   // ── NAV ──
@@ -1314,7 +1442,12 @@
     if (id === 'events')   renderEventList();
     if (id === 'sermons')  renderSermonList();
     if (id === 'settings') renderSettingsPanel();
-    if (id === 'members' || id === 'orders') loadFirebaseData();
+    if (id === 'members') {
+      loadFirebaseData(); // start/ensure listeners are active
+    }
+    if (id === 'orders' && _cachedOrders) {
+      renderOrdersTable();
+    }
   }
 
   // ── DASHBOARD STATS ──
@@ -1530,56 +1663,70 @@
     showToastAdmin(`Sermon "${title}" removed.`);
   }
 
-  // ── MEMBERS (from Firebase) ──
-  function renderMembersTable(members) {
+  // ── MEMBERS ──
+  function renderMembersTable() {
     const q = (document.getElementById('memberSearch')?.value || '').toLowerCase();
     const tbody = document.getElementById('membersTableBody');
     if (!tbody) return;
-    const filtered = (members || []).filter(m =>
-      (m.name || m.displayName || m.email || '').toLowerCase().includes(q)
-    );
-    if (!filtered.length) {
-      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:50px;color:var(--muted)">
+
+    if (!_membersList.length) {
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:50px;color:var(--muted)">
         <i class="bi bi-people" style="font-size:2rem;display:block;margin-bottom:10px;opacity:0.35"></i>
-        ${members && members.length ? 'No members match your search.' : 'No members registered yet.'}
+        No members found. Members will appear here when they register on the website.
       </td></tr>`;
       return;
     }
+
+    const filtered = _membersList.filter(m =>
+      (m.name || '').toLowerCase().includes(q) ||
+      (m.email || '').toLowerCase().includes(q)
+    );
+
     tbody.innerHTML = filtered.map(m => {
-      const name   = m.name || m.displayName || 'Unknown';
-      const initials = name.split(' ').map(w => w[0]).join('').substring(0,2).toUpperCase();
-      const email  = m.email || '—';
-      const branch = m.branch || '—';
-      const joined = m.createdAt ? new Date(m.createdAt.seconds * 1000).toLocaleDateString('en-ZA', { month:'short', year:'numeric' }) : '—';
-      const orders = m.orderCount || 0;
+      const initials = m.name.split(' ').map(w => w[0]).join('').substring(0,2).toUpperCase();
+      const joined = m.createdAt
+        ? new Date(m.createdAt.seconds * 1000).toLocaleDateString('en-ZA', { day:'numeric', month:'short', year:'numeric' })
+        : '—';
+      const lastLogin = m.lastLogin
+        ? new Date(m.lastLogin.seconds * 1000).toLocaleDateString('en-ZA', { day:'numeric', month:'short', year:'numeric' })
+        : '—';
+      
       return `<tr>
-        <td><div style="display:flex;align-items:center;gap:9px">
-          <div style="width:28px;height:28px;background:rgba(184,146,42,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:600;color:var(--gold)">${initials}</div>
-          ${name}</div></td>
-        <td style="color:var(--muted)">${email}</td>
-        <td>${branch}</td>
+        <td>
+          <div style="display:flex;align-items:center;gap:9px">
+            <div style="width:30px;height:30px;background:rgba(184,146,42,0.18);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:600;color:var(--gold);flex-shrink:0">${initials}</div>
+            <div>
+              <div style="font-weight:500;color:var(--text)">${m.name}</div>
+              <div style="font-size:0.68rem;color:var(--muted)">${m.id}</div>
+            </div>
+          </div>
+         </td>
+        <td style="color:var(--muted)">${m.email || '—'}</td>
+        <td>${m.branch || '—'}</td>
         <td style="color:var(--muted)">${joined}</td>
-        <td style="color:var(--gold)">${orders}</td>
+        <td style="color:var(--muted)">${lastLogin}</td>
+        <td style="color:var(--gold)">${m.orderCount || 0}</td>
         <td><span class="cat-pill cat-clothing">Active</span></td>
       </tr>`;
     }).join('');
-    document.getElementById('stat-members').textContent = members.length;
+
+    const el = document.getElementById('stat-members');
+    if (el) el.textContent = _membersList.length;
   }
 
-  function renderMembersTable_empty() { renderMembersTable([]); }
-
   // ── ORDERS (from Firebase) ──
-  function renderOrdersTable(orders) {
+  function renderOrdersTable() {
     const q = (document.getElementById('orderSearch')?.value || '').toLowerCase();
     const tbody = document.getElementById('ordersTableBody');
     if (!tbody) return;
-    const filtered = (orders || []).filter(o =>
-      (o.ref || o.id || o.customerName || o.email || '').toLowerCase().includes(q)
+    const filtered = (_cachedOrders || []).filter(o =>
+      (o.ref || o.id || o.customerName || o.name || '').toLowerCase().includes(q) ||
+      (o.email || '').toLowerCase().includes(q)
     );
     if (!filtered.length) {
-      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:50px;color:var(--muted)">
+      tbody.innerHTML = `<td><td colspan="7" style="text-align:center;padding:50px;color:var(--muted)">
         <i class="bi bi-box-seam" style="font-size:2rem;display:block;margin-bottom:10px;opacity:0.35"></i>
-        ${orders && orders.length ? 'No orders match your search.' : 'No orders yet. Orders placed on the website will appear here.'}
+        ${_cachedOrders && _cachedOrders.length ? 'No orders match your search.' : 'No orders yet. Orders placed on the website will appear here.'}
       </td></tr>`;
       return;
     }
