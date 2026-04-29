@@ -1324,6 +1324,7 @@
         const d = doc.data();
         return {
           id:         doc.id,
+          uid:        d.uid || doc.id,   // always carry the uid field
           name:       d.name || d.displayName || d.email?.split('@')[0] || 'Member',
           email:      d.email || '',
           branch:     d.branch || '—',
@@ -1333,16 +1334,23 @@
         };
       });
 
-      // Also check 'members' collection and merge (some sites use both)
+      // Also check 'members' collection and merge (some sites use both).
+      // Deduplicate by UID field — NOT by doc.id — because members collection
+      // uses auto-generated IDs while users collection uses the Firebase UID.
       adminDb.collection('members').get().then(snap2 => {
-        const seen   = new Set(fromUsers.map(m => m.id));
-        const merged = [...fromUsers];
+        // Build a set of known UIDs from the users collection
+        const seenUids = new Set(fromUsers.map(m => m.uid).filter(Boolean));
+        const merged   = [...fromUsers];
+
         snap2.docs.forEach(doc => {
-          if (!seen.has(doc.id)) {
-            const d = doc.data();
+          const d   = doc.data();
+          const uid = d.uid || doc.id;   // members docs store uid as a field
+          if (!seenUids.has(uid)) {
+            seenUids.add(uid);
             merged.push({
               id:         doc.id,
-              name:       d.name || d.displayName || 'Member',
+              uid:        uid,
+              name:       d.name || d.displayName || d.email?.split('@')[0] || 'Member',
               email:      d.email || '',
               branch:     d.branch || '—',
               createdAt:  d.createdAt  || null,
@@ -1351,6 +1359,7 @@
             });
           }
         });
+
         _membersList = merged.sort((a, b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0));
         renderMembersTable();
         const el = document.getElementById('stat-members');

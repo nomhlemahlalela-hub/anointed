@@ -273,7 +273,10 @@ async function firebaseRegister() {
   try {
     const cred = await auth.createUserWithEmailAndPassword(email, pass);
     await cred.user.updateProfile({ displayName: name });
+    // Write to 'members' for backwards compatibility
     await db.collection('members').add({ uid: cred.user.uid, name, email, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+    // Write to 'users' (keyed by UID) so the admin panel can find this member
+    await db.collection('users').doc(cred.user.uid).set({ uid: cred.user.uid, name, email, createdAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
     okMsg.innerText = 'Account created!';
     setTimeout(() => { closeAuthModal(); }, 1200);
     showToast('Welcome to the family, ' + name + '! 🎉');
