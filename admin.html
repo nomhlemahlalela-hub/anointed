@@ -1279,9 +1279,22 @@
       renderSermonList();
       renderSettingsPanel();
       updateDashboardStats();
-      loadFirebaseData();
       updateClock();
       setInterval(updateClock, 1000);
+
+      // Sign into Firebase so Firestore security rules allow reads.
+      // If already signed in (e.g. re-login without page refresh), go straight to load.
+      if (adminAuth.currentUser) {
+        loadFirebaseData();
+      } else {
+        adminAuth.signInAnonymously()
+          .then(() => loadFirebaseData())
+          .catch(err => {
+            console.warn('Anonymous sign-in failed, trying unauthenticated read:', err.code);
+            // Fall back to unauthenticated read — works if Firestore rules allow it
+            loadFirebaseData();
+          });
+      }
     } else {
       document.getElementById('loginErr').textContent = 'Incorrect username or password.';
       document.getElementById('adminPass').value = '';
@@ -1324,7 +1337,7 @@
         const d = doc.data();
         return {
           id:         doc.id,
-          uid:        d.uid || doc.id,   // always carry the uid field
+          uid:        d.uid || doc.id,
           name:       d.name || d.displayName || d.email?.split('@')[0] || 'Member',
           email:      d.email || '',
           branch:     d.branch || '—',
@@ -1334,17 +1347,14 @@
         };
       });
 
-      // Also check 'members' collection and merge (some sites use both).
-      // Deduplicate by UID field — NOT by doc.id — because members collection
-      // uses auto-generated IDs while users collection uses the Firebase UID.
+      // Merge 'members' collection — deduplicate by UID field, not doc.id
+      // because members uses auto-IDs while users uses UID as doc.id
       adminDb.collection('members').get().then(snap2 => {
-        // Build a set of known UIDs from the users collection
         const seenUids = new Set(fromUsers.map(m => m.uid).filter(Boolean));
         const merged   = [...fromUsers];
-
         snap2.docs.forEach(doc => {
           const d   = doc.data();
-          const uid = d.uid || doc.id;   // members docs store uid as a field
+          const uid = d.uid || doc.id;
           if (!seenUids.has(uid)) {
             seenUids.add(uid);
             merged.push({
@@ -1359,7 +1369,6 @@
             });
           }
         });
-
         _membersList = merged.sort((a, b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0));
         renderMembersTable();
         const el = document.getElementById('stat-members');
