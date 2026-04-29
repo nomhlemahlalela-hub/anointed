@@ -1183,6 +1183,27 @@
   <span id="toastAdminMsg">Done!</span>
 </div>
 
+<!-- Firebase SDK — loaded BEFORE main script so firebase is defined when doLogin runs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+  // Init Firebase once here — admin.html owns this, do NOT also load scripts/firebase.js
+  // (that file calls initializeApp again and causes "already initialized" error)
+  const _adminFirebaseConfig = {
+    apiKey:            "AIzaSyAXgQEkeXd58-zDemTvoiy26Fbb5Scupqc",
+    authDomain:        "anointed-361fa.firebaseapp.com",
+    projectId:         "anointed-361fa",
+    storageBucket:     "anointed-361fa.firebasestorage.app",
+    messagingSenderId: "463194333436",
+    appId:             "1:463194333436:web:217fa6d32be7051720b779",
+    measurementId:     "G-R4PWY37TMD"
+  };
+  if (!firebase.apps.length) firebase.initializeApp(_adminFirebaseConfig);
+  const adminAuth = firebase.auth();
+  const adminDb   = firebase.firestore();
+</script>
+
 <script>
   // ══════════════════════════════════════════════════════════
   // ALC ADMIN — Real data only. localStorage bridges to site.
@@ -1214,11 +1235,7 @@
     { name:"Workers' Day Prayer", date:"May 1, 2026",    time:"9:00 AM",  venue:"Online + Soshanguve", desc:"" }
   ];
 
-  const DEFAULT_SERMONS = [
-    { title:"The Power of Prayer", speaker:"Pastor Ndlovu", date:"March 22, 2026", video:"", desc:"" },
-    { title:"Rooted in Grace",     speaker:"Elder Dlamini", date:"March 15, 2026", video:"", desc:"" },
-    { title:"Be Still and Know",   speaker:"Pastor Ndlovu", date:"March 8, 2026",  video:"", desc:"" }
-  ];
+  const DEFAULT_SERMONS = [];  // No fake sermons — admin adds real ones
 
   const DEFAULT_SETTINGS = {
     churchName: "Anointed in Living Christ",
@@ -1282,139 +1299,101 @@
     activityLog = [];
     _membersList = [];
     _cachedOrders = null;
+    // Note: _fbListenersStarted stays true — listeners persist (Firebase design)
+    // They will simply re-render when loadFirebaseData is called again
   }
 
   // ── FIREBASE LIVE DATA (members + orders) ──
-  let _membersList = [];      // Store all members
+  let _membersList = [];
   let _cachedOrders = null;
-  let _fbReady = false;
-  let _fbRetries = 0;
+  let _fbListenersStarted = false;
 
   function loadFirebaseData() {
-    // Wait for Firebase SDK + firebase.js to fully initialise
-    if (typeof firebase === 'undefined' || !firebase.apps || !firebase.apps.length) {
-      if (_fbRetries++ < 10) setTimeout(loadFirebaseData, 600);
+    // Firebase is already initialised before this script — no retry needed
+    if (_fbListenersStarted) {
+      // Already listening — just re-render what we have
+      renderMembersTable();
+      renderOrdersTable();
       return;
     }
-    if (_fbReady) return;
-    _fbReady = true;
+    _fbListenersStarted = true;
 
-    const db = firebase.firestore();
-    const auth = firebase.auth();
-
-    // ─── METHOD 1: Listen to Firestore 'users' collection ───
-    db.collection('users').onSnapshot(snap => {
-      const members = [];
-      snap.forEach(doc => {
-        const data = doc.data();
-        members.push({
-          id: doc.id,
-          uid: doc.id,
-          name: data.name || data.displayName || 'Unknown',
-          email: data.email || '',
-          branch: data.branch || '—',
-          createdAt: data.createdAt,
-          lastLogin: data.lastLogin,
-          orderCount: data.orderCount || 0,
-          status: data.status || 'active'
-        });
+    // ─── Listen to 'users' collection (primary member store) ───
+    adminDb.collection('users').onSnapshot(snap => {
+      const fromUsers = snap.docs.map(doc => {
+        const d = doc.data();
+        return {
+          id:         doc.id,
+          name:       d.name || d.displayName || d.email?.split('@')[0] || 'Member',
+          email:      d.email || '',
+          branch:     d.branch || '—',
+          createdAt:  d.createdAt  || null,
+          lastLogin:  d.lastLogin  || null,
+          orderCount: d.orderCount || 0
+        };
       });
-      
-      // Also fetch from the main 'members' collection
-      db.collection('members').get().then(snap2 => {
-        snap2.forEach(doc => {
-          const data = doc.data();
-          const existing = members.find(m => m.id === doc.id || m.email === data.email);
-          if (!existing) {
-            members.push({
-              id: doc.id,
-              uid: data.uid || doc.id,
-              name: data.name || 'Unknown',
-              email: data.email || '',
-              branch: data.branch || '—',
-              createdAt: data.createdAt,
-              lastLogin: data.lastLogin,
-              orderCount: data.orderCount || 0,
-              status: data.status || 'active'
+
+      // Also check 'members' collection and merge (some sites use both)
+      adminDb.collection('members').get().then(snap2 => {
+        const seen   = new Set(fromUsers.map(m => m.id));
+        const merged = [...fromUsers];
+        snap2.docs.forEach(doc => {
+          if (!seen.has(doc.id)) {
+            const d = doc.data();
+            merged.push({
+              id:         doc.id,
+              name:       d.name || d.displayName || 'Member',
+              email:      d.email || '',
+              branch:     d.branch || '—',
+              createdAt:  d.createdAt  || null,
+              lastLogin:  d.lastLogin  || null,
+              orderCount: d.orderCount || 0
             });
           }
         });
-        
-        // Remove duplicates by id
-        const uniqueMembers = [];
-        const seen = new Set();
-        for (const m of members) {
-          if (!seen.has(m.id)) {
-            seen.add(m.id);
-            uniqueMembers.push(m);
-          }
-        }
-        
-        _membersList = uniqueMembers.sort((a, b) => {
-          const ta = a.createdAt?.seconds || 0;
-          const tb = b.createdAt?.seconds || 0;
-          return tb - ta;
-        });
-        
+        _membersList = merged.sort((a, b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0));
         renderMembersTable();
         const el = document.getElementById('stat-members');
         if (el) el.textContent = _membersList.length;
-      }).catch(err => {
-        console.error('Error fetching members collection:', err);
+      }).catch(() => {
+        // members collection may not exist — use users only
+        _membersList = fromUsers.sort((a, b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0));
         renderMembersTable();
+        const el = document.getElementById('stat-members');
+        if (el) el.textContent = _membersList.length;
       });
+
     }, err => {
-      console.error('Error listening to users collection:', err);
-      // Fallback: try to get members from auth
-      fallbackLoadMembers();
+      console.error('Users listener error:', err.code, err.message);
+      fallbackLoadMembers(err);
     });
 
-    // ─── METHOD 2: Listen to Auth state to capture new registrations ───
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        // Ensure user document exists in Firestore
-        const userRef = db.collection('users').doc(user.uid);
-        userRef.get().then(doc => {
-          if (!doc.exists) {
-            userRef.set({
-              uid: user.uid,
-              name: user.displayName || user.email?.split('@')[0] || 'Member',
-              email: user.email || '',
-              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-              lastLogin: firebase.firestore.FieldValue.serverTimestamp()
-            }, { merge: true }).catch(() => {});
-          } else {
-            userRef.update({
-              lastLogin: firebase.firestore.FieldValue.serverTimestamp()
-            }).catch(() => {});
-          }
-        }).catch(() => {});
-      }
-    });
-
-    // ─── STEP 3: Load orders ──────────────────────────────────────────────
-    db.collection('orders').orderBy('createdAt', 'desc').onSnapshot(snap => {
-      const orders = [];
-      snap.forEach(doc => orders.push({ id: doc.id, ...doc.data() }));
-      _cachedOrders = orders;
+    // ─── Listen to 'orders' collection ───
+    adminDb.collection('orders').orderBy('createdAt', 'desc').onSnapshot(snap => {
+      _cachedOrders = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       renderOrdersTable();
-    }, err => console.error('Orders listener error:', err));
+    }, () => {
+      // Fallback without ordering if index not ready
+      adminDb.collection('orders').onSnapshot(snap => {
+        _cachedOrders = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        renderOrdersTable();
+      }, err => console.error('Orders listener error:', err.code));
+    });
   }
 
-  function fallbackLoadMembers() {
-    // Try to get users from Auth API (requires admin SDK, limited)
-    // Instead, show a helpful message
+  function fallbackLoadMembers(err) {
     const tbody = document.getElementById('membersTableBody');
-    if (tbody && (!_membersList || _membersList.length === 0)) {
-      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--muted)">
-        <i class="bi bi-shield-lock" style="font-size:2rem;display:block;margin-bottom:10px;color:var(--gold);opacity:0.6"></i>
-        <div style="margin-bottom:6px;font-size:0.85rem">Unable to load members from Firestore.</div>
-        <div style="font-size:0.75rem;color:var(--muted)">Please check that:<br>
-        • Firestore security rules allow reads<br>
-        • The 'users' collection exists<br>
-        • Users are being created when they register</div>
-       </td></tr>`;
-    }
+    if (!tbody) return;
+    const isPermission = err && (err.code === 'permission-denied' || err.message?.includes('permission'));
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--muted)">
+      <i class="bi bi-shield-lock" style="font-size:2rem;display:block;margin-bottom:10px;color:var(--gold);opacity:0.6"></i>
+      <div style="font-size:0.85rem;margin-bottom:8px">${isPermission ? 'Firestore permission denied.' : 'Could not connect to Firestore.'}</div>
+      <div style="font-size:0.75rem;line-height:1.7">
+        ${isPermission
+          ? 'Go to Firebase Console → Firestore → Rules and allow reads on the <strong>users</strong> collection.'
+          : 'Check your internet connection and Firebase project settings.'}
+      </div>
+    </td></tr>`;
   }
 
   // ── NAV ──
@@ -1806,10 +1785,5 @@
     document.getElementById('clockEl').textContent = now.toLocaleTimeString('en-ZA', { hour:'2-digit', minute:'2-digit', second:'2-digit', hour12: false });
   }
 </script>
-<!-- Firebase SDK — needed to read real members & orders -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-<script src="scripts/firebase.js"></script>
 </body>
 </html>
