@@ -5,7 +5,8 @@ const firebaseConfig = {
   projectId:         "anointed-361fa",
   storageBucket:     "anointed-361fa.firebasestorage.app",
   messagingSenderId: "463194333436",
-  appId:             "1:463194333436:web:217fa6d32be7051720b779"
+  appId:             "1:463194333436:web:217fa6d32be7051720b779",
+  measurementId: "G-R4PWY37TMD"
 };
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
