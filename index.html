@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Anointed in Living Christ | Church in Pretoria, Mpumalanga & KwaZulu-Natal</title>
+  <title>Anointed in Living Christ |A zion church in Mpumalanga, Pretoria& KwaZulu-Natal</title>
   <meta name="description" content="Anointed in Living Christ — a Spirit-filled church with branches in Soshanguve Block AA Pretoria, Kameelriver B (Kwandebele), Nkomazi (Jeppes Reef), Msogwaba Pienaar (near Sindzawonye Primary School), Matsulu in Mpumalanga, and Madadeni Newcastle (near Qaphelani Primary School) in KwaZulu-Natal.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="index, follow">
@@ -304,6 +304,17 @@
 
               <div class="notification-item">
                 <div class="notification-info">
+                  <div style="font-weight:500;font-size:0.9rem">New Product Alerts</div>
+                  <div style="font-size:0.8rem;color:var(--ink-muted)">Be notified when the store gets new items</div>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="productNotifications" onchange="updateProductNotifications()">
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <div class="notification-item">
+                <div class="notification-info">
                   <div style="font-weight:500;font-size:0.9rem">Prayer Request Updates</div>
                   <div style="font-size:0.8rem;color:var(--ink-muted)">Receive updates on your prayer requests</div>
                 </div>
@@ -588,7 +599,7 @@
           <div class="event-featured mb-5">
             <div class="row g-0">
               <div class="col-md-7">
-                <img src="images/revival image.jpeg" onerror="this.src='https://via.placeholder.com/600x400?text=REVIVAL'" style="height:100%;object-fit:cover;width:100%;border-radius:3px 0 0 3px">
+                <img src="images/REVIVAL.jpeg" onerror="this.src='https://via.placeholder.com/600x400?text=REVIVAL'" style="height:100%;object-fit:cover;width:100%;border-radius:3px 0 0 3px">
               </div>
               <div class="col-md-5">
                 <div class="event-featured-body" style="padding:40px 30px;height:100%;display:flex;flex-direction:column">
@@ -601,7 +612,7 @@
                         <i class="bi bi-calendar-event" style="color:var(--gold);font-size:1.1rem;margin-right:10px"></i>
                         <div>
                           <div style="font-size:1rem;font-weight:600;color:var(--ink)">Saturday, August 9, 2026</div>
-                          <div style="font-size:0.85rem;color:var(--ink-muted)">10:00 AM - 6:00 PM</div>
+                          <div style="font-size:0.85rem;color:var(--ink-muted)">10:00 AM - Till Late</div>
                         </div>
                       </div>
 
@@ -621,12 +632,12 @@
                       </div>
                     </div>
 
-                    <p style="font-size:1rem;line-height:1.7;margin-bottom:20px;color:var(--ink-soft)">Join us for a powerful revival gathering where we will experience the presence of God, receive fresh anointing, and witness mighty miracles. This special event will feature anointed preaching, worship, and prayer ministry.</p>
+                    <p style="font-size:1rem;line-height:1.7;margin-bottom:20px;color:var(--ink-soft)">Join us for a powerful revival gathering where we will experience the presence of God,and revive hope for the Skosana and Jiyane families . This event will feature anointed preaching, worship, and good music.</p>
 
                     <div class="mb-4">
                       <div class="info-tag me-2"><i class="bi bi-music-note"></i> Worship</div>
                       <div class="info-tag me-2"><i class="bi bi-megaphone"></i> Preaching</div>
-                      <div class="info-tag"><i class="bi bi-pray"></i> Prayer Ministry</div>
+                      <div class="info-tag"><i class="bi bi-pray"></i> Revival</div>
                     </div>
                   </div>
 
@@ -644,20 +655,64 @@
               </div>
             </div>
           </div>
-          <div class="calendar-grid mb-5">
-            <div class="cal-header"><h5 id="monthYearDisplay"></h5><div class="d-flex gap-2"><button class="cal-nav-btn" onclick="changeMonth(-1)"><i class="bi bi-chevron-left"></i></button><button class="cal-nav-btn" onclick="changeMonth(1)"><i class="bi bi-chevron-right"></i></button></div></div>
-            <div class="p-3"><table class="cal-table"><thead><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr></thead><tbody id="calendarBody"></tbody></table></div>
-            <div style="padding:0 16px 14px;font-size:0.73rem;color:var(--ink-muted)"><i class="bi bi-circle-fill me-1" style="color:var(--gold);font-size:0.5rem"></i>Gold dates have events — click for details</div>
-          </div>
 
-          <!-- Event Poster -->
-          <div class="card-clean mb-4">
-            <div class="section-eyebrow">Event Poster</div>
-            <h4 class="serif" style="font-size:1.3rem;font-weight:600;margin-bottom:8px">REVIVAL Poster</h4>
-            <div style="text-align:center;padding:40px;background:var(--warm);border:2px dashed var(--gold);border-radius:8px;">
-              <i class="bi bi-image" style="font-size:3rem;color:var(--gold);display:block;margin-bottom:16px"></i>
-              <p style="font-size:1.2rem;font-weight:600;color:var(--ink);margin-bottom:8px">POSTER COMING SOON</p>
-              <p style="font-size:0.9rem;color:var(--ink-muted)">The official REVIVAL poster will be available here soon. Stay tuned for updates!</p>
+          <div class="event-featured mb-5">
+            <div class="row g-0">
+              <div class="col-md-7 order-md-2">
+                <img src="images/CONFERENCE.jpeg" onerror="this.src='https://via.placeholder.com/600x400?text=Conference'" style="height:100%;object-fit:cover;width:100%;border-radius:0 3px 3px 0">
+              </div>
+              <div class="col-md-5 order-md-1">
+                <div class="event-featured-body" style="padding:40px 30px;height:100%;display:flex;flex-direction:column">
+                  <span class="event-badge">New Event</span>
+                  <h3 class="serif" style="font-size:2.2rem;font-weight:600;color:var(--ink);margin-bottom:20px;line-height:1.2">Annual Conference & Revival</h3>
+
+                  <div style="flex:1">
+                    <div class="mb-4">
+                      <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-calendar-event" style="color:var(--gold);font-size:1.1rem;margin-right:10px"></i>
+                        <div>
+                          <div style="font-size:1rem;font-weight:600;color:var(--ink)">Saturday, October 10, 2026</div>
+                          <div style="font-size:0.85rem;color:var(--ink-muted)">11:00 AM - 1:00 PM Women | 2:00 PM - 4:00 PM Youth | 9:00 PM Main Service</div>
+                        </div>
+                      </div>
+
+                      <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-geo-alt-fill" style="color:var(--gold);font-size:1.1rem;margin-right:10px"></i>
+                        <div>
+                          <div style="font-size:1rem;font-weight:600;color:var(--ink)">Schoemansdal Hall, Nkomazi</div>
+                          <div style="font-size:0.85rem;color:var(--ink-muted)">Mpumalanga Province</div>
+                        </div>
+                      </div>
+
+                      <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-broadcast" style="color:var(--gold);font-size:1.1rem;margin-right:10px"></i>
+                        <div>
+                          <div style="font-size:0.9rem;color:var(--ink)">Community celebration with worship, prophetic ministry, and revival prayer.</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <p style="font-size:1rem;line-height:1.7;margin-bottom:20px;color:var(--ink-soft)">Be part of our Annual Conference & Revival as we gather to worship, hear the Word, and receive fresh direction for the season. This event is open to all branches and includes special sessions for women and youth.</p>
+
+                    <div class="mb-4">
+                      <div class="info-tag me-2"><i class="bi bi-people"></i> Fellowship</div>
+                      <div class="info-tag me-2"><i class="bi bi-stars"></i> Revival Worship</div>
+                      <div class="info-tag"><i class="bi bi-heart"></i> A service full of love and god's grace</div>
+                    </div>
+                  </div>
+
+                  <div style="border-top:1px solid var(--border);padding-top:20px;margin-top:auto">
+                    <div class="d-flex gap-3 flex-wrap">
+                      <a href="https://maps.google.com/?q=Schoemansdal+Hall+Nkomazi" target="_blank" class="btn-submit" style="text-decoration:none;padding:12px 20px;font-size:0.85rem">
+                        <i class="bi bi-geo-alt me-2"></i>View Location
+                      </a>
+                      <button class="btn-submit" style="background:var(--gold);color:var(--ink);padding:12px 20px;font-size:0.85rem" onclick="show('events')">
+                        <i class="bi bi-calendar-check me-2"></i>RSVP Today
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -874,7 +929,16 @@
     <div class="section-wrap">
       <div class="text-center mb-2"><div class="section-eyebrow">Worship</div><h2 class="section-title">Worship Music</h2><div class="rule"></div></div>
       <div class="row g-4">
-        <div class="col-md-6"><div class="card-clean h-100"><div class="section-eyebrow"><i class="bi bi-spotify me-2"></i>Spotify</div><h4 class="serif" style="font-size:1.2rem;font-weight:600;margin-bottom:16px">Listen on Spotify</h4><iframe style="border-radius:3px" src="https://open.spotify.com/embed/artist/4Z2U8mtsETharalZmbsoiR?utm_source=generator" width="100%" height="320" frameBorder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div></div>
+        <div class="col-md-6"><div class="card-clean h-100"><div class="section-eyebrow"><i class="bi bi-spotify me-2"></i>Spotify</div><h4 class="serif" style="font-size:1.2rem;font-weight:600;margin-bottom:16px">Listen on Spotify</h4>
+          <div class="mb-3">
+            <h6 class="mb-2" style="font-size:0.9rem;font-weight:500">AMAZULU ATHEMBE WENA</h6>
+            <iframe style="border-radius:3px" src="https://open.spotify.com/artist/4Z2U8mtsETharalZmbsoiR?si=gjpSGrM9RFKWRNQlfi5JSw" width="100%" height="152" frameBorder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          </div>
+          <div>
+            <h6 class="mb-2" style="font-size:0.9rem;font-weight:500">ALIKHO ELINYE IGAMA</h6>
+            <iframe style="border-radius:3px" src="https://open.spotify.com/album/2E8StCzk4y6jBOP0nZ4Oq1?si=QZO7mfRCT4mz_SoJdZE2Gg" width="100%" height="152" frameBorder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          </div>
+        </div></div>
         <div class="col-md-6"><div class="card-clean h-100"><div class="section-eyebrow">Award Winner</div><h4 class="serif" style="font-size:1.2rem;font-weight:600;margin-bottom:8px">Gospel Awards Winner</h4><p style="font-size:0.88rem;color:var(--ink-muted);margin-bottom:16px"><strong>"Alikho Elinye Igama"</strong> — won the Mpumalanga Gospel Award.</p></div></div>
       </div>
 

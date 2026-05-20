@@ -219,6 +219,7 @@ function loadNotificationSettings() {
         document.getElementById('browserNotifications').checked = data.browserNotifications || false;
         document.getElementById('emailNotifications').checked = data.emailNotifications || false;
         document.getElementById('eventReminders').checked = data.eventReminders || false;
+        document.getElementById('productNotifications').checked = data.productNotifications || false;
       }
     })
     .catch(error => {

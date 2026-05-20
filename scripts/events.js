@@ -3,7 +3,7 @@ const events = [
   { date:'2026-04-03', name:'Good Friday Service',  time:'10:00 PM', venue:'Akasia Community Hall, Pretoria' },
   { date:'2026-06-29', name:'Youth Conference',      time:'9:00 AM',  venue:'Headquarters, Pretoria' },
   { date:'2026-08-05', name:"Women's Conference",    time:'10:00 AM', venue:'Soshanguve Branch, Pretoria' },
-  { date:'2026-10-10', name:'Regional Conference',   time:'8:00 AM',  venue:'Msogwaba Hall, Nelspruit' }
+  { date:'2026-10-10', name:'Annual Conference & Revival', time:'11:00 AM - 9:00 PM', venue:'Schoemansdal Hall, Nkomazi' }
 ];
 let currentMonth = 3, currentYear = 2026;
 

@@ -7,6 +7,8 @@ async function toggleBrowserNotifications() {
       showToast('Browser notifications are already enabled!');
       btn.innerHTML = '<i class="bi bi-bell-fill me-1"></i>Enabled';
       btn.className = 'btn-submit';
+      scheduleEventNotifications();
+      notifyNewProducts();
     } else if (Notification.permission !== 'denied') {
       const permission = await Notification.requestPermission();
       if (permission === 'granted') {
@@ -21,12 +23,14 @@ async function toggleBrowserNotifications() {
           });
         }
 
-        // Schedule a test notification
+        // Schedule a test notification and initialize alerts
         setTimeout(() => {
           new Notification('Anointed in Living Christ', {
-            body: 'Notifications are now enabled! You\'ll be notified about upcoming events.',
+            body: 'Notifications are now enabled! You\'ll be notified about upcoming events and new products.',
             icon: 'images/Logo.png.jpeg'
           });
+          scheduleEventNotifications();
+          notifyNewProducts();
         }, 2000);
       } else {
         showToast('Notification permission denied', 'error');
@@ -45,14 +49,45 @@ async function toggleBrowserNotifications() {
   }
 }
 
+const ALC_NOTIFICATION_HISTORY_KEY = 'alc_notification_history';
+
+function getNotificationHistory() {
+  try {
+    return new Set(JSON.parse(localStorage.getItem(ALC_NOTIFICATION_HISTORY_KEY) || '[]'));
+  } catch (e) {
+    return new Set();
+  }
+}
+
+function saveNotificationHistory(history) {
+  localStorage.setItem(ALC_NOTIFICATION_HISTORY_KEY, JSON.stringify(Array.from(history)));
+}
+
+function hasNotificationBeenSent(key) {
+  return getNotificationHistory().has(key);
+}
+
+function markNotificationSent(key) {
+  const history = getNotificationHistory();
+  history.add(key);
+  saveNotificationHistory(history);
+}
+
+function showBrowserNotification(title, options = {}) {
+  if (!('Notification' in window) || Notification.permission !== 'granted') {
+    return false;
+  }
+  const notification = new Notification(title, options);
+  notification.onclick = () => window.focus();
+  return true;
+}
+
 function updateEmailPreferences() {
   const enabled = document.getElementById('emailNotifications').checked;
   const status = enabled ? 'enabled' : 'disabled';
   showToast(`Email notifications ${status}!`);
 
-  // In a real implementation, this would update user preferences in the database
   if (isLoggedIn) {
-    // Save preference to Firebase
     db.collection('users').doc(currentMember.uid).update({
       emailNotifications: enabled
     });
@@ -71,31 +106,91 @@ function updateEventReminders() {
   }
 }
 
-function scheduleEventNotifications() {
-  // Get upcoming events from Firebase
-  db.collection('events').where('date', '>=', new Date()).orderBy('date').limit(5).get()
-  .then(snapshot => {
-    snapshot.forEach(doc => {
-      const event = doc.data();
-      const eventTime = event.date.toDate();
-      const now = new Date();
-      const timeDiff = eventTime - now;
+function updateProductNotifications() {
+  const enabled = document.getElementById('productNotifications').checked;
+  const status = enabled ? 'enabled' : 'disabled';
+  showToast(`New product alerts ${status}!`);
 
-      // Schedule notification 1 hour before event
-      if (timeDiff > 0 && timeDiff <= 3600000) { // 1 hour in milliseconds
-        setTimeout(() => {
-          if (Notification.permission === 'granted') {
-            new Notification(`Upcoming Event: ${event.title}`, {
-              body: `Starts at ${event.time} - ${event.location}`,
-              icon: '/favicon.ico'
-            });
-          }
-        }, timeDiff);
-      }
+  if (isLoggedIn) {
+    db.collection('users').doc(currentMember.uid).update({
+      productNotifications: enabled
     });
-  })
-  .catch(error => {
-    console.error('Error scheduling notifications:', error);
+  }
+}
+
+function parseEventDate(value) {
+  if (!value) return null;
+  if (value instanceof Date) return value;
+  if (typeof value === 'string') {
+    const normalized = value.trim().replace(/-/g, '/');
+    const parsed = new Date(`${normalized}T09:00:00`);
+    return isNaN(parsed.getTime()) ? null : parsed;
+  }
+  return null;
+}
+
+function scheduleEventNotifications() {
+  const eventCheckbox = document.getElementById('eventReminders');
+  if (!eventCheckbox || !eventCheckbox.checked) return;
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+
+  let upcoming = [];
+  if (typeof events !== 'undefined' && Array.isArray(events)) {
+    upcoming = events;
+  } else if (Array.isArray(window._alcEvents)) {
+    upcoming = window._alcEvents;
+  }
+
+  const now = new Date();
+  upcoming.forEach(event => {
+    const eventDate = parseEventDate(event.date);
+    if (!eventDate || eventDate < now) return;
+
+    const title = event.title || event.name || 'Upcoming Event';
+    const time = event.time || '';
+    const location = event.location || event.venue || '';
+    const bodyParts = [];
+    if (time) bodyParts.push(time);
+    if (location) bodyParts.push(location);
+    const body = bodyParts.join(' · ');
+    const reminderTime = new Date(eventDate.getTime() - 3600000);
+    const delay = reminderTime.getTime() - now.getTime();
+    const key = `event-reminder:${title}:${event.date}`;
+
+    if (hasNotificationBeenSent(key)) return;
+
+    const sendNotification = () => {
+      if (showBrowserNotification(`Upcoming Event: ${title}`, { body: body || 'Don’t miss this upcoming event!', icon: '/favicon.ico' })) {
+        markNotificationSent(key);
+      }
+    };
+
+    if (delay <= 0 && eventDate.getTime() - now.getTime() <= 3600000) {
+      sendNotification();
+    } else if (delay > 0 && delay <= 86400000) {
+      setTimeout(sendNotification, delay);
+    }
+  });
+}
+
+function notifyNewProducts() {
+  const productCheckbox = document.getElementById('productNotifications');
+  if (!productCheckbox || !productCheckbox.checked) return;
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+
+  const productList = typeof products !== 'undefined' && Array.isArray(products) ? products : [];
+  productList.forEach((product, idx) => {
+    const isNew = product.isNew || product.newProduct || idx === 0;
+    if (!isNew) return;
+
+    const key = `new-product:${product.name}`;
+    if (hasNotificationBeenSent(key)) return;
+
+    const body = `Just added to the store for R${product.price}.`;
+    const icon = product.img || '/favicon.ico';
+    if (showBrowserNotification(`New product available: ${product.name}`, { body, icon })) {
+      markNotificationSent(key);
+    }
   });
 }
 
@@ -233,6 +328,7 @@ function loadNotificationSettings() {
         const data = doc.data();
         document.getElementById('emailNotifications').checked = data.emailNotifications || false;
         document.getElementById('eventReminders').checked = data.eventReminders !== false; // Default true
+        document.getElementById('productNotifications').checked = data.productNotifications || false;
         document.getElementById('prayerUpdates').checked = data.prayerUpdates || false;
       }
     });
@@ -247,3 +343,10 @@ function loadNotificationSettings() {
     }
   }
 }
+
+window.addEventListener('load', function() {
+  setTimeout(() => {
+    scheduleEventNotifications();
+    notifyNewProducts();
+  }, 200);
+});
